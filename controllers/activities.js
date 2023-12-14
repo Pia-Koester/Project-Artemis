@@ -2,11 +2,24 @@ const Activity = require("../models/activities.js");
 
 const createActivity = async (req, res) => {
   try {
-    const { title, description, startTime, endTime, registeredUsers } =
-      req.body;
+    const {
+      title,
+      description,
+      capacity,
+      waitlist,
+      instructor,
+      location,
+      startTime,
+      endTime,
+      registeredUsers,
+    } = req.body;
     const activity = await Activity.create({
       title,
       description,
+      capacity,
+      waitlist,
+      instructor,
+      location,
       startTime,
       endTime,
       registeredUsers,
