@@ -1,9 +1,14 @@
 const express = require("express");
 
-const { createMembershipPlan } = require("../controllers/membershipPlans.js");
+const {
+  createMembershipPlan,
+  getMembershipPlans,
+  getMembershipPlan,
+} = require("../controllers/membershipPlans.js");
 
 const membershipPlanRouter = express.Router();
-
-membershipPlanRouter.route("/").post(createMembershipPlan);
+membershipPlanRouter.get("/", getMembershipPlans); //gets all available memberships
+membershipPlanRouter.post("/create", createMembershipPlan); //create new membership
+membershipPlanRouter.get("/:id", getMembershipPlan); // gets one individual membership based on the _id
 
 module.exports = membershipPlanRouter;
