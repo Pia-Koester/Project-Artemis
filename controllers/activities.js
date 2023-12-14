@@ -43,8 +43,11 @@ const getActivities = async (req, res) => {
 
 const getActivity = async (req, res) => {
   try {
-    const { id } = req.params;
-    const activity = await Activity.findById(id);
+    const { activity_id } = req.params;
+    const activity = await Activity.findById(activity_id);
+    if (!activity) {
+      return res.status(404).send("Activity not found");
+    }
     res.json(activity);
   } catch (error) {
     console.log(error);

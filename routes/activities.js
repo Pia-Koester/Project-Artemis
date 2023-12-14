@@ -9,6 +9,6 @@ const {
 const activityRouter = express.Router();
 
 activityRouter.route("/").post(createActivity).get(getActivities);
-activityRouter.route("/:id").get(getActivity);
+activityRouter.route("/:activity_id").get(getActivity);
 
 module.exports = activityRouter;
