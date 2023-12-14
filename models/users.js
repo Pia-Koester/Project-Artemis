@@ -14,7 +14,7 @@ const userSchema = new Schema({
     enum: ["student", "admin", "instructor"],
     default: "student",
   },
-  status: { type: String, enum: ["active", "inactive"], default: active },
+  status: { type: String, enum: ["active", "inactive"], default: "active" },
   activeMembership: { type: Schema.Types.ObjectId, ref: "Membership" },
   classesRegistered: [{ type: Schema.Types.ObjectId, ref: "Activity" }],
 });

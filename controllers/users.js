@@ -14,3 +14,7 @@ res.status(201).json(user)
         res.status(500).send("why are you here?")
     }
 }
+
+module.exports = {
+    createUser
+};
