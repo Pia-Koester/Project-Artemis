@@ -2,7 +2,7 @@ const UserMembership = require("../models/userMemberships.js");
 
 const getUserMemberships = async (req, res) => {
   try {
-      const userMemberships = await UserMembership.find().populate("user").populate("plan")
+      const userMemberships = await UserMembership.find({}).populate("user").populate("plan")
 
       if(userMemberships.length === 0) {
         return res.status(404).send("No results found!")
