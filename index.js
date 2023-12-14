@@ -8,14 +8,16 @@ const port = process.env.PORT;
 const userRouter = require("./routes/users.js");
 const activityRouter = require("./routes/activities.js");
 const membershipPlanRouter = require("./routes/membershipPlans.js");
+const userMembershipRouter = require("./routes/userMemberships.js");
 
 //MiddleWare
 app.use(express.json());
 app.use(cors());
 
-app.use("/", userRouter)
-app.use("/activities", activityRouter)
-app.use("/createplan", membershipPlanRouter)
+app.use("/", userRouter);
+app.use("/activities", activityRouter);
+app.use("/createplan", membershipPlanRouter);
+app.use("/memberships", userMembershipRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on http://localhost:${port}`);
