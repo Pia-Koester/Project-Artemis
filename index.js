@@ -16,7 +16,7 @@ app.use(cors());
 
 app.use("/", userRouter);
 app.use("/activities", activityRouter);
-app.use("/createplan", membershipPlanRouter);
+app.use("/plan", membershipPlanRouter);
 app.use("/memberships", userMembershipRouter);
 
 app.listen(port, () => {
