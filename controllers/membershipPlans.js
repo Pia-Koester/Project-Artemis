@@ -32,6 +32,9 @@ const getMembershipPlan = async (req, res) => {
   try {
     const { id } = req.params;
     const plan = await MembershipPlan.findById(id);
+    if (!plan) {
+      return res.status(400).send("No Membership Plan found");
+    }
     res.json(plan);
   } catch (error) {
     console.log(error);
