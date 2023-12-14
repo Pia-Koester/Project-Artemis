@@ -12,7 +12,8 @@ const createUser = async (req, res) => {
   }
 };
 
-const getUser = async (req, res, next) => {
+//Gets One single user
+const getUser = async (req, res) => {
   try {
     const { userid } = req.params;
     const user = await User.findById(userid);
@@ -26,7 +27,20 @@ const getUser = async (req, res, next) => {
     res.status(500).send("you fucked up big time");
   }
 };
+
+//Gets all the users
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json(users)
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("you fucked up big time");
+  }
+};
+
 module.exports = {
   createUser,
   getUser,
+  getUsers,
 };
