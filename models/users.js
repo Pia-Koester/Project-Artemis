@@ -11,7 +11,7 @@ const userSchema = new Schema({
   address: { type: String },
   role: {
     type: String,
-    enum: ["student", "admin", "instructor"],
+    enum: ["student", "admin", "instructor"], 
     default: "student",
   },
   status: { type: String, enum: ["active", "inactive"], default: "active" },
