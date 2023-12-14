@@ -44,7 +44,9 @@ const getActivities = async (req, res) => {
 const getActivity = async (req, res) => {
   try {
     const { activity_id } = req.params;
-    const activity = await Activity.findById(activity_id);
+    const activity = await Activity.findById(activity_id).populate(
+      "registeredUsers"
+    ); // TODO: .populate("waitlist.waitlistUsers") is this the correct way??
     if (!activity) {
       return res.status(404).send("Activity not found");
     }
@@ -54,6 +56,8 @@ const getActivity = async (req, res) => {
     res.status(500).send("Error while getting activity");
   }
 };
+
+//TODO: create put request to add users to the registered users array
 
 module.exports = {
   createActivity,
