@@ -12,6 +12,13 @@ const createUser = async (req, res) => {
       activeMembership,
       classesRegistered,
     } = req.body;
+    console.log(email);
+
+    const found = await User.findOne({ email });
+    if (found) {
+      return res.status(409).json({ message: "User already exists." });
+    }
+
     const user = await User.create({
       email,
       phone,
@@ -46,6 +53,7 @@ const getUser = async (req, res) => {
 };
 
 //Gets all the users
+//TODO don't return the passwords
 const getUsers = async (req, res) => {
   try {
     const users = await User.find({});

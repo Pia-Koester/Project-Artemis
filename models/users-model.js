@@ -34,6 +34,13 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+//middleware to lowercase email addresses
+userSchema.pre("findOne", function (next) {
+  const query = this.getQuery();
+  if (query.email) query.email = query.email.toLowerCase();
+  next();
+});
+
 const User = model("User", userSchema);
 
 module.exports = User;
