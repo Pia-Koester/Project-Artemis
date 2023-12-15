@@ -2,8 +2,8 @@ const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
-  firstName: { type: String, required: true},
-  lastName: { type: String, required: true},
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
   phone: { type: String, required: true, unique: true }, // TODO - ask Isabella
   password: { type: String, required: true },
   dateOfRegistration: { type: Date, default: Date.now() },
@@ -13,12 +13,12 @@ const userSchema = new Schema({
   address: { type: String },
   role: {
     type: String,
-    enum: ["student", "admin", "instructor"], 
+    enum: ["student", "admin", "instructor"],
     default: "student",
   },
   status: { type: String, enum: ["active", "inactive"], default: "active" },
   activeMembership: { type: Schema.Types.ObjectId, ref: "Membership" },
-  classesRegistered: [{ type: Schema.Types.ObjectId, ref: "Activity" }],
+  classesRegistered: [{ type: Schema.Types.ObjectId, ref: "Activitie" }],
 });
 
 const User = model("User", userSchema);

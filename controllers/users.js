@@ -3,8 +3,24 @@ const User = require("../models/users.js");
 //create new user
 const createUser = async (req, res) => {
   try {
-    const { email, phone, password } = req.body;
-    const user = await User.create({ email, phone, password });
+    const {
+      email,
+      phone,
+      password,
+      firstName,
+      lastName,
+      activeMembership,
+      classesRegistered,
+    } = req.body;
+    const user = await User.create({
+      email,
+      phone,
+      password,
+      firstName,
+      lastName,
+      activeMembership,
+      classesRegistered,
+    });
     res.status(201).json(user);
   } catch (error) {
     console.log(error);
@@ -16,7 +32,7 @@ const createUser = async (req, res) => {
 const getUser = async (req, res) => {
   try {
     const { userid } = req.params;
-    const user = await User.findById(userid);
+    const user = await User.findById(userid).populate("classesRegistered");
     if (!user) {
       return res.status(404).send("Not found");
     } else {
@@ -32,7 +48,7 @@ const getUser = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const users = await User.find({});
-    res.json(users)
+    res.json(users);
   } catch (error) {
     console.log(error);
     res.status(500).send("you fucked up big time");
