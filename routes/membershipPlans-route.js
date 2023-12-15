@@ -4,7 +4,7 @@ const {
   createMembershipPlan,
   getMembershipPlans,
   getMembershipPlan,
-} = require("../controllers/membershipPlans.js");
+} = require("../controllers/membershipPlans-controller.js");
 
 const membershipPlanRouter = express.Router();
 membershipPlanRouter.get("/", getMembershipPlans); //gets all available memberships

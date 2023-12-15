@@ -1,4 +1,4 @@
-const MembershipPlan = require("../models/membershipPlans.js");
+const MembershipPlan = require("../models/membershipPlans-model.js");
 
 //create new membership plan (like 10er Karte, unlimited offer etc)
 const createMembershipPlan = async (req, res) => {

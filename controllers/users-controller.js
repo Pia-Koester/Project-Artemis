@@ -1,4 +1,4 @@
-const User = require("../models/users.js");
+const User = require("../models/users-model.js");
 
 //create new user
 const createUser = async (req, res) => {
@@ -12,6 +12,13 @@ const createUser = async (req, res) => {
       activeMembership,
       classesRegistered,
     } = req.body;
+    console.log(email);
+
+    const found = await User.findOne({ email });
+    if (found) {
+      return res.status(409).json({ message: "User already exists." });
+    }
+
     const user = await User.create({
       email,
       phone,
@@ -21,6 +28,7 @@ const createUser = async (req, res) => {
       activeMembership,
       classesRegistered,
     });
+    console.log("hashed password", user.password);
     res.status(201).json(user);
   } catch (error) {
     console.log(error);
@@ -45,6 +53,7 @@ const getUser = async (req, res) => {
 };
 
 //Gets all the users
+//TODO don't return the passwords
 const getUsers = async (req, res) => {
   try {
     const users = await User.find({});
