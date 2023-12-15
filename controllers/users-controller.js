@@ -1,4 +1,4 @@
-const User = require("../models/users.js");
+const User = require("../models/users-model.js");
 
 //create new user
 const createUser = async (req, res) => {
@@ -21,6 +21,7 @@ const createUser = async (req, res) => {
       activeMembership,
       classesRegistered,
     });
+    console.log("hashed password", user.password);
     res.status(201).json(user);
   } catch (error) {
     console.log(error);

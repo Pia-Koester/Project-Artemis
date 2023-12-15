@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema({
@@ -5,7 +6,7 @@ const userSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   phone: { type: String, required: true, unique: true }, // TODO - ask Isabella
-  password: { type: String, required: true },
+  password: { type: String, required: true, select: false },
   dateOfRegistration: { type: Date, default: Date.now() },
   lastParticipationDate: { type: Date },
   lastLoginDate: { type: Date },
@@ -19,6 +20,18 @@ const userSchema = new Schema({
   status: { type: String, enum: ["active", "inactive"], default: "active" },
   activeMembership: { type: Schema.Types.ObjectId, ref: "Membership" },
   classesRegistered: [{ type: Schema.Types.ObjectId, ref: "Activitie" }],
+});
+
+//creating mongoose middleware to hash passwords and make sure mail adress is lowercase
+userSchema.pre("save", async function (next) {
+  // this pre middlewar applies directly before saving
+  if (this.isModified("email")) this.email = this.email.toLowerCase(); // we check if the mail was changed or added and then lowercase it
+
+  if (this.isModified("password"))
+    // if a password is new or changed then it gets hashed
+    this.password = await bcrypt.hash(this.password, 10);
+  console.log("password from middlewar", this.password);
+  next();
 });
 
 const User = model("User", userSchema);

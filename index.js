@@ -5,10 +5,10 @@ const app = express();
 const port = process.env.PORT;
 
 //Import Routers
-const userRouter = require("./routes/users.js");
-const activityRouter = require("./routes/activities.js");
-const membershipPlanRouter = require("./routes/membershipPlans.js");
-const userMembershipRouter = require("./routes/userMemberships.js");
+const userRouter = require("./routes/users-route.js");
+const activityRouter = require("./routes/activities-route.js");
+const membershipPlanRouter = require("./routes/membershipPlans-route.js");
+const userMembershipRouter = require("./routes/userMemberships-route.js");
 
 //MiddleWare
 app.use(express.json());

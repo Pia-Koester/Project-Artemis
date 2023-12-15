@@ -1,4 +1,4 @@
-const Activity = require("../models/activities.js");
+const Activity = require("../models/activities-model.js");
 
 const createActivity = async (req, res) => {
   try {

@@ -4,7 +4,7 @@ const {
   createActivity,
   getActivities,
   getActivity,
-} = require("../controllers/activities");
+} = require("../controllers/activities-controller.js");
 
 const activityRouter = express.Router();
 
