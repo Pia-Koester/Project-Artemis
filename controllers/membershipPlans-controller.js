@@ -1,46 +1,33 @@
 const MembershipPlan = require("../models/membershipPlans-model.js");
+const ErrorResponse = require("../utils/errorResponse.js");
+const asyncWrapper = require("../utils/asyncWrapper.js");
 
 //create new membership plan (like 10er Karte, unlimited offer etc)
-const createMembershipPlan = async (req, res) => {
-  try {
-    const { title, price, totalCredits } = req.body;
-    const plan = await MembershipPlan.create({
-      title,
-      price,
-      totalCredits,
-    });
-    res.status(201).json(plan);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("For Fuck's sake..Dont Panic!!!");
-  }
-};
+const createMembershipPlan = asyncWrapper(async (req, res, next) => {
+  const { title, price, totalCredits } = req.body;
+  const plan = await MembershipPlan.create({
+    title,
+    price,
+    totalCredits,
+  });
+  res.status(201).json(plan);
+});
 
 // get all the available memberships
-const getMembershipPlans = async (req, res) => {
-  try {
-    const membershipplans = await MembershipPlan.find({});
-    res.json(membershipplans);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Panic! At the disco??");
-  }
-};
+const getMembershipPlans = asyncWrapper(async (req, res, next) => {
+  const membershipplans = await MembershipPlan.find({});
+  res.json(membershipplans);
+});
 
 // get one single membership using the _id from mongodb
-const getMembershipPlan = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const plan = await MembershipPlan.findById(id);
-    if (!plan) {
-      return res.status(400).send("No Membership Plan found");
-    }
-    res.json(plan);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Problem fetching this plan");
+const getMembershipPlan = asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
+  const plan = await MembershipPlan.findById(id);
+  if (!plan) {
+    throw new ErrorResponse("No Membership Plan found", 400);
   }
-};
+  res.json(plan);
+});
 
 module.exports = {
   createMembershipPlan,

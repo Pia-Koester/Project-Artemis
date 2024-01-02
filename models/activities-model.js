@@ -17,7 +17,6 @@ const activitySchema = new Schema({
   registeredUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
-
 const Activity = model("Activitie", activitySchema);
 
 module.exports = Activity;

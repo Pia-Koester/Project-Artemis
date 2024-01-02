@@ -1,7 +1,6 @@
 const Activity = require("../models/activities-model.js");
 const ErrorResponse = require("../utils/errorResponse.js");
 const asyncWrapper = require("../utils/asyncWrapper.js");
-const { Error } = require("mongoose");
 
 const createActivity = asyncWrapper(async (req, res, next) => {
   const {
