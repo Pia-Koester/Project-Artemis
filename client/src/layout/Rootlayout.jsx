@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
+import Navbar from "../pages/Navbar";
 
 export default function Rootlayout() {
   return (
     <>
-      <h1>THIS IS THE HEADLINE FROM THE ROOT LAYOUT</h1>
-      {/* <Navbar /> */}
+      <Navbar />
       <Outlet />
       {/* <Footer /> */}
     </>
