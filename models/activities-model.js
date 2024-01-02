@@ -6,7 +6,7 @@ const waitlistSchema = new Schema({
 });
 
 const activitySchema = new Schema({
-  title: { type: String, required: true, unique: true },
+  title: { type: String, required: true, unique: true }, // To Do: does not need to be unique
   description: { type: String, required: true },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
@@ -16,7 +16,6 @@ const activitySchema = new Schema({
   location: { type: String },
   registeredUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
-
 
 const Activity = model("Activitie", activitySchema);
 
