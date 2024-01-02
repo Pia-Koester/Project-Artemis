@@ -1,8 +1,28 @@
 import { FaWandMagicSparkles } from "react-icons/fa6";
+import { useForm } from "react-hook-form";
 
 export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    const formData = new FormData();
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    console.log(formData);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center">
+    <form
+      className="flex flex-col items-center justify-center"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <label className="form-control w-full max-w-xs  flex flex-col items-center justify-center">
         <div className="label self-start">
           <span className="label-text">What is your E-Mail?</span>
@@ -11,6 +31,7 @@ export default function Login() {
           type="text"
           placeholder="Type E-Mail here"
           className="input input-bordered w-full max-w-xs input-primary "
+          {...register("email", { required: true })}
         />
         <div className="label self-start">
           <span className="label-text">What is your password?</span>
@@ -19,6 +40,7 @@ export default function Login() {
           type="password"
           placeholder="Type Password here"
           className="input input-bordered w-full max-w-xs input-primary "
+          {...register("password", { required: true })}
         />
         <button className="btn btn-primary mt-5">Submit</button>
       </label>
@@ -30,6 +52,6 @@ export default function Login() {
         <FaWandMagicSparkles />
         get magic link
       </button> */}
-    </div>
+    </form>
   );
 }

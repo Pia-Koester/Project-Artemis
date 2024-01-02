@@ -80,6 +80,14 @@ export default function Registration() {
             {...register("dateOfBirth", { required: true })}
           />
           <div className="label self-start">
+            <span className="label-text">What is your E-Mail?</span>
+          </div>
+          <input
+            placeholder="E-Mail"
+            className="input input-bordered w-full max-w-xs input-primary "
+            {...register("email", { required: true })}
+          />
+          <div className="label self-start">
             <span className="label-text">Set a password</span>
           </div>
           <input
