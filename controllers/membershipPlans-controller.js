@@ -24,7 +24,7 @@ const getMembershipPlan = asyncWrapper(async (req, res, next) => {
   const { id } = req.params;
   const plan = await MembershipPlan.findById(id);
   if (!plan) {
-    throw new ErrorResponse("No Membership Plan found", 400);
+    throw new ErrorResponse("No Membership Plan found", 404);
   }
   res.json(plan);
 });
