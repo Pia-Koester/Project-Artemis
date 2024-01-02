@@ -6,7 +6,7 @@ const waitlistSchema = new Schema({
 });
 
 const activitySchema = new Schema({
-  title: { type: String, required: true, unique: true },
+  title: { type: String, required: true, unique: true }, // To Do: does not need to be unique
   description: { type: String, required: true },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
@@ -15,8 +15,9 @@ const activitySchema = new Schema({
   instructor: { type: String },
   location: { type: String },
   registeredUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  trialMembership: { type: Boolean, default: true },
+  // To Do: create new field to make activity be either paid with membership or only single booking possible / bookingOption??
 });
-
 
 const Activity = model("Activitie", activitySchema);
 
