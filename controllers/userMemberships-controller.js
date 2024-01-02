@@ -1,43 +1,34 @@
 const UserMembership = require("../models/userMemberships-model.js");
+const ErrorResponse = require("../utils/errorResponse.js")
+const asyncWrapper = require("../utils/asyncWrapper.js")
 
-const getUserMemberships = async (req, res) => {
-  try {
-    const userMemberships = await UserMembership.find({})
-      .populate("user")
-      .populate("plan");
+const getUserMemberships = asyncWrapper(async (req, res, next) => {
+  const userMemberships = await UserMembership.find({})
+  .populate("user")
+  .populate("plan");
 
-    if (userMemberships.length === 0) {
-      return res.status(404).send("No results found!");
-    } else {
-      res.status(200).json(userMemberships);
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Now panic!");
+if (userMemberships.length === 0) {
+  throw new ErrorResponse("No results found!", 404);
+} else {
+  res.status(200).json(userMemberships);
+}
+})
+
+const getUserMembership = asyncWrapper(async (req, res, next) => {
+  const { membershipId } = req.params;
+
+  const userMembership = await UserMembership.find({ _id: membershipId })
+    .populate("user")
+    .populate("plan");
+
+  if (userMembership.length === 0) {
+    throw new ErrorResponse("No results found!", 404);
+  } else {
+    res.status(200).json(userMembership);
   }
-};
+})
 
-const getUserMembership = async (req, res) => {
-  try {
-    const { membershipId } = req.params;
-
-    const userMembership = await UserMembership.find({ _id: membershipId })
-      .populate("user")
-      .populate("plan");
-
-    if (userMembership.length === 0) {
-      return res.status(404).send("No results found!");
-    } else {
-      res.status(200).json(userMembership);
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Now panic!");
-  }
-};
-
-const createUserMembership = async (req, res) => {
-  try {
+const createUserMembership = asyncWrapper(async (req, res, next) => {
     const { plan, user, expiryDate } = req.body;
     const userMembership = await UserMembership.create({
       plan,
@@ -45,11 +36,7 @@ const createUserMembership = async (req, res) => {
       expiryDate,
     });
     res.status(201).json(userMembership);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Now panic!");
-  }
-};
+})
 
 module.exports = {
   getUserMemberships,
