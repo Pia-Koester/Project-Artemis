@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Registration() {
   const {
@@ -107,6 +108,12 @@ export default function Registration() {
           <button className="btn btn-primary">Submit</button>
         </label>
       </form>
+      <p className="p-2">
+        Already registered?
+        <Link to="/login" className="text-accent">
+          Login
+        </Link>
+      </p>
     </div>
   );
 }
