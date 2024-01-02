@@ -13,7 +13,7 @@ export default function Login() {
   const onSubmit = (data) => {
     console.log(data);
     axios
-      .post("http://localhost:8080/login", data)
+      .post("http://localhost:8080/login", data, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
       })
