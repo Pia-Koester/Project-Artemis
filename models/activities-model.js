@@ -15,6 +15,8 @@ const activitySchema = new Schema({
   instructor: { type: String },
   location: { type: String },
   registeredUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  trialMembership: { type: Boolean, default: true },
+  // To Do: create new field to make activity be either paid with membership or only single booking possible / bookingOption??
 });
 
 const Activity = model("Activitie", activitySchema);
