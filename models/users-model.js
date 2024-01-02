@@ -27,8 +27,8 @@ const userSchema = new Schema({
   activeMembership: { type: Schema.Types.ObjectId, ref: "Membership" },
   classesRegistered: [{ type: Schema.Types.ObjectId, ref: "Activitie" }],
   dateOfBirth: { type: Date, required: true },
-  termsOfUse: { type: String, required: true, enum: ["accepted"] },
-  dataProtectionInfo: { type: String, required: true, enum: ["accepted"] },
+  termsOfUse: { type: Boolean, required: true },
+  dataProtectionInfo: { type: Boolean, required: true },
   emergencyContact: emergencyContactSchema,
 });
 

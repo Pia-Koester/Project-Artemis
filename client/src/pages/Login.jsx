@@ -1,5 +1,6 @@
 import { FaWandMagicSparkles } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export default function Login() {
   const {
@@ -11,11 +12,14 @@ export default function Login() {
 
   const onSubmit = (data) => {
     console.log(data);
-    const formData = new FormData();
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-
-    console.log(formData);
+    axios
+      .post("http://localhost:8080/login", data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -44,9 +48,7 @@ export default function Login() {
         />
         <button className="btn btn-primary mt-5">Submit</button>
       </label>
-
-      {/* 
-      TO DO: in case we create the option to login via mail
+      {/* TO DO: in case we create the option to login via mail
       <div className="divider">OR</div>
       <button className="btn btn-secondary mt-5">
         <FaWandMagicSparkles />

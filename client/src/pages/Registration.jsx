@@ -10,19 +10,19 @@ export default function Registration() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-    const formData = new FormData();
-    formData.append("firstName", data.name);
-    formData.append("lastName", data.price);
-    formData.append("phone", data.phone);
-    formData.append("adress", data.adress);
-    formData.append("dateOfBirth", data.dateOfBirth);
-    formData.append("termsOfUse", data.termsOfUse);
-    formData.append("dataProtectionInfo", data.dataProtectionInfo);
+    console.log("hookdata", data);
+    // const formData = new FormData(); // QUESTION: if we don't upload any images, do we need this formData?
+    // formData.append("firstName", data.name);
+    // formData.append("lastName", data.price);
+    // formData.append("phone", data.phone);
+    // formData.append("address", data.address);
+    // formData.append("dateOfBirth", data.dateOfBirth);
+    // formData.append("termsOfUse", data.termsOfUse);
+    // formData.append("dataProtectionInfo", data.dataProtectionInfo);
 
-    console.log(formData);
+    // console.log("formdata", formData);
     axios
-      .post("http://localhost:8080/signup", formData)
+      .post("http://localhost:8080/signup", data)
       .then((response) => {
         console.log(response.data);
       })
@@ -64,12 +64,12 @@ export default function Registration() {
             {...register("phone", { required: true })}
           />
           <div className="label self-start">
-            <span className="label-text">What is your adress?</span>
+            <span className="label-text">What is your address?</span>
           </div>
           <input
-            placeholder="Adress"
+            placeholder="Address"
             className="input input-bordered w-full max-w-xs input-primary "
-            {...register("adress", { required: true })}
+            {...register("address", { required: true })}
           />
           <div className="label self-start">
             <span className="label-text">When were you born?</span>
@@ -77,6 +77,7 @@ export default function Registration() {
           <input
             placeholder="Date of Birth"
             className="input input-bordered w-full max-w-xs input-primary "
+            type="date"
             {...register("dateOfBirth", { required: true })}
           />
           <div className="label self-start">
