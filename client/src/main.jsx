@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
 import "./index.css";
 
 //IMPORTING THINGS FOR ROUTER
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Rootlayout from "./layout/Rootlayout.jsx";
+import Login from "./pages/Login";
+import Registration from "./pages/Registration";
 
 const router = createBrowserRouter([
   {
@@ -13,8 +14,12 @@ const router = createBrowserRouter([
     element: <Rootlayout />,
     children: [
       {
-        path: "team",
-        element: <>test again</>,
+        path: "signup",
+        element: <Registration />,
+      },
+      {
+        path: "login",
+        element: <Login />,
       },
     ],
   },
