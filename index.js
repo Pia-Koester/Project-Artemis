@@ -1,6 +1,8 @@
 require("./db.js");
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser")
+
 const app = express();
 const port = process.env.PORT;
 
@@ -12,8 +14,9 @@ const userMembershipRouter = require("./routes/userMemberships-route.js");
 const errorHandler = require("./middlewares/errorHandler.js");
 
 //MiddleWare
-app.use(express.json());
 app.use(cors());
+app.use(cookieParser())
+app.use(express.json());
 
 app.use("/", userRouter);
 app.use("/activities", activityRouter);
