@@ -1,68 +1,55 @@
 const User = require("../models/users-model.js");
+const ErrorResponse = require("../utils/errorResponse.js")
+const asyncWrapper = require("../utils/asyncWrapper.js")
 
 //create new user
-const createUser = async (req, res) => {
-  try {
-    const {
-      email,
-      phone,
-      password,
-      firstName,
-      lastName,
-      activeMembership,
-      classesRegistered,
-    } = req.body;
-    console.log(email);
+const createUser = asyncWrapper(async (req, res, next) => {
+  const {
+    email,
+    phone,
+    password,
+    firstName,
+    lastName,
+    activeMembership,
+    classesRegistered,
+  } = req.body;
+  console.log(email);
 
-    const found = await User.findOne({ email });
-    if (found) {
-      return res.status(409).json({ message: "User already exists." });
-    }
-
-    const user = await User.create({
-      email,
-      phone,
-      password,
-      firstName,
-      lastName,
-      activeMembership,
-      classesRegistered,
-    });
-    console.log("hashed password", user.password);
-    res.status(201).json(user);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("why are you here?");
+  const found = await User.findOne({ email });
+  if (found) {
+    throw new ErrorResponse("User already exists!", 409);
   }
-};
+
+  const user = await User.create({
+    email,
+    phone,
+    password,
+    firstName,
+    lastName,
+    activeMembership,
+    classesRegistered,
+  });
+  console.log("hashed password", user.password);
+  res.status(201).json(user);
+})
 
 //Gets One single user
-const getUser = async (req, res) => {
-  try {
-    const { userid } = req.params;
-    const user = await User.findById(userid).populate("classesRegistered");
-    if (!user) {
-      return res.status(404).send("Not found");
-    } else {
-      res.json(user);
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("you fucked up big time");
+const getUser = asyncWrapper(async (req, res, next) => { 
+  const { userid } = req.params;
+  const user = await User.findById(userid).populate("classesRegistered");
+  if (!user) {
+    throw new ErrorResponse("Not found", 404);
+  } else {
+    res.json(user);
   }
-};
+})
 
 //Gets all the users
 //TODO don't return the passwords
-const getUsers = async (req, res) => {
-  try {
-    const users = await User.find({});
-    res.json(users);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("you fucked up big time");
-  }
-};
+const getUsers = asyncWrapper(async (req, res, next) => {
+  const users = await User.find({});
+  res.json(users);
+})
 
 module.exports = {
   createUser,
