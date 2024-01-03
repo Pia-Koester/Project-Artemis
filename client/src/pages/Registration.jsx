@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Registration() {
   const {
@@ -10,21 +11,11 @@ export default function Registration() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("hookdata", data);
-    // const formData = new FormData(); // QUESTION: if we don't upload any images, do we need this formData?
-    // formData.append("firstName", data.name);
-    // formData.append("lastName", data.price);
-    // formData.append("phone", data.phone);
-    // formData.append("address", data.address);
-    // formData.append("dateOfBirth", data.dateOfBirth);
-    // formData.append("termsOfUse", data.termsOfUse);
-    // formData.append("dataProtectionInfo", data.dataProtectionInfo);
-
-    // console.log("formdata", formData);
+    console.log("Data from form", data);
     axios
       .post("http://localhost:8080/signup", data)
       .then((response) => {
-        console.log(response.data);
+        console.log("Data from api", response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -37,7 +28,6 @@ export default function Registration() {
         onSubmit={handleSubmit(onSubmit)}
         className=" signup form-control w-full max-w-xs  flex flex-col items-center justify-center"
       >
-        {/* register your input into the hook by invoking the "register" function */}
         <label>
           <div className="label self-start">
             <span className="label-text">What is your Name?</span>
@@ -94,8 +84,9 @@ export default function Registration() {
           <input
             placeholder="Password"
             className="input input-bordered w-full max-w-xs input-primary "
-            {...register("password", { required: true })}
+            {...register("password", { required: true, minLength: 8 })}
           />
+          {/* TO DO: Password strength indicator */}
           <div className="label cursor-pointer">
             <span className="label-text">AGB Aproval</span>
             <input
@@ -113,12 +104,17 @@ export default function Registration() {
             />
           </div>
 
-          {/* errors will return when field validation fails  */}
           {errors.exampleRequired && <span>This field is required</span>}
 
           <button className="btn btn-primary">Submit</button>
         </label>
       </form>
+      <p className="p-2">
+        Already registered?{" "}
+        <Link to="/login" className="text-accent">
+          Login
+        </Link>
+      </p>
     </div>
   );
 }
