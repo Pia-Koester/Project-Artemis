@@ -1,12 +1,23 @@
 const url = "http://localhost:8080/activities";
 import axios from "axios";
 
-const getActivities = async () => {
+const getActivities = async ({ request }) => {
   try {
-    const response = await axios.get(url);
-    //TO DO: reduce data so that it is grouped based on weekday - if we don't do backend
-    //Change GET Request in backend to only show the current week
-    return response.data;
+    const query = request.url.split("?")[1];
+    console.log(query);
+    const response = await axios.get(`${url}?${query}`);
+    //TO DO: send the date for the week as a query or other parameter and then only send back the data for this week
+    const activitiesByWeekday = response.data.reduce(
+      (accumulator, activity) => {
+        const { weekday } = activity;
+        accumulator[weekday] = accumulator[weekday] || [];
+        accumulator[weekday].push(activity);
+        return accumulator;
+      },
+      {}
+    );
+
+    return activitiesByWeekday;
   } catch (error) {
     console.log(error);
     return;

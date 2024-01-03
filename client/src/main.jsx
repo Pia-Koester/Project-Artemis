@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <ClassSchedule />,
-        loader: getActivities,
+        loader: getActivities, //send the date with the request, and only specific trainers?
         index: true,
       },
       {

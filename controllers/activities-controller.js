@@ -14,6 +14,12 @@ const createActivity = asyncWrapper(async (req, res, next) => {
     endTime,
     registeredUsers,
   } = req.body;
+
+  //defining the weekdays for different filter functions
+  const start = new Date(startTime);
+  const options = { weekday: "long" };
+  const weekday = new Intl.DateTimeFormat("en-En", options).format(start);
+
   const activity = await Activity.create({
     title,
     description,
@@ -24,13 +30,25 @@ const createActivity = asyncWrapper(async (req, res, next) => {
     startTime,
     endTime,
     registeredUsers,
+    weekday,
   });
   res.status(201).json(activity);
 });
 
 const getActivities = asyncWrapper(async (req, res, next) => {
-  const activities = await Activity.find({});
-  res.json(activities);
+  const { instructor } = req.query;
+
+  if (!instructor) {
+    const activities = await Activity.find({}).sort({
+      startTime: "asc",
+    });
+    res.json(activities);
+  } else {
+    const activities = await Activity.find({ instructor: instructor }).sort({
+      startTime: "asc",
+    });
+    res.json(activities);
+  }
 });
 
 const getActivity = asyncWrapper(async (req, res, next) => {
