@@ -6,7 +6,7 @@ const waitlistSchema = new Schema({
 });
 
 const activitySchema = new Schema({
-  title: { type: String, required: true, unique: true }, // To Do: does not need to be unique
+  title: { type: String, required: true },
   description: { type: String, required: true },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
