@@ -11,10 +11,6 @@ export default function ActivityCard({ activity }) {
 
   //calculate duration based on start and end date in milliseconds
   const endTime = new Date(activity.endTime);
-  const formattedEndTime = endTime.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
   const endMilliseconds = endTime.getTime();
   const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
 

@@ -28,6 +28,9 @@ export default function ClassSchedule() {
         <option>Cosima</option>
       </select>
       <div className="grid lg:grid-cols-7 grid-cols-1 gap-4">
+        {/* TO DO: create grid with a column for each day, then have flexbox column inside with filter based on the days
+        grouping by weekday in the backend and then returning array with the objects for those days. Goal would be to map over result.monday for example 
+        Mongoose: aggregate */}
         {activities.map((activity) => {
           return <ActivityCard activity={activity} key={activity._id} />;
         })}
