@@ -7,12 +7,22 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Rootlayout from "./layout/Rootlayout.jsx";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
+import ClassSchedule from "./pages/ClassSchedule";
+
+//loader Functions
+import { getActivities } from "./api/activities.js";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Rootlayout />,
     children: [
+      {
+        path: "/",
+        element: <ClassSchedule />,
+        loader: getActivities,
+        index: true,
+      },
       {
         path: "signup",
         element: <Registration />,
