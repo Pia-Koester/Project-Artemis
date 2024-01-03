@@ -46,13 +46,14 @@ export default function Footer() {
           </fieldset>
         </form>
       </footer>
-      <footer className="footer px-10 py-4 border-t bg-base-200 text-base-content border-base-300">
+      <footer className="footer px-2 py-4 border-t bg-base-200 text-base-content border-base-300">
         <aside className="items-center grid-flow-col">
           <img src={logoSmall} className="w-24" />
           <p>© 2023 Artemis Academy, alle Rechte vorbehalten</p>
         </aside>
         <nav className="md:place-self-center md:justify-self-end">
           <a
+            className="px-6"
             href="https://www.instagram.com/isabella.kravmaga/"
             target="_blank"
           >

@@ -84,8 +84,9 @@ export default function Registration() {
           <input
             placeholder="Password"
             className="input input-bordered w-full max-w-xs input-primary "
-            {...register("password", { required: true })}
+            {...register("password", { required: true, minLength: 8 })}
           />
+          {/* TO DO: Password strength indicator */}
           <div className="label cursor-pointer">
             <span className="label-text">AGB Aproval</span>
             <input
@@ -109,7 +110,7 @@ export default function Registration() {
         </label>
       </form>
       <p className="p-2">
-        Already registered?
+        Already registered?{" "}
         <Link to="/login" className="text-accent">
           Login
         </Link>
