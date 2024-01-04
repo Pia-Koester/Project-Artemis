@@ -10,7 +10,9 @@ import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import UserMemberships from "./components/UserProfile/UserMemberships.jsx";
 import UserActivities from "./components/UserProfile/UserActivities.jsx";
-import UserSettings from "./components/UserProfile/UserSettings.jsx";
+import UserInformation from "./components/UserProfile/UserInformation.jsx";
+import MembershipPlans from "./components/UserProfile/MembershipPlans.jsx";
+import UserUpdateInformation from "./components/UserProfile/UserUpdateInformation.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "membershipPlans",
+        element: <MembershipPlans />,
       },
     ],
   },
@@ -41,8 +47,12 @@ const router = createBrowserRouter([
         element: <UserActivities />,
       },
       {
-        path: "updateProfile",
-        element: <UserSettings />,
+        path: "details",
+        element: <UserInformation />,
+      },
+      {
+        path: "details/update",
+        element: <UserUpdateInformation />,
       },
     ],
   },
