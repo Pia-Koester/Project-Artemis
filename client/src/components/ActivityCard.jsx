@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function ActivityCard({ activity }) {
   //TODO: make transition to card Details
-  //TO DO: Hover effects for cards
+
   //calculating the start time based on the provided date
   const startTime = new Date(activity.startTime);
   const formattedStartTime = startTime.toLocaleTimeString([], {
@@ -37,7 +37,7 @@ export default function ActivityCard({ activity }) {
       className="card  w-full bg-primary text-primary-content"
     >
       {/* use min width to ensure uniformity */}
-      <Link to="/details">
+      <Link to={`/details/${activity._id}`}>
         <div className="card-body">
           <p>{weekday}</p>
           <p>

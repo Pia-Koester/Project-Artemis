@@ -44,7 +44,7 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     });
     res.json(activities);
   } else {
-    const activities = await Activity.find({ instructor: instructor }).sort({
+    const activities = await Activity.find({ instructor }).sort({
       startTime: "asc",
     });
     res.json(activities);
