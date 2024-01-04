@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function ActivityCard({ activity }) {
   //TODO: make transition to card Details
@@ -33,26 +34,28 @@ export default function ActivityCard({ activity }) {
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
-      className="card w-max-96 bg-primary text-primary-content"
+      className="card  w-full bg-primary text-primary-content"
     >
       {/* use min width to ensure uniformity */}
-      <div className="card-body">
-        <p>{weekday}</p>
-        <p>
-          {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
-        </p>
+      <Link to="/details">
+        <div className="card-body">
+          <p>{weekday}</p>
+          <p>
+            {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
+          </p>
 
-        <h2 className="card-title">{activity.title}</h2>
-        <p>{activity.description}</p>
-        <div className="flex justify-between items-end">
-          <div className="badge badge-secondary">{activity.capacity}</div>
-          <div className="avatar">
-            <div className="w-24 mask mask-hexagon">
-              <img src={photos[activity.instructor]} />
+          <h2 className="card-title">{activity.title}</h2>
+          <p>{activity.description}</p>
+          <div className="flex justify-between items-end">
+            <div className="badge badge-secondary">{activity.capacity}</div>
+            <div className="avatar">
+              <div className="w-24 mask mask-hexagon">
+                <img src={photos[activity.instructor]} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </motion.div>
   );
 }

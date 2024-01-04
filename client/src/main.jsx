@@ -11,6 +11,7 @@ import ClassSchedule from "./pages/ClassSchedule";
 
 //loader Functions
 import { getActivities } from "./api/activities.js";
+import ClassDetails from "./pages/ClassDetails";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
         path: "login",
         element: <Login />,
       },
+      { path: "details", element: <ClassDetails /> },
     ],
   },
 ]);
