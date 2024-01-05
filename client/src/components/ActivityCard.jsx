@@ -39,7 +39,6 @@ export default function ActivityCard({ activity }) {
       {/* use min width to ensure uniformity */}
       <Link to={`/details/${activity._id}`}>
         <div className="card-body">
-          <p>{weekday}</p>
           <p>
             {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
           </p>

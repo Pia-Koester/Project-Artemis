@@ -27,7 +27,7 @@ const createActivity = asyncWrapper(async (req, res, next) => {
     waitlist,
     instructor,
     location,
-    startTime,
+    startTime: start,
     endTime,
     registeredUsers,
     weekday,
@@ -36,15 +36,32 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 });
 
 const getActivities = asyncWrapper(async (req, res, next) => {
-  const { instructor } = req.query;
+  const { instructor, mon, sun } = req.query;
+  console.log(mon);
 
-  if (!instructor) {
-    const activities = await Activity.find({}).sort({
+  let filter = {
+    startTime: {
+      $gte: new Date(mon).toLocaleDateString("en-US"),
+      $lt: new Date(sun).toLocaleDateString("en-US"),
+    },
+  };
+  console.log(filter);
+  if (!instructor || instructor === "All") {
+    if (!mon && !sun) {
+      const activities = await Activity.find({}).sort({
+        startTime: "asc",
+      });
+      res.json(activities);
+    }
+    const activities = await Activity.find(filter).sort({
       startTime: "asc",
     });
+
     res.json(activities);
   } else {
-    const activities = await Activity.find({ instructor }).sort({
+    const activities = await Activity.find({
+      $and: [filter, { instructor }],
+    }).sort({
       startTime: "asc",
     });
     res.json(activities);

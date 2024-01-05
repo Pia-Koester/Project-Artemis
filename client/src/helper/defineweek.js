@@ -1,5 +1,7 @@
-const defineWeek = () => {
+const defineWeek = (skip) => {
   const today = new Date();
+  console.log(+skip);
+  today.setDate(today.getDate() + +skip);
   //const today = new Date("01.01.2025");
   const currentDayNumber = today.getDay(); // each day of the week corresponts to one numer 0 = sunday, 6 = saturday
   const daysOffset = {
@@ -37,8 +39,12 @@ const defineWeek = () => {
     "de-DE",
     formattedOptions
   );
-  return { formattedMonday, formattedSunday };
-  console.log({ formattedMonday, formattedSunday });
+  return {
+    formattedMonday,
+    formattedSunday,
+    formattedMondayDate,
+    formattedSundayDate,
+  };
 };
 
 export { defineWeek };
