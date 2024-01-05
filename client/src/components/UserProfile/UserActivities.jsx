@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { handleCancelation } from "../../api/cancelationAcitvity";
 
 export default function UserActivities() {
   const [userActivity, setUserActivity] = useState(null);
@@ -62,7 +63,7 @@ export default function UserActivities() {
 
                   <div className="flex justify-between items-end">
                     <div className="badge badge-secondary">
-                      <a href="#">Cancel</a>
+                      <button onClick={() => handleCancelation(userActivity._id)}>Cancel</button>
                     </div>
                   </div>
                 </div>

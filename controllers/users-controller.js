@@ -75,24 +75,59 @@ const setUserMembership = asyncWrapper(async (req, res, next) => {
   res.json(membershipHolder);
 });
 
-//Set user active membership after successful purchase
 const setUserActivity = asyncWrapper(async (req, res, next) => {
   const { id } = req.user;
   const { activity } = req;
-  console.log(id, activity);
+  const { _id: activity_id } = activity; // Destructure directly
+
+  // Retrieve old user data
+  const oldUser = await User.findById(id);
+
+  if (!oldUser) {
+    throw new ErrorResponse("User not found", 404);
+  }
+
+  const { classesRegistered } = oldUser;
+
+  // Check if activity_id is already registered
+  const isRegistered = classesRegistered.includes(activity_id);
+
+  if (isRegistered) {
+    throw new ErrorResponse("User already registered", 409);
+  }
+
+  // Update the user's data
+  const updatedUser = await User.findByIdAndUpdate(
+    id,
+    { $push: { classesRegistered: activity_id } },
+    { new: true }
+  );
+
+  res.json(updatedUser);
+});
+
+
+const cancelUserActivity = asyncWrapper(async (req, res, next) => {
+  const { id } = req.user;
+  const { activity } = req;
   const activity_id = activity._id;
   const oldUser = await User.findById(id);
   const activityArray = oldUser.classesRegistered;
 
-  //TO DO: error handeling if activity is already in the array
-  activityArray.push(activity_id);
+  const match = activityArray.indexOf(activity_id)
+
+  if (match === -1) {
+    throw new ErrorResponse("User not registered!", 404);
+  } else {
+    activityArray.splice(match, 1);
+  }
+  
   const updatedUser = await User.findByIdAndUpdate(
     id,
     { classesRegistered: activityArray },
     { new: true }
   );
-  console.log({ updatedUser });
-  res.json("success");
+  res.json(updatedUser);
 });
 
 //User login
@@ -150,4 +185,5 @@ module.exports = {
   updateProfile,
   setUserMembership,
   setUserActivity,
+  cancelUserActivity
 };

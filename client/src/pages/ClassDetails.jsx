@@ -2,6 +2,7 @@ import { FaRegCalendar, FaClock, FaPersonDress } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
+import { handleCancelation } from "../api/cancelationAcitvity";
 
 export default function ClassDetails() {
   const { id } = useParams();
@@ -146,6 +147,12 @@ export default function ClassDetails() {
           onClick={handleBooking}
         >
           Book Now
+        </button>
+        <button
+          className="btn btn-primary w-4/5 self-center mt-5"
+          onClick={() => handleCancelation(id)}
+        >
+          Cancel
         </button>
       </aside>
     </div>
