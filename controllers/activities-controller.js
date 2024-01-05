@@ -1,6 +1,7 @@
 const Activity = require("../models/activities-model.js");
 const ErrorResponse = require("../utils/errorResponse.js");
 const asyncWrapper = require("../utils/asyncWrapper.js");
+const { Error } = require("mongoose");
 
 const createActivity = asyncWrapper(async (req, res, next) => {
   const {
@@ -81,8 +82,36 @@ const getActivity = asyncWrapper(async (req, res, next) => {
 
 //TODO: create put request to add users to the registered users array
 
+const updateActivity = asyncWrapper(async (req, res, next) => {
+  const { activity_id } = req.params;
+  const { id } = req.user;
+  const oldActivity = await Activity.findById(activity_id);
+  const userArray = oldActivity.registeredUsers;
+
+  const match = userArray.find((id) => {
+    return true;
+  });
+  if (match) {
+    throw new ErrorResponse("This user has already registered ");
+  } else {
+    userArray.push(id);
+  }
+
+  const updatedActivity = await Activity.findByIdAndUpdate(
+    activity_id,
+    {
+      registeredUsers: userArray,
+    },
+    { new: true }
+  );
+  req.activity = updatedActivity;
+  console.log(updatedActivity);
+  next();
+});
+
 module.exports = {
   createActivity,
   getActivities,
   getActivity,
+  updateActivity,
 };

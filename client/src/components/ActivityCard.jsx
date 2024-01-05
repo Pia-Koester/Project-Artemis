@@ -12,7 +12,6 @@ export default function ActivityCard({ activity }) {
     timeZone: "UTC", //TO DO: backend must save dates with UTC+1
   });
   const startMilliseconds = startTime.getTime();
-  // const calenderWeek =
 
   //calculate duration based on start and end date in milliseconds
   const endTime = new Date(activity.endTime);

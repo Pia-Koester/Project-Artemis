@@ -8,7 +8,7 @@ const emergencyContactSchema = new Schema({
 });
 
 const userSchema = new Schema({
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true, lowercase: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   phone: { type: String, required: true, unique: true }, // TODO - ask Isabella
@@ -24,7 +24,7 @@ const userSchema = new Schema({
     default: "student",
   },
   status: { type: String, enum: ["active", "inactive"], default: "active" },
-  activeMembership: {type: Schema.Types.ObjectId, ref: "UserMembership"},
+  activeMembership: { type: Schema.Types.ObjectId, ref: "UserMembership" },
   classesRegistered: [{ type: Schema.Types.ObjectId, ref: "Activitie" }],
   dateOfBirth: { type: Date, required: true },
   termsOfUse: { type: Boolean, required: true },

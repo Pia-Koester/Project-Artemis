@@ -5,7 +5,7 @@ import { defineWeek } from "../helper/defineweek.js";
 const getActivities = async ({ request }) => {
   try {
     const query = request.url.split("?")[1];
-    const instructor = query?.search(/instructor/);
+    // const instructor = query?.search(/instructor/);
     // const skip = query.split("&")[1];
     const week = defineWeek(0);
 
