@@ -8,6 +8,13 @@ import Rootlayout from "./layout/RootLayout.jsx";
 import UserLayout from "./layout/UserLayout.jsx";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
+
+import ClassSchedule from "./pages/ClassSchedule";
+
+//loader Functions
+import { getActivities, getActivity } from "./api/activities.js";
+import ClassDetails from "./pages/ClassDetails";
+
 import UserMemberships from "./components/UserProfile/UserMemberships.jsx";
 import UserActivities from "./components/UserProfile/UserActivities.jsx";
 import UserInformation from "./components/UserProfile/UserInformation.jsx";
@@ -20,6 +27,12 @@ const router = createBrowserRouter([
     element: <Rootlayout />,
     children: [
       {
+        path: "/",
+        element: <ClassSchedule />,
+        loader: getActivities, //send the date with the request, and only specific trainers?
+        index: true,
+      },
+      {
         path: "signup",
         element: <Registration />,
       },
@@ -27,6 +40,9 @@ const router = createBrowserRouter([
         path: "login",
         element: <Login />,
       },
+
+      { path: "details/:id", element: <ClassDetails />, loader: getActivity },
+
       {
         path: "membershipPlans",
         element: <MembershipPlans />,
@@ -54,6 +70,7 @@ const router = createBrowserRouter([
         path: "details/update",
         element: <UserUpdateInformation />,
       },
+
     ],
   },
 ]);

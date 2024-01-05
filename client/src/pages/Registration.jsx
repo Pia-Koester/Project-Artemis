@@ -22,6 +22,8 @@ export default function Registration() {
       });
   };
 
+  //TO DO: split registration into first only asking for mail and password and then onboarding on different screen
+
   return (
     <div className="flex flex-col items-center justify-center">
       <form

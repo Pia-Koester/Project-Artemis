@@ -14,6 +14,12 @@ const createActivity = asyncWrapper(async (req, res, next) => {
     endTime,
     registeredUsers,
   } = req.body;
+
+  //defining the weekdays for different filter functions
+  const start = new Date(startTime);
+  const options = { weekday: "long" };
+  const weekday = new Intl.DateTimeFormat("en-En", options).format(start);
+
   const activity = await Activity.create({
     title,
     description,
@@ -21,16 +27,45 @@ const createActivity = asyncWrapper(async (req, res, next) => {
     waitlist,
     instructor,
     location,
-    startTime,
+    startTime: start,
     endTime,
     registeredUsers,
+    weekday,
   });
   res.status(201).json(activity);
 });
 
 const getActivities = asyncWrapper(async (req, res, next) => {
-  const activities = await Activity.find({});
-  res.json(activities);
+  const { instructor, mon, sun } = req.query;
+  console.log(mon);
+
+  let filter = {
+    startTime: {
+      $gte: new Date(mon).toLocaleDateString("en-US"),
+      $lt: new Date(sun).toLocaleDateString("en-US"),
+    },
+  };
+  console.log(filter);
+  if (!instructor || instructor === "All") {
+    if (!mon && !sun) {
+      const activities = await Activity.find({}).sort({
+        startTime: "asc",
+      });
+      res.json(activities);
+    }
+    const activities = await Activity.find(filter).sort({
+      startTime: "asc",
+    });
+
+    res.json(activities);
+  } else {
+    const activities = await Activity.find({
+      $and: [filter, { instructor }],
+    }).sort({
+      startTime: "asc",
+    });
+    res.json(activities);
+  }
 });
 
 const getActivity = asyncWrapper(async (req, res, next) => {
