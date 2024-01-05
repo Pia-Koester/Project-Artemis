@@ -11,7 +11,7 @@ import Registration from "./pages/Registration";
 import UserMemberships from "./components/UserProfile/UserMemberships.jsx";
 import UserActivities from "./components/UserProfile/UserActivities.jsx";
 import UserInformation from "./components/UserProfile/UserInformation.jsx";
-import MembershipPlans from "./components/UserProfile/MembershipPlans.jsx";
+import MembershipPlans from "./components/Memberships/MembershipPlans.jsx";
 import UserUpdateInformation from "./components/UserProfile/UserUpdateInformation.jsx";
 
 const router = createBrowserRouter([
