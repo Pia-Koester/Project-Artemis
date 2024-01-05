@@ -80,21 +80,46 @@ const getActivity = asyncWrapper(async (req, res, next) => {
   res.json(activity);
 });
 
-//TODO: create put request to add users to the registered users array
-
+//TODO: if activity is full throw error and/or disable posibilty of registering new user
 const updateActivity = asyncWrapper(async (req, res, next) => {
   const { activity_id } = req.params;
   const { id } = req.user;
   const oldActivity = await Activity.findById(activity_id);
   const userArray = oldActivity.registeredUsers;
 
-  const match = userArray.find((id) => {
-    return true;
+  const match = userArray.find((userId) => {
+    return userId === id
   });
   if (match) {
-    throw new ErrorResponse("This user has already registered ");
+    throw new ErrorResponse("This user has already registered", 409);
   } else {
     userArray.push(id);
+  }
+
+  const updatedActivity = await Activity.findByIdAndUpdate(
+    activity_id,
+    {
+      registeredUsers: userArray,
+    },
+    { new: true }
+  );
+  req.activity = updatedActivity;
+  console.log(updatedActivity);
+  next();
+});
+
+const cancelActivity = asyncWrapper(async (req, res, next) => {
+  const { activity_id } = req.params;
+  const { id } = req.user;
+  const oldActivity = await Activity.findById(activity_id);
+  const userArray = oldActivity.registeredUsers;
+
+  const match = userArray.indexOf(id)
+
+  if (match === -1) {
+    throw new ErrorResponse("User not registered!", 404);
+  } else {
+    userArray.splice(match, 1);
   }
 
   const updatedActivity = await Activity.findByIdAndUpdate(
@@ -114,4 +139,5 @@ module.exports = {
   getActivities,
   getActivity,
   updateActivity,
+  cancelActivity
 };
