@@ -37,4 +37,14 @@ const getActivities = async ({ request }) => {
   }
 };
 
-export { getActivities };
+const getActivity = async ({ params }) => {
+  try {
+    const { id } = params;
+    const response = await axios.get(`${url}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getActivities, getActivity };
