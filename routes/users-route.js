@@ -2,11 +2,12 @@ const express = require("express");
 
 const {
   createUser,
-  getUser,
+  // getUser,
   getUsers,
   login,
   logout,
   getProfile,
+  updateProfile,
 } = require("../controllers/users-controller.js");
 
 const { 
@@ -18,8 +19,7 @@ const userRouter = express.Router();
 userRouter.route("/signup").post(createUser);
 userRouter.route("/login").post(login);
 userRouter.route("/logout").get(logout);
-userRouter.route("/profile").get(authenticate, getProfile);
+userRouter.route("/users/profile").get(authenticate, getProfile).put(authenticate, updateProfile);
 userRouter.route("/users").get(getUsers);
-userRouter.route("/users/:userid").get(getUser);
 
 module.exports = userRouter;

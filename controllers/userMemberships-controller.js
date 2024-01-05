@@ -35,7 +35,11 @@ const createUserMembership = asyncWrapper(async (req, res, next) => {
       user,
       expiryDate,
     });
-    res.status(201).json(userMembership);
+
+    req.userMembership = userMembership
+
+    next()
+    // res.status(201).json(userMembership);
 })
 
 module.exports = {
