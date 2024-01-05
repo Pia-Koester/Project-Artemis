@@ -9,6 +9,7 @@ export default function ActivityCard({ activity }) {
   const formattedStartTime = startTime.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "UTC", //TO DO: backend must save dates with UTC+1
   });
   const startMilliseconds = startTime.getTime();
   // const calenderWeek =
@@ -20,7 +21,7 @@ export default function ActivityCard({ activity }) {
 
   //finding out weekday
   const options = { weekday: "long" };
-  const weekday = new Intl.DateTimeFormat("en-En", options).format(startTime);
+  const weekday = new Intl.DateTimeFormat("de-DE", options).format(startTime);
 
   //instructor images based on name
   const photos = {
