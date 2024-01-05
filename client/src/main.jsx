@@ -42,7 +42,6 @@ const router = createBrowserRouter([
       },
 
       { path: "details/:id", element: <ClassDetails />, loader: getActivity },
-
       {
         path: "membershipPlans",
         element: <MembershipPlans />,
@@ -70,7 +69,6 @@ const router = createBrowserRouter([
         path: "details/update",
         element: <UserUpdateInformation />,
       },
-
     ],
   },
 ]);
