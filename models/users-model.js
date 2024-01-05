@@ -24,7 +24,7 @@ const userSchema = new Schema({
     default: "student",
   },
   status: { type: String, enum: ["active", "inactive"], default: "active" },
-  activeMembership: { type: Schema.Types.ObjectId, ref: "Membership" },
+  activeMembership: {type: Schema.Types.ObjectId, ref: "UserMembership"},
   classesRegistered: [{ type: Schema.Types.ObjectId, ref: "Activitie" }],
   dateOfBirth: { type: Date, required: true },
   termsOfUse: { type: Boolean, required: true },

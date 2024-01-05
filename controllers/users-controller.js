@@ -43,22 +43,29 @@ const createUser = asyncWrapper(async (req, res, next) => {
   res.status(201).json(user);
 });
 
-//Gets One single user
-const getUser = asyncWrapper(async (req, res, next) => {
-  const { userid } = req.params;
-  const user = await User.findById(userid).populate("classesRegistered");
-  if (!user) {
-    throw new ErrorResponse("Not found", 404);
-  } else {
-    res.json(user);
-  }
-});
 
 //Gets all the users
 //TODO don't return the passwords
 const getUsers = asyncWrapper(async (req, res, next) => {
   const users = await User.find({});
   res.json(users);
+});
+
+//Update user profile
+const updateProfile = asyncWrapper(async (req, res, next) => {
+  const {id} = req.user
+  const {firstName, lastName, phone, address, dateOfBirth} = req.body
+
+  const user = await User.findByIdAndUpdate(id, {firstName, lastName, phone, address, dateOfBirth}, {new: true})
+  res.json(user)
+});
+
+//Set user active membership after successful purchase
+const setUserMembership = asyncWrapper(async (req, res, next) => {
+  const {_id, user} = req.userMembership
+
+  const membershipHolder = await User.findByIdAndUpdate(user, {activeMembership: _id}, {new: true})
+  res.json(membershipHolder)
 });
 
 //User login
@@ -88,19 +95,20 @@ const logout = asyncWrapper(async (req, res, next) => {
   res.cookie("access_token", "", {httpOnly: true, maxAge: 0}).json({success: true})
 })
 
-//Display users profile after authentication
+//Get users profile after authentication
 const getProfile = asyncWrapper(async (req, res, next) => {
   const {id} = req.user
 
-  const user = await User.findById(id)
+  const user = await User.findById(id).populate("classesRegistered").populate({path: "activeMembership", populate:{ path: "plan", model: "MembershipPlan" }})
   res.json(user)
 })
 
 module.exports = {
   createUser,
-  getUser,
   getUsers,
   login,
   logout,
-  getProfile
+  getProfile,
+  updateProfile,
+  setUserMembership
 };
