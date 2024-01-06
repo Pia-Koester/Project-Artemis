@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { handleCancelation } from "../../api/cancelationAcitvity";
+import { useNavigate } from "react-router-dom";
 
 export default function UserActivities() {
+  const navigate = useNavigate()
+
   const [userActivity, setUserActivity] = useState(null);
 
   useEffect(() => {
@@ -63,7 +66,7 @@ export default function UserActivities() {
 
                   <div className="flex justify-between items-end">
                     <div className="badge badge-secondary">
-                      <button onClick={() => handleCancelation(userActivity._id)}>Cancel</button>
+                      <button onClick={() => {handleCancelation(userActivity._id); window.location.reload()}}>Cancel</button>
                     </div>
                   </div>
                 </div>
