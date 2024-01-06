@@ -1,9 +1,11 @@
-import { FaWandMagicSparkles } from "react-icons/fa6";
+import { FaWandMagicSparkles, FaRegEye } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -16,11 +18,16 @@ export default function Login() {
     axios
       .post("http://localhost:8080/login", data, { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
+        badCredentials();
       });
+  };
+
+  const badCredentials = () => {
+    document.getElementById("my_modal_1").showModal();
   };
 
   return (
@@ -33,12 +40,15 @@ export default function Login() {
           <div className="label self-start">
             <span className="label-text">What is your E-Mail?</span>
           </div>
-          <input
-            type="text"
-            placeholder="Type E-Mail here"
-            className="input input-bordered w-full max-w-xs input-primary "
-            {...register("email", { required: true })}
-          />
+          <div className="flex items-center">
+            <input
+              type="text"
+              placeholder="Type E-Mail here"
+              className="input input-bordered w-full max-w-xs input-primary "
+              {...register("email", { required: true })}
+            />{" "}
+            {/* <FaRegEye /> */}
+          </div>
           <div className="label self-start">
             <span className="label-text">What is your password?</span>
           </div>
@@ -63,6 +73,26 @@ export default function Login() {
           Sign up
         </Link>
       </p>
+
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box">
+          <div role="alert">
+            <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+              Error
+            </div>
+            <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+              <p>Invalid username and/or password</p><br />
+              <p>Please try again</p>
+            </div>
+          </div>
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 }
