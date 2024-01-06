@@ -1,7 +1,6 @@
 const Activity = require("../models/activities-model.js");
 const ErrorResponse = require("../utils/errorResponse.js");
 const asyncWrapper = require("../utils/asyncWrapper.js");
-const { Error } = require("mongoose");
 
 const createActivity = asyncWrapper(async (req, res, next) => {
   const {
@@ -38,7 +37,7 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun } = req.query;
-  console.log(mon);
+  console.log(req.originalUrl);
 
   let filter = {
     startTime: {
@@ -46,8 +45,8 @@ const getActivities = asyncWrapper(async (req, res, next) => {
       $lt: new Date(sun).toLocaleDateString("en-US"),
     },
   };
-  console.log(filter);
-  if (!instructor || instructor === "All") {
+
+  if (!instructor || instructor === "All" || instructor === "null") {
     if (!mon && !sun) {
       const activities = await Activity.find({}).sort({
         startTime: "asc",
@@ -88,7 +87,7 @@ const updateActivity = asyncWrapper(async (req, res, next) => {
   const userArray = oldActivity.registeredUsers;
 
   const match = userArray.find((userId) => {
-    return userId === id
+    return userId === id;
   });
   if (match) {
     throw new ErrorResponse("This user has already registered", 409);
@@ -114,7 +113,7 @@ const cancelActivity = asyncWrapper(async (req, res, next) => {
   const oldActivity = await Activity.findById(activity_id);
   const userArray = oldActivity.registeredUsers;
 
-  const match = userArray.indexOf(id)
+  const match = userArray.indexOf(id);
 
   if (match === -1) {
     throw new ErrorResponse("User not registered!", 404);
@@ -139,5 +138,5 @@ module.exports = {
   getActivities,
   getActivity,
   updateActivity,
-  cancelActivity
+  cancelActivity,
 };
