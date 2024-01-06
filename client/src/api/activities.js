@@ -4,15 +4,17 @@ import { defineWeek } from "../helper/defineweek.js";
 
 const getActivities = async ({ request }) => {
   try {
-    const query = request.url.split("?")[1];
-    // const instructor = query?.search(/instructor/);
-    // const skip = query.split("&")[1];
-    const week = defineWeek(0);
+    const parameterurl = new URL(request.url);
+    const instructor = parameterurl.searchParams.get("instructor");
+    const skip = parameterurl.searchParams.get("skip");
+
+    const week = defineWeek(skip);
 
     const response = await axios.get(
-      `${url}?mon=${week.formattedMondayDate}&sun=${week.formattedSundayDate}&${query}`
+      `${url}?instructor=${instructor}&mon=${week.formattedMondayDate}&sun=${week.formattedSundayDate}`
     );
 
+    console.log(response);
     //TO DO: send the date for the week as a query or other parameter and then only send back the data for this week
     const activitiesByWeekday = response.data.reduce(
       (accumulator, activity) => {

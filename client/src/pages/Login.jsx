@@ -1,4 +1,4 @@
-import { FaWandMagicSparkles } from "react-icons/fa6";
+import { FaWandMagicSparkles, FaRegEye } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -33,12 +33,15 @@ export default function Login() {
           <div className="label self-start">
             <span className="label-text">What is your E-Mail?</span>
           </div>
-          <input
-            type="text"
-            placeholder="Type E-Mail here"
-            className="input input-bordered w-full max-w-xs input-primary "
-            {...register("email", { required: true })}
-          />
+          <div className="flex items-center">
+            <input
+              type="text"
+              placeholder="Type E-Mail here"
+              className="input input-bordered w-full max-w-xs input-primary "
+              {...register("email", { required: true })}
+            />{" "}
+            <FaRegEye />
+          </div>
           <div className="label self-start">
             <span className="label-text">What is your password?</span>
           </div>

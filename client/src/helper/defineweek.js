@@ -39,11 +39,16 @@ const defineWeek = (skip) => {
     "de-DE",
     formattedOptions
   );
+
+  const usMonday = formattedMondayDate.toLocaleDateString("en-US");
+  const usSunday = formattedMondayDate.toLocaleDateString("en-US");
   return {
     formattedMonday,
     formattedSunday,
     formattedMondayDate,
     formattedSundayDate,
+    usMonday,
+    usSunday,
   };
 };
 

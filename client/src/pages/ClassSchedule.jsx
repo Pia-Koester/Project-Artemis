@@ -1,7 +1,6 @@
 import { useLoaderData, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import ActivityCard from "../components/ActivityCard";
-import { defineWeek } from "../helper/defineweek.js";
 
 export default function ClassSchedule() {
   const response = useLoaderData();
@@ -33,14 +32,14 @@ export default function ClassSchedule() {
   const handleNext = () => {
     setSkip((prev) => {
       const newSkip = prev + 7;
-      setSearchParams(newSkip);
+      setSearchParams(`skip=${prev + 7}`);
       return newSkip;
     });
   };
   const handlePrev = () => {
     setSkip((prev) => {
       const newSkip = prev - 7;
-      setSearchParams(newSkip);
+      setSearchParams(`skip=${prev - 7}`);
       return newSkip;
     });
   };
