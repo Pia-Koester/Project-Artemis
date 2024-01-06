@@ -77,11 +77,11 @@ export default function Login() {
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
           <div role="alert">
-            <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+            <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
               Error
             </div>
-            <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-              <p>Invalid username and/or password</p><br />
+            <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+              <p>Invalid username and/or password!</p><br />
               <p>Please try again</p>
             </div>
           </div>

@@ -23,6 +23,7 @@ export default function ClassDetails() {
       })
       .catch((err) => {
         console.log(err);
+        navigate("/login")
       });
   };
 
