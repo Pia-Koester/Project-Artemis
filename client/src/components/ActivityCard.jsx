@@ -18,9 +18,7 @@ export default function ActivityCard({ activity }) {
   const endMilliseconds = endTime.getTime();
   const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
 
-  //finding out weekday
-  const options = { weekday: "long" };
-  const weekday = new Intl.DateTimeFormat("de-DE", options).format(startTime);
+  //TO DO: change color of card based on if the time and day have already passed
 
   //instructor images based on name
   const photos = {
@@ -34,7 +32,7 @@ export default function ActivityCard({ activity }) {
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
-      className="card  w-full bg-primary text-primary-content"
+      className="card  w-full bg-primary text-primary-content flex flex-col"
     >
       {/* use min width to ensure uniformity */}
       <Link to={`/details/${activity._id}`}>

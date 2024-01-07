@@ -27,6 +27,7 @@ const defineWeek = (skip) => {
 
   // Formatting options for the final output
   const formattedOptions = {
+    year: "2-digit",
     month: "short",
     day: "numeric",
   };

@@ -46,34 +46,36 @@ export default function ClassSchedule() {
 
   return (
     <div className="flex gap-3 flex-col items-center p-5">
-      <div className="join">
-        <button className="join-item btn" onClick={handlePrev}>
-          «
-        </button>
-        <button className="join-item btn">
-          {response.weekstart} - {response.weekend}
-        </button>
-        <button className="join-item btn" onClick={handleNext}>
-          »
-        </button>
-      </div>
+      <div className="flex flex-col md:flex-row w-full gap-2 md:justify-center items-center">
+        <div className="join">
+          <button className="join-item btn" onClick={handlePrev}>
+            «
+          </button>
+          <button className="join-item btn">
+            {response.weekstart} - {response.weekend}
+          </button>
+          <button className="join-item btn" onClick={handleNext}>
+            »
+          </button>
+        </div>
 
-      <select
-        className="select select-secondary w-full max-w-xs"
-        onChange={handleTrainer}
-      >
-        <option selected disabled>
-          Pick trainer
-        </option>
-        {/* TO DO: map through all the activities and if the trainer is not yet listed create a option with trainer name
+        <select
+          className="select select-secondary w-full max-w-xs"
+          onChange={handleTrainer}
+        >
+          <option selected disabled>
+            Pick trainer
+          </option>
+          {/* TO DO: map through all the activities and if the trainer is not yet listed create a option with trainer name
         TO DO: create logic to show only the classes for this trainer */}
-        <option>All</option>
-        <option>Isabella</option>
-        <option>Cosima</option>
-        <option>John Doe</option>
-        <option>Rolf</option>
-      </select>
-      <div className="grid md:grid-cols-7 grid-cols-1 gap-4">
+          <option>All</option>
+          <option>Isabella</option>
+          <option>Cosima</option>
+          <option>John Doe</option>
+          <option>Rolf</option>
+        </select>
+      </div>
+      <div className="grid lg:grid-cols-7 grid-cols-1 gap-4 md:w-full">
         {weekdays.map((day) => {
           return (
             <div className="flex flex-col gap-2 items-center" key={day}>

@@ -12,7 +12,6 @@ export default function ClassDetails() {
   const [openSlots, setOpenSlots] = useState(
     activity.capacity - activity.registeredUsers.length
   );
-  console.log(openSlots);
 
   const handleBooking = () => {
     axios
@@ -62,6 +61,7 @@ export default function ClassDetails() {
 
   //colors for conditional capacity badge
   const capacityColors = {
+    0: "badge-error",
     1: "badge-error",
     2: "badge-error",
     3: "badge-warning",
@@ -126,7 +126,7 @@ export default function ClassDetails() {
             />
           </div>
         </div>
-        <p>{activity.description}</p>
+        <p className="mt-4">{activity.description}</p>
       </div>
       <aside className="card w-96 bg-base-100 shadow-2xl flex flex-col p-4 m-2">
         <div>
@@ -149,10 +149,10 @@ export default function ClassDetails() {
         <div>
           <div className="flex gap-2 m-2">
             <FaPersonDress className="text-2xl" />
-            <p className="font-bold">Capacity </p>
+            <p className="font-bold">Capacity</p>
           </div>
           <div className={clsx("badge badge-lg", capacityColors[openSlots])}>
-            {openSlots}
+            {openSlots > 0 ? openSlots : "Fully Booked"}
           </div>
         </div>
         <div className="avatar flex flex-col m-2 mt-4">
@@ -163,12 +163,14 @@ export default function ClassDetails() {
         <button
           className="btn btn-primary w-4/5 self-center m-2"
           onClick={handleBooking}
+          disabled={openSlots <= 0}
         >
           Book Now
         </button>
         <button
           className="btn btn-primary w-4/5 self-center m-2"
           onClick={handleBooking}
+          disabled={openSlots > 0}
         >
           Waitlist
         </button>
