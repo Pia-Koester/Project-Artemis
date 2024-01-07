@@ -4,7 +4,7 @@ import { handleCancelation } from "../../api/cancelationAcitvity";
 import { useNavigate } from "react-router-dom";
 
 export default function UserActivities() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [userActivity, setUserActivity] = useState(null);
 
@@ -61,12 +61,19 @@ export default function UserActivities() {
                   </p>
                   <p>
                     <span className="font-medium">Location:</span>{" "}
-                    {userActivity.location}, 20357, Hamburg
+                    {userActivity.location.address}, 20357, Hamburg
                   </p>
 
                   <div className="flex justify-between items-end">
                     <div className="badge badge-secondary">
-                      <button onClick={() => {handleCancelation(userActivity._id); window.location.reload()}}>Cancel</button>
+                      <button
+                        onClick={() => {
+                          handleCancelation(userActivity._id);
+                          window.location.reload();
+                        }}
+                      >
+                        Cancel
+                      </button>
                     </div>
                   </div>
                 </div>

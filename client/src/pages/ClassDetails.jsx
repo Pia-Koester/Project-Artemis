@@ -8,9 +8,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import { handleCancelation } from "../api/cancelationAcitvity";
-import clsx from "clsx";
 import { useState } from "react";
 import CapacityBadge from "../components/Activities/CapacityBadge";
+import LocationMap from "../components/Activities/LocationMap";
 
 export default function ClassDetails() {
   const { id } = useParams();
@@ -80,6 +80,8 @@ export default function ClassDetails() {
     4: "badge-warning",
   };
 
+  //TO DO: upload images for all types and create more types
+
   //instructor images based on name
   const photos = {
     Isabella:
@@ -90,8 +92,8 @@ export default function ClassDetails() {
   };
 
   return (
-    <div className="flex md:flex-row flex-col-reverse">
-      <div className="Kurs-Informationen card bg-base-100 shadow-xl flex flex-col p-4 m-2">
+    <div className="flex md:flex-row flex-col-reverse justify-center">
+      <div className="Kurs-Informationen card bg-base-100 shadow-xl flex flex-col p-4 m-2 min-w-96">
         {/* To Do: block für Kursinformationen erstellen */}
         <h1 className="text-2xl font-bold mb-4">{activity.title}</h1>
         <div className="carousel carousel-center rounded-box w-4/5 self-center">
@@ -113,9 +115,13 @@ export default function ClassDetails() {
           <FaLocationDot className="text-2xl" />
           <p className="font-bold">Location</p>
         </div>
-        {/* TO DO: create leaflet map here */}
+        <LocationMap
+          className="w-4/5 self-center"
+          location={activity.location}
+        />
       </div>
       <aside className="card w-96 bg-base-100 shadow-2xl flex flex-col p-4 m-2">
+        <h1 className="text-2xl font-bold mb-4 lg:hidden">{activity.title}</h1>
         <div>
           <div className="flex gap-2 m-2">
             <FaRegCalendar className="text-2xl" />

@@ -27,6 +27,7 @@ const activitySchema = new Schema({
       index: "2dsphere",
       default: [53.58044198674046, 9.97947668337071],
     },
+    address: { type: String, default: "Klosterallee 67" },
   },
   registeredUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
   trialMembership: { type: Boolean, default: true },
