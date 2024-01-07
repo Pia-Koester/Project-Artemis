@@ -203,10 +203,7 @@ export default function ClassDetails() {
                 {/* if there is a button in form, it will close the modal */}
                 <button
                   className="btn btn-primary mr-3 self-center"
-                  onClick={() => {
-                    handleBooking;
-                    window.location.reload();
-                  }}
+                  onClick={handleBooking}
                 >
                   Confirm
                 </button>

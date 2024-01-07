@@ -102,7 +102,9 @@ const setUserActivity = asyncWrapper(async (req, res, next) => {
     { new: true }
   );
 
-  res.json(activity);
+  req.user = updatedUser;
+
+  next();
 });
 
 const cancelUserActivity = asyncWrapper(async (req, res, next) => {
@@ -125,7 +127,8 @@ const cancelUserActivity = asyncWrapper(async (req, res, next) => {
     { classesRegistered: activityArray },
     { new: true }
   );
-  res.json(updatedUser);
+  req.user = updatedUser;
+  next();
 });
 
 //User login
