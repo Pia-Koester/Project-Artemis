@@ -22,8 +22,10 @@ export default function ClassDetails() {
         console.log("Data from api", response);
       })
       .catch((err) => {
-        console.log(err);
-        navigate("/login")
+        console.log(err.response.status);
+        if(err.response.status.toString() === "403") {
+          navigate("/login")
+        }
       });
   };
 
@@ -139,7 +141,7 @@ export default function ClassDetails() {
           </div>
           <p>capacity with color indicating fullness</p>
         </div>
-        <div className="avatar self-center mt-3">
+        <div className="avatar self-center mt-3 sm:flex gap-2">
           <div className="grid grid-rows-2 mt-5">
             <p className="font-bold">Instructor:</p>
             <p>{activity.instructor}</p>
