@@ -1,5 +1,5 @@
 import { FaRegCalendar, FaClock, FaPersonDress } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import { handleCancelation } from "../api/cancelationAcitvity";
@@ -10,9 +10,13 @@ import CapacityBadge from "../components/Activities/CapacityBadge";
 export default function ClassDetails() {
   const { id } = useParams();
   const activity = useLoaderData();
+
   const [openSlots, setOpenSlots] = useState(
     activity.capacity - activity.registeredUsers.length
   );
+
+  const navigate = useNavigate();
+
 
   const handleBooking = () => {
     axios
@@ -28,7 +32,10 @@ export default function ClassDetails() {
         console.log("Data from api", response);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.status);
+        if(err.response.status.toString() === "403") {
+          navigate("/login")
+        }
       });
   };
 
@@ -124,6 +131,7 @@ export default function ClassDetails() {
           </div>
           <CapacityBadge activity={activity} />
         </div>
+
         <div className="avatar flex flex-col m-2 mt-4">
           <div className="w-24 mask mask-hexagon self-center">
             <img src={photos[activity.instructor]} />
@@ -145,10 +153,94 @@ export default function ClassDetails() {
         </button>
         <button
           className="btn btn-primary w-4/5 self-center mt-5 m-2"
+
+        <div className="avatar self-center mt-3 sm:flex gap-2">
+          <div className="grid grid-rows-2 mt-5">
+            <p className="font-bold">Instructor:</p>
+            <p>{activity.instructor}</p>
+          </div>
+          <div className="w-24 mask mask-hexagon">
+            <img src={photos[activity.instructor]} />
+          </div>
+        </div>
+        <div className="grid grid-cols-2">
+          <button
+            className="btn btn-primary mr-3 self-center mt-2"
+            onClick={() => document.getElementById("my_modal_1").showModal()}
+          >
+            Book Now
+          </button>
+          <button
+            className="btn btn-neutral mr-3 self-center mt-2"
+            onClick={() => navigate(`/`)}
+          >
+            Go Back
+          </button>
+        </div>
+
+        <dialog id="my_modal_1" className="modal">
+          <div className="modal-box">
+            <div className="card-body items-center text-center">
+              <h3 className="font-bold text-lg">Booking Overview</h3>
+            </div>
+
+            <div className="grid grid-cols-2">
+              <div>
+                <div className="flex gap-2">
+                  <FaRegCalendar className="text-2xl" />
+                  <p className="font-bold">Date</p>
+                </div>
+                <p>{formattedStartDate}</p>
+              </div>
+
+              <div>
+                <div className="flex gap-2">
+                  <FaClock className="text-2xl" />
+                  <p className="font-bold">Time</p>
+                </div>
+                <p>
+                  {formattedStartTime} - {formattedEndTime} ({duration} Min.)
+                </p>
+              </div>
+
+              <div className="mt-5">
+                <div className="flex gap-2">
+                  <FaPersonDress className="text-2xl" />
+                  <p className="font-bold">Capacity </p>
+                </div>
+                <p>capacity with color indicating fullness</p>
+              </div>
+
+              <div className="avatar mt-1">
+                <span className="font-bold mt-10">Instructor</span>
+                <p className="mt-10">: {activity.instructor}</p>
+                <div className="w-24 mask mask-hexagon">
+                  <img src={photos[activity.instructor]} />
+                </div>
+              </div>
+            </div>
+
+            <div className="modal-action">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button
+                  className="btn btn-primary mr-3 self-center"
+                  onClick={handleBooking}
+                >
+                  Confirm
+                </button>
+                <button className="btn">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+
+        {/* <button
+          className="btn btn-primary w-4/5 self-center mt-5"
           onClick={() => handleCancelation(id)}
         >
           Cancel
-        </button>
+        </button> */}
       </aside>
     </div>
   );
