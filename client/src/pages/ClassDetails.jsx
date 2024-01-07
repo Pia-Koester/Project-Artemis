@@ -4,10 +4,15 @@ import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import { handleCancelation } from "../api/cancelationAcitvity";
 import clsx from "clsx";
+import { useState } from "react";
 
 export default function ClassDetails() {
   const { id } = useParams();
   const activity = useLoaderData();
+  const [openSlots, setOpenSlots] = useState(
+    activity.capacity - activity.registeredUsers.length
+  );
+  console.log(openSlots);
 
   const handleBooking = () => {
     axios
@@ -17,6 +22,9 @@ export default function ClassDetails() {
         { withCredentials: true }
       )
       .then((response) => {
+        setOpenSlots(
+          response.data.capacity - response.data.registeredUsers.length
+        );
         console.log("Data from api", response);
       })
       .catch((err) => {
@@ -51,11 +59,6 @@ export default function ClassDetails() {
   const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
 
   console.log(activity);
-
-  //calculation capacity based on array length
-  const totalCapacity = activity.capacity;
-  console.log(totalCapacity);
-  const openSlots = totalCapacity - activity.registeredUsers.length;
 
   //colors for conditional capacity badge
   const capacityColors = {
@@ -148,11 +151,11 @@ export default function ClassDetails() {
             <FaPersonDress className="text-2xl" />
             <p className="font-bold">Capacity </p>
           </div>
-          <div className={clsx("badge", capacityColors[openSlots])}>
+          <div className={clsx("badge badge-lg", capacityColors[openSlots])}>
             {openSlots}
           </div>
         </div>
-        <div className="avatar flex flex-col" m-2>
+        <div className="avatar flex flex-col m-2 mt-4">
           <div className="w-24 mask mask-hexagon self-center">
             <img src={photos[activity.instructor]} />
           </div>
@@ -162,6 +165,12 @@ export default function ClassDetails() {
           onClick={handleBooking}
         >
           Book Now
+        </button>
+        <button
+          className="btn btn-primary w-4/5 self-center m-2"
+          onClick={handleBooking}
+        >
+          Waitlist
         </button>
         <button
           className="btn btn-primary w-4/5 self-center mt-5 m-2"

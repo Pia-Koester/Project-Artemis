@@ -40,7 +40,7 @@ userSchema.pre("save", async function (next) {
   if (this.isModified("password"))
     // if a password is new or changed then it gets hashed
     this.password = await bcrypt.hash(this.password, 10);
-  console.log("password from middlewar", this.password);
+
   next();
 });
 

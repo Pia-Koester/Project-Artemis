@@ -37,7 +37,6 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun } = req.query;
-  console.log(req.originalUrl);
 
   let filter = {
     startTime: {
@@ -103,7 +102,7 @@ const updateActivity = asyncWrapper(async (req, res, next) => {
     { new: true }
   );
   req.activity = updatedActivity;
-  console.log(updatedActivity);
+
   next();
 });
 
@@ -129,7 +128,7 @@ const cancelActivity = asyncWrapper(async (req, res, next) => {
     { new: true }
   );
   req.activity = updatedActivity;
-  console.log(updatedActivity);
+
   next();
 });
 

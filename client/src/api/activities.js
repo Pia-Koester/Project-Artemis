@@ -14,7 +14,6 @@ const getActivities = async ({ request }) => {
       `${url}?instructor=${instructor}&mon=${week.formattedMondayDate}&sun=${week.formattedSundayDate}`
     );
 
-    console.log(response);
     //TO DO: send the date for the week as a query or other parameter and then only send back the data for this week
     const activitiesByWeekday = response.data.reduce(
       (accumulator, activity) => {
