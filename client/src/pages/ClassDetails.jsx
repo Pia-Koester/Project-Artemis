@@ -1,4 +1,9 @@
-import { FaRegCalendar, FaClock, FaPersonDress } from "react-icons/fa6";
+import {
+  FaRegCalendar,
+  FaClock,
+  FaPersonDress,
+  FaLocationDot,
+} from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
@@ -104,6 +109,11 @@ export default function ClassDetails() {
           })}
         </div>
         <p className="mt-4">{activity.description}</p>
+        <div className="flex gap-2 m-2">
+          <FaLocationDot className="text-2xl" />
+          <p className="font-bold">Location</p>
+        </div>
+        {/* TO DO: create leaflet map here */}
       </div>
       <aside className="card w-96 bg-base-100 shadow-2xl flex flex-col p-4 m-2">
         <div>
