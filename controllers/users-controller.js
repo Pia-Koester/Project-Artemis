@@ -102,7 +102,9 @@ const setUserActivity = asyncWrapper(async (req, res, next) => {
     { new: true }
   );
 
-  res.json(activity);
+  req.user = updatedUser;
+
+  next();
 });
 
 const cancelUserActivity = asyncWrapper(async (req, res, next) => {

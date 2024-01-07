@@ -12,13 +12,17 @@ const {
   setUserActivity,
   cancelUserActivity,
 } = require("../controllers/users-controller.js");
+const {
+  updateUserMembership,
+} = require("../controllers/userMemberships-controller.js");
+
 const activityRouter = express.Router();
 
 activityRouter.route("/").post(createActivity).get(getActivities);
 activityRouter
   .route("/:activity_id")
   .get(getActivity)
-  .put(authenticate, updateActivity, setUserActivity);
+  .put(authenticate, updateActivity, setUserActivity, updateUserMembership);
 //QUESTION: how can we make sure that loged in users get the user data in the response but not logged in users can still see the page?
 activityRouter
   .route("/:activity_id/cancel")
