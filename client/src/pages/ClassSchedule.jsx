@@ -1,6 +1,6 @@
 import { useLoaderData, useSearchParams } from "react-router-dom";
 import { useState } from "react";
-import ActivityCard from "../components/ActivityCard";
+import ActivityCard from "../components/Activities/ActivityCard";
 
 export default function ClassSchedule() {
   const response = useLoaderData();

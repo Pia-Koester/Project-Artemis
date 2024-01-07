@@ -16,7 +16,7 @@ const getActivities = async ({ request }) => {
 
     const instructors = [];
     const activitytypes = [];
-
+    console.log(response);
     const activitiesByWeekday = response.data.reduce(
       (accumulator, activity) => {
         const { weekday, instructor, type } = activity;
@@ -29,7 +29,7 @@ const getActivities = async ({ request }) => {
 
         // if (!activitytypes.includes(type.type)) {
         //   activitytypes.push(type.type);
-        // } //TO DO: why is this not getting populated as expected?
+        // } //QUESTION: why is this not getting populated as expected?
 
         return accumulator;
       },

@@ -47,26 +47,26 @@ const getActivities = asyncWrapper(async (req, res, next) => {
 
   if (!instructor || instructor === "All" || instructor === "null") {
     if (!mon && !sun) {
-      const activities = await Activity.find({})
-        .sort({
-          startTime: "asc",
-        })
-        .populate("type");
+      const activities = await Activity.find({}).populate("type").sort({
+        startTime: "asc",
+      });
       res.json(activities);
     }
-    const activities = await Activity.find(filter).sort({
-      startTime: "asc",
-    });
+    const activities = await Activity.find(filter)
+      .sort({
+        startTime: "asc",
+      })
+      .populate("type");
 
     res.json(activities);
   } else {
     const activities = await Activity.find({
       $and: [filter, { instructor }],
     })
+      .populate("type")
       .sort({
         startTime: "asc",
-      })
-      .populate("type");
+      });
     res.json(activities);
   }
 });
@@ -89,9 +89,7 @@ const updateActivity = asyncWrapper(async (req, res, next) => {
   const oldActivity = await Activity.findById(activity_id);
   const userArray = oldActivity.registeredUsers;
 
-  const match = userArray.find((userId) => {
-    return userId === id;
-  });
+  const match = userArray.includes(id);
   if (match) {
     throw new ErrorResponse("This user has already registered", 409);
   } else {

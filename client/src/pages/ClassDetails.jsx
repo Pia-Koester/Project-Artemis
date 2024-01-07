@@ -5,6 +5,7 @@ import axios from "axios";
 import { handleCancelation } from "../api/cancelationAcitvity";
 import clsx from "clsx";
 import { useState } from "react";
+import CapacityBadge from "../components/Activities/CapacityBadge";
 
 export default function ClassDetails() {
   const { id } = useParams();
@@ -121,9 +122,7 @@ export default function ClassDetails() {
             <FaPersonDress className="text-2xl" />
             <p className="font-bold">Capacity</p>
           </div>
-          <div className={clsx("badge badge-lg", capacityColors[openSlots])}>
-            {openSlots > 0 ? openSlots : "Fully Booked"}
-          </div>
+          <CapacityBadge activity={activity} />
         </div>
         <div className="avatar flex flex-col m-2 mt-4">
           <div className="w-24 mask mask-hexagon self-center">
