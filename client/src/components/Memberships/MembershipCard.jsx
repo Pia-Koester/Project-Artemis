@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRef } from "react";
 
-export default function MembershipCard({membershipPlanImg, plan, user }) {
+export default function MembershipCard({ plan, user }) {
   const modalRef = useRef(null);
 
   const handlePurchase = () => {

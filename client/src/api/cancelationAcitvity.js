@@ -1,6 +1,7 @@
 import axios from "axios"
 
 const handleCancelation = (id) => {
+
     console.log("id of the activity:", id)
     axios
       .put(
@@ -9,7 +10,7 @@ const handleCancelation = (id) => {
         { withCredentials: true }
       )
       .then((response) => {
-        console.log("Data from api", response);
+        console.log("Data from api", response)
       })
       .catch((err) => {
         console.log(err);
