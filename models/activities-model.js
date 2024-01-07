@@ -17,6 +17,7 @@ const activitySchema = new Schema({
   location: { type: String },
   registeredUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
   trialMembership: { type: Boolean, default: true },
+  type: { type: Schema.Types.ObjectId, ref: "Activitytype" },
   // To Do: create new field to make activity be either paid with membership or only single booking possible / bookingOption??
 });
 
