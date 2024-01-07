@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import CapacityBadge from "./CapacityBadge";
 
 export default function ActivityCard({ activity }) {
   //TODO: make transition to card Details
@@ -18,9 +19,7 @@ export default function ActivityCard({ activity }) {
   const endMilliseconds = endTime.getTime();
   const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
 
-  //finding out weekday
-  const options = { weekday: "long" };
-  const weekday = new Intl.DateTimeFormat("de-DE", options).format(startTime);
+  //TO DO: change color of card based on if the time and day have already passed
 
   //instructor images based on name
   const photos = {
@@ -34,9 +33,9 @@ export default function ActivityCard({ activity }) {
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
-      className="card  w-full bg-primary text-primary-content"
+      className="card  w-full bg-primary text-primary-content flex flex-col"
     >
-      {/* use min width to ensure uniformity */}
+      {/* QUESTION: Why is the text running outside the box on medium sizes?  */}
       <Link to={`/details/${activity._id}`}>
         <div className="card-body">
           <p>
@@ -46,7 +45,7 @@ export default function ActivityCard({ activity }) {
           <h2 className="card-title">{activity.title}</h2>
           <p>{activity.description}</p>
           <div className="flex justify-between items-end">
-            <div className="badge badge-secondary">{activity.capacity}</div>
+            <CapacityBadge activity={activity} />
             <div className="avatar">
               <div className="w-24 mask mask-hexagon">
                 <img src={photos[activity.instructor]} />

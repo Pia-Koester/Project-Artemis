@@ -4,7 +4,7 @@ const ErrorResponse = require("../utils/errorResponse.js");
 const authenticate = (req, res, next) => {
   try {
     const { access_token: token } = req.cookies;
-    console.log(token);
+
     if (!token) {
       throw new ErrorResponse("Forbidden!", 403);
     }

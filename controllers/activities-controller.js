@@ -37,7 +37,6 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun } = req.query;
-  console.log(req.originalUrl);
 
   let filter = {
     startTime: {
@@ -48,31 +47,35 @@ const getActivities = asyncWrapper(async (req, res, next) => {
 
   if (!instructor || instructor === "All" || instructor === "null") {
     if (!mon && !sun) {
-      const activities = await Activity.find({}).sort({
+      const activities = await Activity.find({}).populate("type").sort({
         startTime: "asc",
       });
       res.json(activities);
     }
-    const activities = await Activity.find(filter).sort({
-      startTime: "asc",
-    });
+    const activities = await Activity.find(filter)
+      .sort({
+        startTime: "asc",
+      })
+      .populate("type");
 
     res.json(activities);
   } else {
     const activities = await Activity.find({
       $and: [filter, { instructor }],
-    }).sort({
-      startTime: "asc",
-    });
+    })
+      .populate("type")
+      .sort({
+        startTime: "asc",
+      });
     res.json(activities);
   }
 });
 
 const getActivity = asyncWrapper(async (req, res, next) => {
   const { activity_id } = req.params;
-  const activity = await Activity.findById(activity_id).populate(
-    "registeredUsers"
-  ); // TODO: .populate("waitlist.waitlistUsers") is this the correct way??
+  const activity = await Activity.findById(activity_id)
+    .populate("registeredUsers")
+    .populate("type"); // TODO: .populate("waitlist.waitlistUsers") is this the correct way??
   if (!activity) {
     throw new ErrorResponse("Activity not found", 404);
   }
@@ -86,9 +89,7 @@ const updateActivity = asyncWrapper(async (req, res, next) => {
   const oldActivity = await Activity.findById(activity_id);
   const userArray = oldActivity.registeredUsers;
 
-  const match = userArray.find((userId) => {
-    return userId === id;
-  });
+  const match = userArray.includes(id);
   if (match) {
     throw new ErrorResponse("This user has already registered", 409);
   } else {
@@ -103,7 +104,7 @@ const updateActivity = asyncWrapper(async (req, res, next) => {
     { new: true }
   );
   req.activity = updatedActivity;
-  console.log(updatedActivity);
+
   next();
 });
 
@@ -129,7 +130,7 @@ const cancelActivity = asyncWrapper(async (req, res, next) => {
     { new: true }
   );
   req.activity = updatedActivity;
-  console.log(updatedActivity);
+
   next();
 });
 

@@ -19,7 +19,6 @@ const createUser = asyncWrapper(async (req, res, next) => {
     dataProtectionInfo,
     address,
   } = req.body;
-  console.log("POSTMAN TEST", email);
 
   const found = await User.findOne({ email });
   if (found) {
@@ -39,7 +38,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
     dataProtectionInfo,
     address,
   });
-  console.log("hashed password", user.password);
+
   res.status(201).json(user);
 });
 
@@ -103,9 +102,8 @@ const setUserActivity = asyncWrapper(async (req, res, next) => {
     { new: true }
   );
 
-  res.json(updatedUser);
+  res.json(activity);
 });
-
 
 const cancelUserActivity = asyncWrapper(async (req, res, next) => {
   const { id } = req.user;
@@ -114,14 +112,14 @@ const cancelUserActivity = asyncWrapper(async (req, res, next) => {
   const oldUser = await User.findById(id);
   const activityArray = oldUser.classesRegistered;
 
-  const match = activityArray.indexOf(activity_id)
+  const match = activityArray.indexOf(activity_id);
 
   if (match === -1) {
     throw new ErrorResponse("User not registered!", 404);
   } else {
     activityArray.splice(match, 1);
   }
-  
+
   const updatedUser = await User.findByIdAndUpdate(
     id,
     { classesRegistered: activityArray },
@@ -185,5 +183,5 @@ module.exports = {
   updateProfile,
   setUserMembership,
   setUserActivity,
-  cancelUserActivity
+  cancelUserActivity,
 };

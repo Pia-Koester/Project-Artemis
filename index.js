@@ -11,6 +11,7 @@ const userRouter = require("./routes/users-route.js");
 const activityRouter = require("./routes/activities-route.js");
 const membershipPlanRouter = require("./routes/membershipPlans-route.js");
 const userMembershipRouter = require("./routes/userMemberships-route.js");
+const typeRouter = require("./routes/activityType-route.js");
 const errorHandler = require("./middlewares/errorHandler.js");
 
 //MiddleWare
@@ -27,6 +28,7 @@ app.use("/", userRouter);
 app.use("/activities", activityRouter);
 app.use("/plan", membershipPlanRouter);
 app.use("/memberships", userMembershipRouter);
+app.use("/activityTypes", typeRouter);
 
 app.use(errorHandler);
 

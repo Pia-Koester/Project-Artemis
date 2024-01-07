@@ -1,6 +1,6 @@
 const defineWeek = (skip) => {
   const today = new Date();
-  console.log(+skip);
+
   today.setDate(today.getDate() + +skip);
   //const today = new Date("01.01.2025");
   const currentDayNumber = today.getDay(); // each day of the week corresponts to one numer 0 = sunday, 6 = saturday
@@ -27,6 +27,7 @@ const defineWeek = (skip) => {
 
   // Formatting options for the final output
   const formattedOptions = {
+    year: "2-digit",
     month: "short",
     day: "numeric",
   };

@@ -14,13 +14,23 @@ const getActivities = async ({ request }) => {
       `${url}?instructor=${instructor}&mon=${week.formattedMondayDate}&sun=${week.formattedSundayDate}`
     );
 
+    const instructors = [];
+    const activitytypes = [];
     console.log(response);
-    //TO DO: send the date for the week as a query or other parameter and then only send back the data for this week
     const activitiesByWeekday = response.data.reduce(
       (accumulator, activity) => {
-        const { weekday } = activity;
+        const { weekday, instructor, type } = activity;
         accumulator[weekday] = accumulator[weekday] || [];
         accumulator[weekday].push(activity);
+
+        if (!instructors.includes(instructor)) {
+          instructors.push(instructor);
+        }
+
+        // if (!activitytypes.includes(type.type)) {
+        //   activitytypes.push(type.type);
+        // } //QUESTION: why is this not getting populated as expected?
+
         return accumulator;
       },
       {}
@@ -30,6 +40,8 @@ const getActivities = async ({ request }) => {
       weekstart: week.formattedMonday,
       weekend: week.formattedSunday,
       activities: activitiesByWeekday,
+      instructors: instructors,
+      // activitytypes,
     };
 
     return data;

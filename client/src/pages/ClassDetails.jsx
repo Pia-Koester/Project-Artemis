@@ -3,14 +3,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import { handleCancelation } from "../api/cancelationAcitvity";
+import clsx from "clsx";
+import { useState } from "react";
+import CapacityBadge from "../components/Activities/CapacityBadge";
 
 export default function ClassDetails() {
   const { id } = useParams();
   const activity = useLoaderData();
+
+  const [openSlots, setOpenSlots] = useState(
+    activity.capacity - activity.registeredUsers.length
+  );
+
   const navigate = useNavigate();
 
-  // TO DO: create function which triggers put request to backend
-  // body must contain: activity id and user id  - user id we get from the jwt token so sending with credentials
+
   const handleBooking = () => {
     axios
       .put(
@@ -19,6 +26,9 @@ export default function ClassDetails() {
         { withCredentials: true }
       )
       .then((response) => {
+        setOpenSlots(
+          response.data.capacity - response.data.registeredUsers.length
+        );
         console.log("Data from api", response);
       })
       .catch((err) => {
@@ -56,6 +66,16 @@ export default function ClassDetails() {
   const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
 
   console.log(activity);
+
+  //colors for conditional capacity badge
+  const capacityColors = {
+    0: "badge-error",
+    1: "badge-error",
+    2: "badge-error",
+    3: "badge-warning",
+    4: "badge-warning",
+  };
+
   //instructor images based on name
   const photos = {
     Isabella:
@@ -66,66 +86,36 @@ export default function ClassDetails() {
   };
 
   return (
-    <div className="flex md:flex-row flex-col">
-      <div className="Kurs-Informationen card bg-base-100 shadow-xl flex flex-col p-4">
+    <div className="flex md:flex-row flex-col-reverse">
+      <div className="Kurs-Informationen card bg-base-100 shadow-xl flex flex-col p-4 m-2">
         {/* To Do: block für Kursinformationen erstellen */}
-        <h1>{activity.title}</h1>
-        <div className="carousel carousel-center rounded-box">
-          <div className="carousel-item">
-            <img
-              src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://daisyui.com/images/stock/photo-1565098772267-60af42b81ef2.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://daisyui.com/images/stock/photo-1572635148818-ef6fd45eb394.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://daisyui.com/images/stock/photo-1494253109108-2e30c049369b.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://daisyui.com/images/stock/photo-1559181567-c3190ca9959b.jpg"
-              alt="Pizza"
-            />
-          </div>
-          <div className="carousel-item">
-            <img
-              src="https://daisyui.com/images/stock/photo-1601004890684-d8cbf643f5f2.jpg"
-              alt="Pizza"
-            />
-          </div>
+        <h1 className="text-2xl font-bold mb-4">{activity.title}</h1>
+        <div className="carousel carousel-center rounded-box w-4/5 self-center">
+          {activity.type?.images.map((image) => {
+            return (
+              <div className="carousel-item">
+                <img
+                  src={image.url}
+                  alt="Pizza"
+                  key={image._id}
+                  className="object-center	w-96"
+                />
+              </div>
+            );
+          })}
         </div>
-        <p>{activity.description}</p>
+        <p className="mt-4">{activity.description}</p>
       </div>
-      <aside className="card w-96 bg-base-100 shadow-xl flex flex-col p-4">
+      <aside className="card w-96 bg-base-100 shadow-2xl flex flex-col p-4 m-2">
         <div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 m-2">
             <FaRegCalendar className="text-2xl" />
             <p className="font-bold">Date</p>
           </div>
           <p>{formattedStartDate}</p>
         </div>
         <div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 m-2">
             <FaClock className="text-2xl" />
             <p className="font-bold">Time</p>
           </div>
@@ -135,12 +125,35 @@ export default function ClassDetails() {
         </div>
 
         <div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 m-2">
             <FaPersonDress className="text-2xl" />
-            <p className="font-bold">Capacity </p>
+            <p className="font-bold">Capacity</p>
           </div>
-          <p>capacity with color indicating fullness</p>
+          <CapacityBadge activity={activity} />
         </div>
+
+        <div className="avatar flex flex-col m-2 mt-4">
+          <div className="w-24 mask mask-hexagon self-center">
+            <img src={photos[activity.instructor]} />
+          </div>
+        </div>
+        <button
+          className="btn btn-primary w-4/5 self-center m-2"
+          onClick={handleBooking}
+          disabled={openSlots <= 0}
+        >
+          Book Now
+        </button>
+        <button
+          className="btn btn-primary w-4/5 self-center m-2"
+          onClick={handleBooking}
+          disabled={openSlots > 0}
+        >
+          Waitlist
+        </button>
+        <button
+          className="btn btn-primary w-4/5 self-center mt-5 m-2"
+
         <div className="avatar self-center mt-3 sm:flex gap-2">
           <div className="grid grid-rows-2 mt-5">
             <p className="font-bold">Instructor:</p>
