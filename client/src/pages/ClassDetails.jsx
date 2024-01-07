@@ -17,7 +17,6 @@ export default function ClassDetails() {
 
   const navigate = useNavigate();
 
-
   const handleBooking = () => {
     axios
       .put(
@@ -33,8 +32,8 @@ export default function ClassDetails() {
       })
       .catch((err) => {
         console.log(err.response.status);
-        if(err.response.status.toString() === "403") {
-          navigate("/login")
+        if (err.response.status.toString() === "403") {
+          navigate("/login");
         }
       });
   };
@@ -132,28 +131,6 @@ export default function ClassDetails() {
           <CapacityBadge activity={activity} />
         </div>
 
-        <div className="avatar flex flex-col m-2 mt-4">
-          <div className="w-24 mask mask-hexagon self-center">
-            <img src={photos[activity.instructor]} />
-          </div>
-        </div>
-        <button
-          className="btn btn-primary w-4/5 self-center m-2"
-          onClick={handleBooking}
-          disabled={openSlots <= 0}
-        >
-          Book Now
-        </button>
-        <button
-          className="btn btn-primary w-4/5 self-center m-2"
-          onClick={handleBooking}
-          disabled={openSlots > 0}
-        >
-          Waitlist
-        </button>
-        <button
-          className="btn btn-primary w-4/5 self-center mt-5 m-2"
-
         <div className="avatar self-center mt-3 sm:flex gap-2">
           <div className="grid grid-rows-2 mt-5">
             <p className="font-bold">Instructor:</p>
@@ -167,6 +144,7 @@ export default function ClassDetails() {
           <button
             className="btn btn-primary mr-3 self-center mt-2"
             onClick={() => document.getElementById("my_modal_1").showModal()}
+            disabled={openSlots <= 0}
           >
             Book Now
           </button>
@@ -225,7 +203,10 @@ export default function ClassDetails() {
                 {/* if there is a button in form, it will close the modal */}
                 <button
                   className="btn btn-primary mr-3 self-center"
-                  onClick={handleBooking}
+                  onClick={() => {
+                    handleBooking;
+                    window.location.reload();
+                  }}
                 >
                   Confirm
                 </button>
@@ -238,9 +219,16 @@ export default function ClassDetails() {
         {/* <button
           className="btn btn-primary w-4/5 self-center mt-5"
           onClick={() => handleCancelation(id)}
+      
         >
           Cancel
         </button> */}
+        <button
+          className="btn btn-primary w-4/5 self-center m-2"
+          disabled={openSlots > 0}
+        >
+          Waitlist
+        </button>
       </aside>
     </div>
   );
