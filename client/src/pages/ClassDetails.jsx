@@ -3,13 +3,12 @@ import { useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import { handleCancelation } from "../api/cancelationAcitvity";
+import clsx from "clsx";
 
 export default function ClassDetails() {
   const { id } = useParams();
   const activity = useLoaderData();
 
-  // TO DO: create function which triggers put request to backend
-  // body must contain: activity id and user id  - user id we get from the jwt token so sending with credentials
   const handleBooking = () => {
     axios
       .put(
@@ -52,6 +51,20 @@ export default function ClassDetails() {
   const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
 
   console.log(activity);
+
+  //calculation capacity based on array length
+  const totalCapacity = activity.capacity;
+  console.log(totalCapacity);
+  const openSlots = totalCapacity - activity.registeredUsers.length;
+
+  //colors for conditional capacity badge
+  const capacityColors = {
+    1: "badge-error",
+    2: "badge-error",
+    3: "badge-warning",
+    4: "badge-warning",
+  };
+
   //instructor images based on name
   const photos = {
     Isabella:
@@ -62,11 +75,11 @@ export default function ClassDetails() {
   };
 
   return (
-    <div className="flex md:flex-row flex-col">
-      <div className="Kurs-Informationen card bg-base-100 shadow-xl flex flex-col p-4">
+    <div className="flex md:flex-row flex-col-reverse">
+      <div className="Kurs-Informationen card bg-base-100 shadow-xl flex flex-col p-4 m-2">
         {/* To Do: block für Kursinformationen erstellen */}
-        <h1>{activity.title}</h1>
-        <div className="carousel carousel-center rounded-box">
+        <h1 className="text-2xl font-bold mb-4">{activity.title}</h1>
+        <div className="carousel carousel-center rounded-box w-4/5 self-center">
           <div className="carousel-item">
             <img
               src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
@@ -112,16 +125,16 @@ export default function ClassDetails() {
         </div>
         <p>{activity.description}</p>
       </div>
-      <aside className="card w-96 bg-base-100 shadow-xl flex flex-col p-4">
+      <aside className="card w-96 bg-base-100 shadow-2xl flex flex-col p-4 m-2">
         <div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 m-2">
             <FaRegCalendar className="text-2xl" />
             <p className="font-bold">Date</p>
           </div>
           <p>{formattedStartDate}</p>
         </div>
         <div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 m-2">
             <FaClock className="text-2xl" />
             <p className="font-bold">Time</p>
           </div>
@@ -131,25 +144,27 @@ export default function ClassDetails() {
         </div>
 
         <div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 m-2">
             <FaPersonDress className="text-2xl" />
             <p className="font-bold">Capacity </p>
           </div>
-          <p>capacity with color indicating fullness</p>
+          <div className={clsx("badge", capacityColors[openSlots])}>
+            {openSlots}
+          </div>
         </div>
-        <div className="avatar">
-          <div className="w-24 mask mask-hexagon">
+        <div className="avatar flex flex-col" m-2>
+          <div className="w-24 mask mask-hexagon self-center">
             <img src={photos[activity.instructor]} />
           </div>
         </div>
         <button
-          className="btn btn-primary w-4/5 self-center"
+          className="btn btn-primary w-4/5 self-center m-2"
           onClick={handleBooking}
         >
           Book Now
         </button>
         <button
-          className="btn btn-primary w-4/5 self-center mt-5"
+          className="btn btn-primary w-4/5 self-center mt-5 m-2"
           onClick={() => handleCancelation(id)}
         >
           Cancel
