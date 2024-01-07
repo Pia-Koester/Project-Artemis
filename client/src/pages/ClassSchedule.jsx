@@ -69,10 +69,9 @@ export default function ClassSchedule() {
           {/* TO DO: map through all the activities and if the trainer is not yet listed create a option with trainer name
         TO DO: create logic to show only the classes for this trainer */}
           <option>All</option>
-          <option>Isabella</option>
-          <option>Cosima</option>
-          <option>John Doe</option>
-          <option>Rolf</option>
+          {response.instructors.map((instructor) => {
+            return <option>{instructor}</option>;
+          })}
         </select>
       </div>
       <div className="grid lg:grid-cols-7 grid-cols-1 gap-4 md:w-full">

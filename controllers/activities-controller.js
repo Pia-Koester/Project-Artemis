@@ -47,9 +47,11 @@ const getActivities = asyncWrapper(async (req, res, next) => {
 
   if (!instructor || instructor === "All" || instructor === "null") {
     if (!mon && !sun) {
-      const activities = await Activity.find({}).sort({
-        startTime: "asc",
-      });
+      const activities = await Activity.find({})
+        .sort({
+          startTime: "asc",
+        })
+        .populate("type");
       res.json(activities);
     }
     const activities = await Activity.find(filter).sort({
@@ -60,9 +62,11 @@ const getActivities = asyncWrapper(async (req, res, next) => {
   } else {
     const activities = await Activity.find({
       $and: [filter, { instructor }],
-    }).sort({
-      startTime: "asc",
-    });
+    })
+      .sort({
+        startTime: "asc",
+      })
+      .populate("type");
     res.json(activities);
   }
 });

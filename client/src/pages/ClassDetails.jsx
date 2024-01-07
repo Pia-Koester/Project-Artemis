@@ -83,7 +83,7 @@ export default function ClassDetails() {
         {/* To Do: block für Kursinformationen erstellen */}
         <h1 className="text-2xl font-bold mb-4">{activity.title}</h1>
         <div className="carousel carousel-center rounded-box w-4/5 self-center">
-          {activity.type.images.map((image) => {
+          {activity.type?.images.map((image) => {
             return (
               <div className="carousel-item">
                 <img
