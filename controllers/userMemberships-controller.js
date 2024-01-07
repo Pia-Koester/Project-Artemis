@@ -55,9 +55,23 @@ const updateUserMembership = asyncWrapper(async (req, res, next) => {
   res.send(activity);
 });
 
+const cancelUserMembershipCredit = asyncWrapper(async (req, res, next) => {
+  const { id, activeMembership } = req.user;
+  const { activity } = req;
+
+  const userMembership = await UserMembership.findByIdAndUpdate(
+    activeMembership,
+    { $inc: { usedCredits: -1 } },
+    { new: true }
+  );
+  console.log(userMembership);
+  res.send(activity);
+});
+
 module.exports = {
   getUserMemberships,
   getUserMembership,
   createUserMembership,
   updateUserMembership,
+  cancelUserMembershipCredit,
 };

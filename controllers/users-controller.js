@@ -127,7 +127,8 @@ const cancelUserActivity = asyncWrapper(async (req, res, next) => {
     { classesRegistered: activityArray },
     { new: true }
   );
-  res.json(updatedUser);
+  req.user = updatedUser;
+  next();
 });
 
 //User login
