@@ -2,9 +2,12 @@ import { FaWandMagicSparkles, FaRegEye } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../components/context/AuthProvider";
 
 export default function Login() {
   const navigate = useNavigate();
+  const {login} = useContext(AuthContext);
 
   const {
     register,
@@ -14,16 +17,18 @@ export default function Login() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-    axios
-      .post("http://localhost:8080/login", data, { withCredentials: true })
-      .then((response) => {
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        badCredentials();
-      });
+    // console.log(data);
+    // axios
+    //   .post("http://localhost:8080/login", data, { withCredentials: true })
+    //   .then((response) => {
+    //     navigate("/");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     badCredentials();
+    //   });
+    login(data)
+    navigate("/")
   };
 
   const badCredentials = () => {

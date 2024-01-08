@@ -1,29 +1,10 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { handleCancelation } from "../../api/cancelationAcitvity";
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
 
 export default function UserActivities() {
-  const navigate = useNavigate()
 
-  const [userActivity, setUserActivity] = useState(null);
-
-  useEffect(() => {
-    getUser("http://localhost:8080/users/profile");
-  }, []);
-
-  const getUser = async (url) => {
-    try {
-      const response = await axios.get(url, { withCredentials: true });
-      setUserActivity(response.data.classesRegistered);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-      if (error.response.status.toString() === "403") {
-        navigate("/login");
-      }
-    }
-  };
+  const {userActivity} = useContext(AuthContext);
 
   return (
     <>

@@ -4,13 +4,15 @@ import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import { handleCancelation } from "../api/cancelationAcitvity";
 import clsx from "clsx";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import CapacityBadge from "../components/Activities/CapacityBadge";
 import { ToastContainer, toast } from "react-toastify";
+import { AuthContext } from "../components/context/AuthProvider";
 
 export default function ClassDetails() {
   const { id } = useParams();
   const activity = useLoaderData();
+  const { user } = useContext(AuthContext);
 
   const [openSlots, setOpenSlots] = useState(
     activity.capacity - activity.registeredUsers.length
@@ -37,7 +39,7 @@ export default function ClassDetails() {
         if (err.response.status.toString() === "403") {
           navigate("/login");
         }
-      })
+      });
   };
 
   const notify = () =>
@@ -78,8 +80,6 @@ export default function ClassDetails() {
   const endMilliseconds = endTime.getTime();
   const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
 
-  console.log(activity);
-
   //colors for conditional capacity badge
   const capacityColors = {
     0: "badge-error",
@@ -88,6 +88,8 @@ export default function ClassDetails() {
     3: "badge-warning",
     4: "badge-warning",
   };
+
+  const registeredUsers = activity?.registeredUsers;
 
   //instructor images based on name
   const photos = {
@@ -169,11 +171,32 @@ export default function ClassDetails() {
         </div>
         <div className="grid grid-cols-2">
           <button
-            className="btn btn-primary mr-3 self-center mt-2"
+            className={clsx(
+              "btn btn-primary mr-3 self-center mt-2",
+              registeredUsers
+                .map((item) => {
+                  return item._id;
+                })
+                .includes(user?._id) && "hidden"
+            )}
             onClick={() => document.getElementById("my_modal_1").showModal()}
             disabled={openSlots <= 0}
           >
             Book Now
+          </button>
+          <button
+            className={clsx(
+              "btn btn-secondary mr-3 self-center mt-2",
+              !registeredUsers
+                .map((item) => {
+                  return item._id;
+                })
+                .includes(user?._id) && "hidden"
+            )}
+            onClick={() => document.getElementById("my_modal_1").showModal()}
+            disabled={openSlots <= 0}
+          >
+            Cancel
           </button>
           <button
             className="btn btn-neutral mr-3 self-center mt-2"
@@ -184,7 +207,12 @@ export default function ClassDetails() {
         </div>
 
         <dialog id="my_modal_1" className="modal">
-          <div className="modal-box">
+          <div
+            className={clsx(
+              "modal-box",
+              user?.activeMembership === null && "hidden"
+            )}
+          >
             <div className="card-body items-center text-center">
               <h3 className="font-bold text-lg">Booking Overview</h3>
             </div>
@@ -229,26 +257,83 @@ export default function ClassDetails() {
               <form method="dialog">
                 {/* if there is a button in form, it will close the modal */}
                 <button
-                  className="btn btn-primary mr-3 self-center"
+                  className={clsx(
+                    "btn btn-primary mr-3 self-center mt-2",
+                    registeredUsers
+                      .map((item) => {
+                        return item._id;
+                      })
+                      .includes(user?._id) && "hidden"
+                  )}
                   onClick={() => {
                     handleBooking();
                   }}
                 >
                   Confirm
                 </button>
-                <button className="btn">Cancel</button>
+                <button
+                  className={clsx(
+                    "btn btn-secondary mr-3 self-center mt-2",
+                    !registeredUsers
+                      .map((item) => {
+                        return item._id;
+                      })
+                      .includes(user?._id) && "hidden"
+                  )}
+                  onClick={() => {
+                    handleCancelation(id);
+                    window.location.reload();
+                  }}
+                >
+                  Cancel Booking
+                </button>
+
+                <button className="btn">Close</button>
               </form>
             </div>
           </div>
+
+          {/* <div
+            className={clsx(
+              "modal-box",
+              !user?.activeMembership === null && "hidden"
+            )}
+          >
+            <div class="w-full mx-auto">
+              <div class="flex flex-col p-5 rounded-lg shadow bg-white">
+                <div class="flex flex-col items-center text-center">
+                  <div class="inline-block p-4 bg-yellow-50 rounded-full">
+                    <svg
+                      class="w-12 h-12 fill-current text-yellow-500"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M0 0h24v24H0V0z" fill="none" />
+                      <path d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z" />
+                    </svg>
+                  </div>
+                  <h2 class="mt-2 font-semibold text-gray-800">
+                    No active membership plan
+                  </h2>
+                  <p class="mt-2 text-sm text-gray-600 leading-relaxed">
+                    You dont have an active membership plan. In order to book a class, please purchase one of the available membership plans
+                  </p>
+                </div>
+
+                <div class="flex items-center mt-3">
+                  <button class="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md">
+                    Cancel
+                  </button>
+
+                  <button onClick={() => navigate("/membershipPlans")}class="flex-1 px-4 py-2 ml-2 bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium rounded-md">
+                    Purchase Membership Plan
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div> */}
         </dialog>
 
-        {/* <button
-          className="btn btn-primary w-4/5 self-center mt-5"
-          onClick={() => handleCancelation(id)}
-      
-        >
-          Cancel
-        </button> */}
         <button
           className="btn btn-primary w-4/5 self-center m-2"
           disabled={openSlots > 0}

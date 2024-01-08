@@ -1,27 +1,13 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/logos/avatar.jpg";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
 
 export default function UserUpdateInformation() {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    getUser("http://localhost:8080/users/profile");
-  }, []);
-
-  const getUser = async (url) => {
-    try {
-      const response = await axios.get(url, { withCredentials: true });
-      setUser(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const {user, updateUserProfile} = useContext(AuthContext);
 
   const {
     register,
@@ -31,19 +17,7 @@ export default function UserUpdateInformation() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Data from form", data);
-    axios
-      .put("http://localhost:8080/users/profile", data, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log("Data from api", response.data);
-        navigate("/userProfile/details");
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    updateUserProfile(data)
   };
 
   const formattedDate = user?.dateOfBirth.split("T")[0];

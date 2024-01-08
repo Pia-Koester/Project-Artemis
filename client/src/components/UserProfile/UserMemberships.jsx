@@ -1,24 +1,10 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
 export default function UserMemberships() {
-  const [userMembership, setUserMembership] = useState(null);
 
-  useEffect(() => {
-    getUser("http://localhost:8080/users/profile");
-  }, []);
+  const {user} = useContext(AuthContext);
 
-  const getUser = async (url) => {
-    try {
-      const response = await axios.get(url, { withCredentials: true });
-      setUserMembership(response.data.activeMembership);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const formatPurchasedDate = userMembership?.purchaseDate.split("T");
+  const formatPurchasedDate = user?.activeMembership.purchaseDate.split("T");
 
   return (
     <>
@@ -26,19 +12,19 @@ export default function UserMemberships() {
         <h2 className="card-title">Your active membership</h2>
       </div>
 
-      {!userMembership ? (
+      {!user ? (
         <p>Loading...</p>
       ) : (
         <div className="card w-96 bg-neutral text-neutral-content mx-auto mb-12">
           <div className="card-body items-center text-center">
-            <h2 className="card-title">{userMembership.plan.title}</h2>
+            <h2 className="card-title">{user.activeMembership.plan.title}</h2>
             <p>Date purchased: {formatPurchasedDate[0]}</p>
             {/* To Do: determine the expiry date of the membership plan and replace the hardcoded string TBD*/}
             <p>Date expiry: TBD</p>
             <div className="card-actions justify-end">
-              <p className="btn btn-primary">Status: {userMembership.status}</p>
+              <p className="btn btn-primary">Status: {user.activeMembership.status}</p>
               <p className="btn btn-ghost">
-                Credits remaining: {10 - userMembership.usedCredits}
+                Credits remaining: {10 - user.activeMembership.usedCredits}
               </p>
             </div>
           </div>

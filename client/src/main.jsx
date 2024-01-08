@@ -13,7 +13,6 @@ import ClassSchedule from "./pages/ClassSchedule";
 //loader Functions
 import { getActivities, getActivity } from "./api/activities.js";
 import ClassDetails from "./pages/ClassDetails";
-
 import UserMemberships from "./components/UserProfile/UserMemberships.jsx";
 import UserActivities from "./components/UserProfile/UserActivities.jsx";
 import UserInformation from "./components/UserProfile/UserInformation.jsx";
@@ -74,6 +73,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
   </React.StrictMode>
 );
