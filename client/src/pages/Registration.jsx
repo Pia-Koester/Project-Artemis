@@ -27,7 +27,6 @@ export default function Registration() {
   //TO DO: create 3 forms with each a submit function and the own validation
   const [loginInfo, setLoginInfo] = useState();
   const [personalInfo, setPersonalInfo] = useState();
-  const [emergencyInfo, setEmergencyInfo] = useState();
 
   const registrationSubmit = (data) => {
     console.log(data, step);
@@ -43,6 +42,19 @@ export default function Registration() {
     setStep((prev) => {
       return prev + 1;
     });
+  };
+
+  const formSubmit = (data) => {
+    console.log(loginInfo, personalInfo);
+    console.log("Data from form", data);
+    axiosClient
+      .post("signup", data)
+      .then((response) => {
+        console.log("Data from api", response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   //TO DO: split registration into first only asking for mail and password and then onboarding on different screen
@@ -67,10 +79,9 @@ export default function Registration() {
   const backClasses = {
     1: "hidden",
   };
-  console.log(errors);
 
   const submitClasses = { 1: "hidden", 2: "hidden" };
-  console.log(step);
+
   return (
     <div>
       <h1 className="text-5xl font-bold mb-4 text-center">Sign Up</h1>
@@ -154,36 +165,6 @@ export default function Registration() {
                   </span>
                 )}
                 {/* TO DO: Password strength indicator */}
-                <div className="label cursor-pointer">
-                  <span className="label-text">AGB Aproval</span>
-                  <input
-                    type="checkbox"
-                    className="toggle toggle-secondary"
-                    {...register("termsOfUse", {
-                      required: "You must agree to the AGB",
-                    })}
-                  />
-                </div>
-                {errors.termsOfUse?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.termsOfUse.message}
-                  </span>
-                )}
-                <div className="label cursor-pointer">
-                  <span className="label-text">Dataprotection read</span>
-                  <input
-                    type="checkbox"
-                    className="toggle toggle-secondary"
-                    {...register("dataProtectionInfo", {
-                      required: "You must agree to the DSGVO",
-                    })}
-                  />
-                </div>
-                {errors.dataProtectionInfo?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.dataProtectionInfo.message}
-                  </span>
-                )}
               </div>
               <button
                 // TO DO: disable button if there are any errors
@@ -191,7 +172,6 @@ export default function Registration() {
                   "btn btn-primary self-center",
                   nextClasses[step]
                 )}
-                type="submit"
               >
                 Next
               </button>
@@ -291,30 +271,62 @@ export default function Registration() {
                     "btn btn-primary self-center",
                     nextClasses[step]
                   )}
-                  type="submit"
                 >
                   Next
                 </button>
               </div>
             </form>
           ) : (
-            <div className="flex justify-around mt-2">
-              <button
-                className={clsx("btn btn-neutral", backClasses[step])}
-                onClick={handleBacksteps}
-              >
-                Back
-              </button>
+            <form onSubmit={handleSubmit(formSubmit)}>
+              {" "}
+              <div className="label cursor-pointer">
+                <span className="label-text">AGB Aproval</span>
+                <input
+                  type="checkbox"
+                  className="toggle toggle-secondary"
+                  {...register("termsOfUse", {
+                    required: "You must agree to the AGB",
+                  })}
+                />
+              </div>
+              {errors.termsOfUse?.type === "required" && (
+                <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  {errors.termsOfUse.message}
+                </span>
+              )}
+              <div className="label cursor-pointer">
+                <span className="label-text">Dataprotection read</span>
+                <input
+                  type="checkbox"
+                  className="toggle toggle-secondary"
+                  {...register("dataProtectionInfo", {
+                    required: "You must agree to the DSGVO",
+                  })}
+                />
+              </div>
+              {errors.dataProtectionInfo?.type === "required" && (
+                <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                  {errors.dataProtectionInfo.message}
+                </span>
+              )}
+              <div className="flex justify-around mt-2">
+                <button
+                  className={clsx("btn btn-neutral", backClasses[step])}
+                  onClick={handleBacksteps}
+                >
+                  Back
+                </button>
 
-              <button
-                className={clsx(
-                  "btn btn-primary self-center",
-                  submitClasses[step]
-                )}
-              >
-                Submit
-              </button>
-            </div>
+                <button
+                  className={clsx(
+                    "btn btn-primary self-center",
+                    submitClasses[step]
+                  )}
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
           )}
         </div>
         <img
