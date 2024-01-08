@@ -1,6 +1,7 @@
 const url = "http://localhost:8080/activities";
 import axios from "axios";
 import { defineWeek } from "../helper/defineweek.js";
+import axiosClient from "./axiosClient.jsx";
 
 const getActivities = async ({ request }) => {
   try {
@@ -10,8 +11,8 @@ const getActivities = async ({ request }) => {
 
     const week = defineWeek(skip);
 
-    const response = await axios.get(
-      `${url}?instructor=${instructor}&mon=${week.formattedMondayDate}&sun=${week.formattedSundayDate}`
+    const response = await axiosClient.get(
+      `activities?instructor=${instructor}&mon=${week.formattedMondayDate}&sun=${week.formattedSundayDate}`
     );
 
     const instructors = [];
