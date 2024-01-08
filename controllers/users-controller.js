@@ -100,7 +100,7 @@ const setUserActivity = asyncWrapper(async (req, res, next) => {
     id,
     { $push: { classesRegistered: activity_id } },
     { new: true }
-  );
+  )
 
   req.user = updatedUser;
 
