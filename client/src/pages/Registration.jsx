@@ -34,6 +34,7 @@ export default function Registration() {
 
   const nextClasses = {
     3: "hidden",
+    4: "hidden",
   };
 
   const submitClasses = { 1: "hidden", 2: "hidden" };
@@ -141,14 +142,20 @@ export default function Registration() {
 
               {errors.exampleRequired && <span>This field is required</span>}
               <button
-                //TO DO: conditionally render the buttons if steps is lower then 3 then show it, if steps is 3 or higher, then hide it
-                className="btn btn-primary self-center"
+                className={clsx(
+                  "btn btn-primary self-center",
+                  nextClasses[step]
+                )}
                 onClick={handleFormSteps}
               >
                 Next
               </button>
-              <button className="btn btn-primary self-center">
-                {/* TO DO: only show button if steps is equal or higher then 3 */}
+              <button
+                className={clsx(
+                  "btn btn-primary self-center",
+                  submitClasses[step]
+                )}
+              >
                 Submit
               </button>
             </label>
