@@ -13,7 +13,7 @@ const getActivities = async ({ request }) => {
     const week = defineWeek(skip);
 
     const response = await axiosClient.get(
-      `activities?instructor=${instructor}&type=${type}&mon=${week.formattedMondayDate}&sun=${week.formattedSundayDate}`
+      `activities?instructor=${instructor}&mon=${week.formattedMondayDate}&sun=${week.formattedSundayDate}`
     );
 
     //TO DO: wo muss entschieden werden ob ein type mitgeschickt wird oder nicht. Wie können die Daten dann gefetched werden?

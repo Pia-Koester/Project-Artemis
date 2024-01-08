@@ -45,23 +45,25 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     },
   };
 
+  // TO DO: loop over query and depending on the values add them to the filter object
+
   if (!instructor || instructor === "All" || instructor === "null") {
     if (!mon && !sun) {
       const activities = await Activity.find({}).populate("type").sort({
         startTime: "asc",
       });
       res.json(activities);
+    } else {
+      console.log(type);
+      console.log(filter);
+      const activities = await Activity.find(filter)
+        .sort({
+          startTime: "asc",
+        })
+        .populate("type");
+      console.log(activities);
+      res.json(activities);
     }
-    console.log(type);
-    const activities = await Activity.find({
-      $and: [filter, { type }],
-    })
-      .sort({
-        startTime: "asc",
-      })
-      .populate("type");
-    console.log(activities);
-    res.json(activities);
   }
   // else if (type) {
   //   const activities = awaitActivity
