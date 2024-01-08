@@ -45,7 +45,7 @@ export default function ActivityCard({ activity }) {
           <h2 className="card-title">{activity.title}</h2>
           <p>{activity.description}</p>
           <div className="flex justify-between items-end">
-            <CapacityBadge activity={activity} />
+            {/* <CapacityBadge activity={activity} /> */}
             <div className="avatar">
               <div className="w-24 mask mask-hexagon">
                 <img src={photos[activity.instructor]} />

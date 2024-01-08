@@ -1,5 +1,5 @@
 import { FaRegCalendar, FaClock, FaPersonDress } from "react-icons/fa6";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useRevalidator } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
 import { handleCancelation } from "../api/cancelationAcitvity";
@@ -18,6 +18,8 @@ export default function ClassDetails() {
     activity.capacity - activity.registeredUsers.length
   );
 
+  const revalidator = useRevalidator();
+
   const navigate = useNavigate();
 
   const handleBooking = () => {
@@ -29,9 +31,10 @@ export default function ClassDetails() {
       )
       .then((response) => {
         setOpenSlots(
-          response.data.capacity - response.data.registeredUsers.length,
-          notify()
+          response.data.capacity - response.data.registeredUsers.length
         );
+        notify();
+        revalidator.revalidate();
         console.log("Data from api", response);
       })
       .catch((err) => {
@@ -99,7 +102,7 @@ export default function ClassDetails() {
       "https://static.wixstatic.com/media/87046c_2a44f60d1a8a47faad745a9a3b2e4fa1~mv2.jpg/v1/fill/w_656,h_920,fp_0.48_0.34,q_85,usm_0.66_1.00_0.01,enc_auto/87046c_2a44f60d1a8a47faad745a9a3b2e4fa1~mv2.jpg",
     Rolf: "https://static.wixstatic.com/media/87046c_8b75e3d5339f4d46b34471ccee515c3f~mv2.jpg/v1/fill/w_656,h_1040,fp_0.47_0.37,q_85,usm_0.66_1.00_0.01,enc_auto/87046c_8b75e3d5339f4d46b34471ccee515c3f~mv2.jpg",
   };
-
+  console.log(user?.activeMembership);
   return (
     <div className="flex md:flex-row flex-col-reverse">
       <ToastContainer
@@ -157,7 +160,7 @@ export default function ClassDetails() {
             <FaPersonDress className="text-2xl" />
             <p className="font-bold">Capacity</p>
           </div>
-          <CapacityBadge activity={activity} />
+          <CapacityBadge openSlots={openSlots} />
         </div>
 
         <div className="avatar self-center mt-3 sm:flex gap-2">
@@ -196,7 +199,7 @@ export default function ClassDetails() {
             onClick={() => document.getElementById("my_modal_1").showModal()}
             disabled={openSlots <= 0}
           >
-            Cancel
+            Cancel Booking
           </button>
           <button
             className="btn btn-neutral mr-3 self-center mt-2"
@@ -255,7 +258,6 @@ export default function ClassDetails() {
 
             <div className="modal-action">
               <form method="dialog">
-                {/* if there is a button in form, it will close the modal */}
                 <button
                   className={clsx(
                     "btn btn-primary mr-3 self-center mt-2",
@@ -293,10 +295,10 @@ export default function ClassDetails() {
             </div>
           </div>
 
-          {/* <div
+          <div
             className={clsx(
               "modal-box",
-              !user?.activeMembership === null && "hidden"
+              user?.activeMembership !== null && "hidden"
             )}
           >
             <div class="w-full mx-auto">
@@ -316,22 +318,27 @@ export default function ClassDetails() {
                     No active membership plan
                   </h2>
                   <p class="mt-2 text-sm text-gray-600 leading-relaxed">
-                    You dont have an active membership plan. In order to book a class, please purchase one of the available membership plans
+                    You dont have an active membership plan. In order to book a
+                    class, please purchase one of the available membership plans
                   </p>
                 </div>
+                <div className="modal-action">
+                  <form method="dialog">
+                    <button class="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
+                      Cancel
+                    </button>
 
-                <div class="flex items-center mt-3">
-                  <button class="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md">
-                    Cancel
-                  </button>
-
-                  <button onClick={() => navigate("/membershipPlans")}class="flex-1 px-4 py-2 ml-2 bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium rounded-md">
-                    Purchase Membership Plan
-                  </button>
+                    <button
+                      onClick={() => navigate("/membershipPlans")}
+                      class="flex-1 px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium rounded-md"
+                    >
+                      Purchase Membership Plan
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
         </dialog>
 
         <button

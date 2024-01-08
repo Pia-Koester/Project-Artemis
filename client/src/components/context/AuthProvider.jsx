@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+import { badCredentials } from "../../utils/badCredentials";
 
 export const AuthContext = createContext();
 
@@ -22,6 +23,9 @@ export default function AuthProvider({ children }) {
       .catch((error) => {
         console.log(error);
         setUser(null);
+        if(error.response.status.toString() === "403") {
+            navigate("/login")
+        }
       }).finally(() => {
         setIsLoading(false)
       })
@@ -33,10 +37,11 @@ export default function AuthProvider({ children }) {
       .then((response) => {
         setUser(response.data);
         console.log(response.data)
-        navigate("/");
+        navigate("/")
       })
       .catch((error) => {
         console.log(error);
+        badCredentials()
         setUser(null);
       })
       .finally(() => {
@@ -46,7 +51,7 @@ export default function AuthProvider({ children }) {
 
   const logout = async () => {
     axios
-      .post("/logout")
+      .get("http://localhost:8080/logout", {withCredentials: true})
       .then((response) => {
         setUser(null);
         navigate("/login");
