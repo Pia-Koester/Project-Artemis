@@ -52,18 +52,21 @@ const getActivities = asyncWrapper(async (req, res, next) => {
       });
       res.json(activities);
     }
-    const activities = await Activity.find(filter)
+    console.log(type);
+    const activities = await Activity.find({
+      $and: [filter, { type }],
+    })
       .sort({
         startTime: "asc",
       })
       .populate("type");
-
+    console.log(activities);
     res.json(activities);
   }
   // else if (type) {
   //   const activities = awaitActivity
   //     .find({
-  //       $and: [filter, { instructor }],
+  //       $and: [filter, { type }],
   //     })
   //     .sort({
   //       startTime: "asc",
