@@ -202,7 +202,7 @@ export default function ClassDetails() {
                   <FaPersonDress className="text-2xl" />
                   <p className="font-bold">Capacity </p>
                 </div>
-                <p>capacity with color indicating fullness</p>
+                <CapacityBadge activity={activity} className="m-2" />
               </div>
 
               <div className="avatar mt-1">

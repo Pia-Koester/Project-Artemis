@@ -28,7 +28,7 @@ export default function Registration() {
   const [step, setStep] = useState(1);
   const handleFormSteps = () => {
     setStep((prev) => {
-      return prev + 1;
+      return Math.min(prev + 1, 3);
     });
   };
 
@@ -49,9 +49,25 @@ export default function Registration() {
             className=" signup form-control w-full max-w-xs  flex flex-col items-center justify-center"
           >
             <ul className="steps steps-vertical lg:steps-horizontal">
-              <li className="step step-primary">Login Information</li>
-              <li className="step step-primary">Personal Details</li>
-              <li className="step">Emergency Contact</li>
+              <li
+                className={clsx(
+                  "step",
+                  (step === 1 || step === 2 || step === 3) && "step-primary"
+                )}
+              >
+                Login Information
+              </li>
+              <li
+                className={clsx(
+                  "step",
+                  (step === 2 || step === 3) && "step-primary"
+                )}
+              >
+                Personal Details
+              </li>
+              <li className={clsx("step", step === 3 && "step-primary")}>
+                Emergency Contact
+              </li>
             </ul>
             <label>
               {step === 1 ? (
