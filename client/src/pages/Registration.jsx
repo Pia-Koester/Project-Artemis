@@ -24,6 +24,19 @@ export default function Registration() {
       });
   };
 
+  //TO DO: create 3 forms with each a submit function and the own validation
+  const [loginInfo, setLoginInfo] = useState();
+  const [personalInfo, setPersonalInfo] = useState();
+  const [emergencyInfo, setEmergencyInfo] = useState();
+
+  const registrationSubmit = (data) => {
+    setLoginInfo(data);
+    setStep((prev) => {
+      prev + 1;
+    });
+    console.log(loginInfo);
+  };
+
   //TO DO: split registration into first only asking for mail and password and then onboarding on different screen
   const [step, setStep] = useState(1);
   const handleFormSteps = () => {
@@ -32,9 +45,19 @@ export default function Registration() {
     });
   };
 
+  const handleBacksteps = () => {
+    setStep((prev) => {
+      return prev - 1;
+    });
+  };
+
   const nextClasses = {
     3: "hidden",
     4: "hidden",
+  };
+
+  const backClasses = {
+    1: "hidden",
   };
 
   const submitClasses = { 1: "hidden", 2: "hidden" };
@@ -44,33 +67,33 @@ export default function Registration() {
       <h1 className="text-5xl font-bold mb-4 text-center">Sign Up</h1>
       <div className="flex justify-center">
         <div className="flex flex-col items-center justify-center w-4/12 p-4  ">
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className=" signup form-control w-full max-w-xs  flex flex-col items-center justify-center"
-          >
-            <ul className="steps steps-vertical lg:steps-horizontal">
-              <li
-                className={clsx(
-                  "step",
-                  (step === 1 || step === 2 || step === 3) && "step-primary"
-                )}
-              >
-                Login Information
-              </li>
-              <li
-                className={clsx(
-                  "step",
-                  (step === 2 || step === 3) && "step-primary"
-                )}
-              >
-                Personal Details
-              </li>
-              <li className={clsx("step", step === 3 && "step-primary")}>
-                Emergency Contact
-              </li>
-            </ul>
-            <label>
-              {step === 1 ? (
+          <ul className="steps steps-vertical lg:steps-horizontal">
+            <li
+              className={clsx(
+                "step",
+                (step === 1 || step === 2 || step === 3) && "step-primary"
+              )}
+            >
+              Login Information
+            </li>
+            <li
+              className={clsx(
+                "step",
+                (step === 2 || step === 3) && "step-primary"
+              )}
+            >
+              Personal Details
+            </li>
+            <li className={clsx("step", step === 3 && "step-primary")}>
+              Emergency Contact
+            </li>
+          </ul>
+          {step === 1 ? (
+            <form
+              onSubmit={handleSubmit(registrationSubmit)}
+              className=" signup form-control w-full max-w-xs  flex flex-col items-center justify-center"
+            >
+              <label>
                 <div className="login-info ">
                   <div className="label self-start">
                     <span className="label-text">What is your E-Mail?</span>
@@ -106,76 +129,83 @@ export default function Registration() {
                     />
                   </div>
                 </div>
-              ) : step === 2 ? (
-                <div className="personal-details">
-                  <div className="label self-start">
-                    <span className="label-text">What is your Name?</span>
-                  </div>
-                  <input
-                    placeholder="First Name"
-                    className="input input-bordered w-full max-w-xs input-primary "
-                    {...register("firstName", { required: true })}
-                  />
-                  <div className="label self-start">
-                    <span className="label-text">What is your Last-Name?</span>
-                  </div>
-                  <input
-                    placeholder="Last Name"
-                    className="input input-bordered w-full max-w-xs input-primary "
-                    {...register("lastName", { required: true })}
-                  />
-                  <div className="label self-start">
-                    <span className="label-text">
-                      What is your Phone Number?
-                    </span>
-                  </div>
-                  <input
-                    placeholder="Phonenumber"
-                    className="input input-bordered w-full max-w-xs input-primary "
-                    {...register("phone", { required: true })}
-                  />
-                  <div className="label self-start">
-                    <span className="label-text">What is your address?</span>
-                  </div>
-                  <input
-                    placeholder="Address"
-                    className="input input-bordered w-full max-w-xs input-primary "
-                    {...register("address", { required: true })}
-                  />
-                  <div className="label self-start">
-                    <span className="label-text">When were you born?</span>
-                  </div>
-                  <input
-                    placeholder="Date of Birth"
-                    className="input input-bordered w-full max-w-xs input-primary "
-                    type="date"
-                    {...register("dateOfBirth", { required: true })}
-                  />
-                </div>
-              ) : (
-                "empty"
-              )}
-
-              {errors.exampleRequired && <span>This field is required</span>}
+              </label>
               <button
                 className={clsx(
                   "btn btn-primary self-center",
                   nextClasses[step]
                 )}
-                onClick={handleFormSteps}
+                type="submit"
               >
                 Next
               </button>
-              <button
-                className={clsx(
-                  "btn btn-primary self-center",
-                  submitClasses[step]
-                )}
-              >
-                Submit
-              </button>
-            </label>
-          </form>
+            </form>
+          ) : step === 2 ? (
+            <div className="personal-details">
+              <div className="label self-start">
+                <span className="label-text">What is your Name?</span>
+              </div>
+              <input
+                placeholder="First Name"
+                className="input input-bordered w-full max-w-xs input-primary "
+                {...register("firstName", { required: true })}
+              />
+              <div className="label self-start">
+                <span className="label-text">What is your Last-Name?</span>
+              </div>
+              <input
+                placeholder="Last Name"
+                className="input input-bordered w-full max-w-xs input-primary "
+                {...register("lastName", { required: true })}
+              />
+              <div className="label self-start">
+                <span className="label-text">What is your Phone Number?</span>
+              </div>
+              <input
+                placeholder="Phonenumber"
+                className="input input-bordered w-full max-w-xs input-primary "
+                {...register("phone", { required: true })}
+              />
+              <div className="label self-start">
+                <span className="label-text">What is your address?</span>
+              </div>
+              <input
+                placeholder="Address"
+                className="input input-bordered w-full max-w-xs input-primary "
+                {...register("address", { required: true })}
+              />
+              <div className="label self-start">
+                <span className="label-text">When were you born?</span>
+              </div>
+              <input
+                placeholder="Date of Birth"
+                className="input input-bordered w-full max-w-xs input-primary "
+                type="date"
+                {...register("dateOfBirth", { required: true })}
+              />
+            </div>
+          ) : (
+            "empty"
+          )}
+
+          {errors.exampleRequired && <span>This field is required</span>}
+          <div className="flex justify-around mt-2">
+            <button
+              className={clsx("btn btn-neutral", backClasses[step])}
+              onClick={handleBacksteps}
+            >
+              Back
+            </button>
+
+            {/* <button
+              className={clsx(
+                "btn btn-primary self-center",
+                submitClasses[step]
+              )}
+            >
+              Submit
+            </button> */}
+          </div>
         </div>
         <img
           src="https://res.cloudinary.com/ddj2xpjki/image/upload/v1704633572/Zeus/isabella.small_gu1hs7.webp"
