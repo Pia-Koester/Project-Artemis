@@ -30,11 +30,11 @@ export default function Registration() {
   const [emergencyInfo, setEmergencyInfo] = useState();
 
   const registrationSubmit = (data) => {
+    console.log(data, step);
     setLoginInfo(data);
     setStep((prev) => {
-      prev + 1;
+      return prev + 1;
     });
-    console.log(loginInfo);
   };
 
   //TO DO: split registration into first only asking for mail and password and then onboarding on different screen
@@ -61,7 +61,7 @@ export default function Registration() {
   };
 
   const submitClasses = { 1: "hidden", 2: "hidden" };
-
+  console.log(step);
   return (
     <div>
       <h1 className="text-5xl font-bold mb-4 text-center">Sign Up</h1>
@@ -93,44 +93,43 @@ export default function Registration() {
               onSubmit={handleSubmit(registrationSubmit)}
               className=" signup form-control w-full max-w-xs  flex flex-col items-center justify-center"
             >
-              <label>
-                <div className="login-info ">
-                  <div className="label self-start">
-                    <span className="label-text">What is your E-Mail?</span>
-                  </div>
-                  <input
-                    placeholder="E-Mail"
-                    className="input input-bordered w-full max-w-xs input-primary "
-                    {...register("email", { required: true })}
-                  />
-                  <div className="label self-start">
-                    <span className="label-text">Set a password</span>
-                  </div>
-                  <input
-                    placeholder="Password"
-                    className="input input-bordered w-full max-w-xs input-primary "
-                    {...register("password", { required: true, minLength: 8 })}
-                  />
-                  {/* TO DO: Password strength indicator */}
-                  <div className="label cursor-pointer">
-                    <span className="label-text">AGB Aproval</span>
-                    <input
-                      type="checkbox"
-                      className="toggle toggle-secondary"
-                      {...register("termsOfUse", { required: true })}
-                    />
-                  </div>
-                  <div className="label cursor-pointer">
-                    <span className="label-text">Dataprotection read</span>
-                    <input
-                      type="checkbox"
-                      className="toggle toggle-secondary"
-                      {...register("dataProtectionInfo", { required: true })}
-                    />
-                  </div>
+              <div className="login-info ">
+                <div className="label self-start">
+                  <span className="label-text">What is your E-Mail?</span>
                 </div>
-              </label>
+                <input
+                  placeholder="E-Mail"
+                  className="input input-bordered w-full max-w-xs input-primary "
+                  {...register("email", { required: true })}
+                />
+                <div className="label self-start">
+                  <span className="label-text">Set a password</span>
+                </div>
+                <input
+                  placeholder="Password"
+                  className="input input-bordered w-full max-w-xs input-primary "
+                  {...register("password", { required: true, minLength: 8 })}
+                />
+                {/* TO DO: Password strength indicator */}
+                <div className="label cursor-pointer">
+                  <span className="label-text">AGB Aproval</span>
+                  <input
+                    type="checkbox"
+                    className="toggle toggle-secondary"
+                    {...register("termsOfUse", { required: true })}
+                  />
+                </div>
+                <div className="label cursor-pointer">
+                  <span className="label-text">Dataprotection read</span>
+                  <input
+                    type="checkbox"
+                    className="toggle toggle-secondary"
+                    {...register("dataProtectionInfo", { required: true })}
+                  />
+                </div>
+              </div>
               <button
+                // TO DO: disable button if there are any errors
                 className={clsx(
                   "btn btn-primary self-center",
                   nextClasses[step]
@@ -197,14 +196,14 @@ export default function Registration() {
               Back
             </button>
 
-            {/* <button
+            <button
               className={clsx(
                 "btn btn-primary self-center",
                 submitClasses[step]
               )}
             >
               Submit
-            </button> */}
+            </button>
           </div>
         </div>
         <img
