@@ -37,12 +37,12 @@ export default function ActivityCard({ activity }) {
     >
       {/* QUESTION: Why is the text running outside the box on medium sizes?  */}
       <Link to={`/details/${activity._id}`}>
-        <div className="card-body">
+        <div className="card-body overflow-hidden">
           <p>
             {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
           </p>
 
-          <h2 className="card-title">{activity.title}</h2>
+          <h2 className="card-title text-wrap ">{activity.title}</h2>
           <p>{activity.description}</p>
           <div className="flex justify-between items-end">
             <CapacityBadge activity={activity} />

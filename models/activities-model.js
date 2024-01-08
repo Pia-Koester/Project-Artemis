@@ -14,7 +14,21 @@ const activitySchema = new Schema({
   capacity: { type: Number },
   waitlist: waitlistSchema,
   instructor: { type: String },
-  location: { type: String },
+  location: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: true,
+      default: "Point",
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+      index: "2dsphere",
+      default: [53.58044198674046, 9.97947668337071],
+    },
+    address: { type: String, default: "Klosterallee 67" },
+  },
   registeredUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
   trialMembership: { type: Boolean, default: true },
   type: { type: Schema.Types.ObjectId, ref: "Activitytype" },
