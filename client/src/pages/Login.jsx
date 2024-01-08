@@ -40,13 +40,18 @@ export default function Login() {
           <div className="label self-start">
             <span className="label-text">What is your E-Mail?</span>
           </div>
-          <div className="flex items-center">
+          <div className="flex flex-col items-center">
             <input
               type="text"
               placeholder="Type E-Mail here"
               className="input input-bordered w-full max-w-xs input-primary "
-              {...register("email", { required: true })}
-            />{" "}
+              {...register("email", { required: "E-mail is required" })}
+            />
+            {errors.email?.type === "required" && (
+              <p className="label w-full self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                {errors.email.message}
+              </p>
+            )}
             {/* <FaRegEye /> */}
           </div>
           <div className="label self-start">
@@ -56,8 +61,13 @@ export default function Login() {
             type="password"
             placeholder="Type Password here"
             className="input input-bordered w-full max-w-xs input-primary "
-            {...register("password", { required: true })}
+            {...register("password", { required: "Password is required" })}
           />
+          {errors.password?.type === "required" && (
+            <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+              {errors.password.message}
+            </span>
+          )}
           <button className="btn btn-primary mt-5">Submit</button>
         </label>
         {/* TO DO: in case we create the option to login via mail
@@ -81,7 +91,8 @@ export default function Login() {
               Error
             </div>
             <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-              <p>Invalid username and/or password!</p><br />
+              <p>Invalid username and/or password!</p>
+              <br />
               <p>Please try again</p>
             </div>
           </div>

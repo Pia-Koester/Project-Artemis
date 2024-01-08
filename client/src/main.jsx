@@ -8,7 +8,6 @@ import Rootlayout from "./layout/RootLayout.jsx";
 import UserLayout from "./layout/UserLayout.jsx";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
-
 import ClassSchedule from "./pages/ClassSchedule";
 
 //loader Functions

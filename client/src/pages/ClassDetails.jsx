@@ -6,6 +6,7 @@ import { handleCancelation } from "../api/cancelationAcitvity";
 import clsx from "clsx";
 import { useState } from "react";
 import CapacityBadge from "../components/Activities/CapacityBadge";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function ClassDetails() {
   const { id } = useParams();
@@ -26,7 +27,8 @@ export default function ClassDetails() {
       )
       .then((response) => {
         setOpenSlots(
-          response.data.capacity - response.data.registeredUsers.length
+          response.data.capacity - response.data.registeredUsers.length,
+          notify()
         );
         console.log("Data from api", response);
       })
@@ -35,8 +37,20 @@ export default function ClassDetails() {
         if (err.response.status.toString() === "403") {
           navigate("/login");
         }
-      });
+      })
   };
+
+  const notify = () =>
+    toast.success("Booked Successfully", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   //transforming dates and times
   const startTime = new Date(activity.startTime);
@@ -86,6 +100,19 @@ export default function ClassDetails() {
 
   return (
     <div className="flex md:flex-row flex-col-reverse">
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       <div className="Kurs-Informationen card bg-base-100 shadow-xl flex flex-col p-4 m-2">
         {/* To Do: block für Kursinformationen erstellen */}
         <h1 className="text-2xl font-bold mb-4">{activity.title}</h1>
@@ -203,7 +230,9 @@ export default function ClassDetails() {
                 {/* if there is a button in form, it will close the modal */}
                 <button
                   className="btn btn-primary mr-3 self-center"
-                  onClick={handleBooking}
+                  onClick={() => {
+                    handleBooking();
+                  }}
                 >
                   Confirm
                 </button>
