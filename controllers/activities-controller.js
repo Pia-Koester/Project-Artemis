@@ -1,6 +1,7 @@
 const Activity = require("../models/activities-model.js");
 const ErrorResponse = require("../utils/errorResponse.js");
 const asyncWrapper = require("../utils/asyncWrapper.js");
+const mongoose = require("mongoose");
 
 const createActivity = asyncWrapper(async (req, res, next) => {
   const {
@@ -37,7 +38,7 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun, type } = req.query;
-
+  console.log(req.query);
   let filter = {
     startTime: {
       $gte: new Date(mon).toLocaleDateString("en-US"),
@@ -45,48 +46,31 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     },
   };
 
-  // TO DO: loop over query and depending on the values add them to the filter object
+  const queryParams = { instructor, type };
 
-  if (!instructor || instructor === "All" || instructor === "null") {
-    if (!mon && !sun) {
-      const activities = await Activity.find({}).populate("type").sort({
-        startTime: "asc",
-      });
-      res.json(activities);
-    } else {
-      console.log(type);
-      console.log(filter);
-      const activities = await Activity.find(filter)
-        .sort({
-          startTime: "asc",
-        })
-        .populate("type");
-      console.log(activities);
-      res.json(activities);
+  for (const key of Object.keys(queryParams)) {
+    const value = queryParams[key];
+    if (value !== undefined) {
+      filter[key] = value;
     }
   }
-  // else if (type) {
-  //   const activities = awaitActivity
-  //     .find({
-  //       $and: [filter, { type }],
-  //     })
-  //     .sort({
-  //       startTime: "asc",
-  //     })
-  //     .populate("type");
+  console.log(filter);
+  //This was for bugfixing
+  // const typeId = new mongoose.Types.ObjectId("659adaa36ec02ab910f6c34a");
+  // const activities = await Activity.find({
+  //   type: typeId,
+  // }).sort({
+  //   startTime: "asc",
+  // });
+  // console.log(activities);
+  // return res.json(activities);
+  // TO DO: loop over query and depending on the values add them to the filter object
 
-  //   res.json(activities);
-  // }
-  else {
-    const activities = await Activity.find({
-      $and: [filter, { instructor }],
-    })
-      .populate("type")
-      .sort({
-        startTime: "asc",
-      });
-    res.json(activities);
-  }
+  const activities = await Activity.find(filter).populate("type").sort({
+    startTime: "asc",
+  });
+  console.log(activities);
+  res.json(activities);
 });
 
 const getActivity = asyncWrapper(async (req, res, next) => {
