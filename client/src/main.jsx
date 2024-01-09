@@ -5,7 +5,6 @@ import "./index.css";
 //IMPORTING THINGS FOR ROUTER
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Rootlayout from "./layout/RootLayout.jsx";
-import UserLayout from "./layout/UserLayout.jsx";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import ClassSchedule from "./pages/ClassSchedule";
@@ -44,27 +43,20 @@ const router = createBrowserRouter([
         path: "membershipPlans",
         element: <MembershipPlans />,
       },
-    ],
-  },
-
-  {
-    path: "/userProfile",
-    element: <UserLayout />,
-    children: [
       {
-        path: "memberships",
+        path: "/userProfile/memberships",
         element: <UserMemberships />,
       },
       {
-        path: "activities",
+        path: "/userProfile/activities",
         element: <UserActivities />,
       },
       {
-        path: "details",
+        path: "/userProfile/details",
         element: <UserInformation />,
       },
       {
-        path: "details/update",
+        path: "/userProfile/details/update",
         element: <UserUpdateInformation />,
       },
     ],

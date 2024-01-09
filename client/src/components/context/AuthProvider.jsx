@@ -41,7 +41,7 @@ export default function AuthProvider({ children }) {
         navigate("/")
         setTimeout(() => {
           window.location.reload()
-        }, 500);
+        }, 100);
       })
       .catch((error) => {
         console.log(error);

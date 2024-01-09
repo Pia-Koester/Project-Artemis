@@ -6,6 +6,11 @@ import clsx from "clsx";
 export default function UserActivities() {
   const { userActivity } = useContext(AuthContext);
   
+  // const startTime = new Date(userActivity?.startTime)
+  // const today = new Date()
+  // console.log(startTime)
+  // const [past, setPast] = useState(startTime < today)
+
   const currentDate = new Date();
 
   const currentYear = currentDate.getFullYear();
@@ -35,12 +40,9 @@ export default function UserActivities() {
           const year = date.getFullYear();
           const month = date.getMonth() + 1; // JavaScript months are 0-based, so we add 1
           const day = date.getDate();
+
           let pastDate = false;
 
-
-          console.log(`Year: ${year}`);
-          console.log(`Month: ${month}`);
-          console.log(`Day: ${day}`);
           if(currentYear > year) {
             pastDate = true
             return
