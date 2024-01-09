@@ -169,7 +169,7 @@ export default function Registration() {
               <button
                 // TO DO: disable button if there are any errors
                 className={clsx(
-                  "btn btn-primary self-center",
+                  "btn btn-primary self-center mt-2",
                   nextClasses[step]
                 )}
               >
@@ -181,104 +181,108 @@ export default function Registration() {
               onSubmit={handleSubmit(personalSubmit)}
               className=" signup form-control w-full max-w-xs  flex flex-col items-center justify-center"
             >
-              <div className="personal-details">
-                <div className="label self-start">
-                  <span className="label-text">What is your Name?</span>
-                </div>
-                <input
-                  placeholder="First Name"
-                  className="input input-bordered w-full max-w-xs input-primary "
-                  {...register("firstName", {
-                    required: "Enter your First Name",
-                  })}
-                />
-                {errors.firstName?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.firstName.message}
-                  </span>
-                )}
-                <div className="label self-start">
-                  <span className="label-text">What is your Last-Name?</span>
-                </div>
-                <input
-                  placeholder="Last Name"
-                  className="input input-bordered w-full max-w-xs input-primary "
-                  {...register("lastName", {
-                    required: "Enter your last Name",
-                  })}
-                />{" "}
-                {errors.lastName?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.lastName.message}
-                  </span>
-                )}
-                <div className="label self-start">
-                  <span className="label-text">What is your Phone Number?</span>
-                </div>
-                <input
-                  placeholder="Phonenumber"
-                  className="input input-bordered w-full max-w-xs input-primary "
-                  {...register("phone", {
-                    required: "You must enter your phone Number",
-                  })}
-                />{" "}
-                {errors.phone?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.phone.message}
-                  </span>
-                )}
-                <div className="label self-start">
-                  <span className="label-text">What is your address?</span>
-                </div>
-                <input
-                  placeholder="Address"
-                  className="input input-bordered w-full max-w-xs input-primary "
-                  {...register("address", {
-                    required: "Please enter your address",
-                  })}
-                />{" "}
-                {errors.address?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.address.message}
-                  </span>
-                )}
-                <div className="label self-start">
-                  <span className="label-text">When were you born?</span>
-                </div>
-                <input
-                  placeholder="Date of Birth"
-                  className="input input-bordered w-full max-w-xs input-primary "
-                  type="date"
-                  {...register("dateOfBirth", {
-                    required: "Enter your date of birth",
-                  })}
-                />
-                {errors.dateOfBirth?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.dateOfBirth.message}
-                  </span>
-                )}
-              </div>{" "}
-              <div className="flex justify-around mt-2">
-                <button
-                  className={clsx("btn btn-neutral", backClasses[step])}
-                  onClick={handleBacksteps}
-                >
-                  Back
-                </button>
-                <button
-                  className={clsx(
-                    "btn btn-primary self-center",
-                    nextClasses[step]
+              <label>
+                {/* ATTENTION: this label is here so that the data from the first input is not being used from the first form or send to the third. Unclear why we need it */}
+                <div className="personal-details">
+                  <div className="label self-start">
+                    <span className="label-text">What is your Name?</span>
+                  </div>
+                  <input
+                    placeholder="First Name"
+                    className="input input-bordered w-full max-w-xs input-primary "
+                    {...register("firstName", {
+                      required: "Enter your First Name",
+                    })}
+                  />
+                  {errors.firstName?.type === "required" && (
+                    <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                      {errors.firstName.message}
+                    </span>
                   )}
-                >
-                  Next
-                </button>
-              </div>
+                  <div className="label self-start">
+                    <span className="label-text">What is your Last-Name?</span>
+                  </div>
+                  <input
+                    placeholder="Last Name"
+                    className="input input-bordered w-full max-w-xs input-primary "
+                    {...register("lastName", {
+                      required: "Enter your last Name",
+                    })}
+                  />{" "}
+                  {errors.lastName?.type === "required" && (
+                    <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                      {errors.lastName.message}
+                    </span>
+                  )}
+                  <div className="label self-start">
+                    <span className="label-text">
+                      What is your Phone Number?
+                    </span>
+                  </div>
+                  <input
+                    placeholder="Phonenumber"
+                    className="input input-bordered w-full max-w-xs input-primary "
+                    {...register("phone", {
+                      required: "You must enter your phone Number",
+                    })}
+                  />{" "}
+                  {errors.phone?.type === "required" && (
+                    <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                      {errors.phone.message}
+                    </span>
+                  )}
+                  <div className="label self-start">
+                    <span className="label-text">What is your address?</span>
+                  </div>
+                  <input
+                    placeholder="Address"
+                    className="input input-bordered w-full max-w-xs input-primary "
+                    {...register("address", {
+                      required: "Please enter your address",
+                    })}
+                  />{" "}
+                  {errors.address?.type === "required" && (
+                    <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                      {errors.address.message}
+                    </span>
+                  )}
+                  <div className="label self-start">
+                    <span className="label-text">When were you born?</span>
+                  </div>
+                  <input
+                    placeholder="Date of Birth"
+                    className="input input-bordered w-full max-w-xs input-primary "
+                    type="date"
+                    {...register("dateOfBirth", {
+                      required: "Enter your date of birth",
+                    })}
+                  />
+                  {errors.dateOfBirth?.type === "required" && (
+                    <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                      {errors.dateOfBirth.message}
+                    </span>
+                  )}
+                </div>{" "}
+                <div className="flex justify-around mt-2">
+                  <button
+                    className={clsx("btn btn-neutral", backClasses[step])}
+                    onClick={handleBacksteps}
+                  >
+                    Back
+                  </button>
+                  <button
+                    className={clsx(
+                      "btn btn-primary self-center",
+                      nextClasses[step]
+                    )}
+                  >
+                    Next
+                  </button>
+                </div>
+              </label>
             </form>
           ) : (
             <form onSubmit={handleSubmit(formSubmit)}>
-              {" "}
               <div className="label cursor-pointer">
                 <span className="label-text">AGB Aproval</span>
                 <input

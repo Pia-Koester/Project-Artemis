@@ -39,6 +39,7 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun, type } = req.query;
   console.log(req.query);
+
   let filter = {
     startTime: {
       $gte: new Date(mon).toLocaleDateString("en-US"),
@@ -46,25 +47,20 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     },
   };
 
-  const queryParams = { instructor, type };
+  const queryParams = { instructor }; //TO DO: put back type to be able to filter for it
 
   for (const key of Object.keys(queryParams)) {
     const value = queryParams[key];
     if (value !== undefined) {
-      filter[key] = value;
+      if (key === "type") {
+        filter["type._id"] = value;
+      } else {
+        filter[key] = value;
+      }
     }
   }
+
   console.log(filter);
-  //This was for bugfixing
-  // const typeId = new mongoose.Types.ObjectId("659adaa36ec02ab910f6c34a");
-  // const activities = await Activity.find({
-  //   type: typeId,
-  // }).sort({
-  //   startTime: "asc",
-  // });
-  // console.log(activities);
-  // return res.json(activities);
-  // TO DO: loop over query and depending on the values add them to the filter object
 
   const activities = await Activity.find(filter).populate("type").sort({
     startTime: "asc",

@@ -17,7 +17,11 @@ const getActivities = async ({ request }) => {
       sun: week.formattedSundayDate,
     };
 
-    if (instructor !== null && instructor !== undefined) {
+    if (
+      instructor !== null &&
+      instructor !== undefined &&
+      instructor !== "All"
+    ) {
       queryParams.instructor = instructor;
     }
 

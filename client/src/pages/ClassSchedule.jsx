@@ -32,12 +32,12 @@ export default function ClassSchedule() {
     setSearchParams(`instructor=${e.target.value}`);
   };
 
-  //function to take care of activitytyp /workouttype filter
-  const handleType = (e) => {
-    setWorkouttype(e.target.value);
-    setTrainer("");
-    setSearchParams(`type=${e.target.value}`);
-  };
+  // //function to take care of activitytyp /workouttype filter
+  // const handleType = (e) => {
+  //   setWorkouttype(e.target.value);
+  //   setTrainer("");
+  //   setSearchParams(`type=${e.target.value}`);
+  // };
 
   //pagination based on week logic
   const handleNext = () => {
@@ -83,7 +83,7 @@ export default function ClassSchedule() {
             return <option>{instructor}</option>;
           })}
         </select>
-        <select
+        {/* <select
           className="select select-secondary w-full max-w-xs"
           onChange={handleType}
           value={worktouttype}
@@ -98,7 +98,7 @@ export default function ClassSchedule() {
             }
             return <option>{type}</option>;
           })}
-        </select>
+        </select> */}
       </div>
       <div className="grid lg:grid-cols-7 grid-cols-1 gap-4 md:w-full">
         {weekdays.map((day) => {
