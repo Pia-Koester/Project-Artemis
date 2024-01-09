@@ -18,6 +18,7 @@ import UserInformation from "./components/UserProfile/UserInformation.jsx";
 import MembershipPlans from "./components/Memberships/MembershipPlans.jsx";
 import UserUpdateInformation from "./components/UserProfile/UserUpdateInformation.jsx";
 import Protected from "./pages/Protected";
+import CreateActivity from "./components/Admin/CreateActivity";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,13 @@ const router = createBrowserRouter([
             element: <UserUpdateInformation />,
           },
         ],
+      },
+      {
+        path: "/createActivity",
+        element: <CreateActivity />,
+        loader: async () => {
+          return fetch(`http://localhost:8080/activityTypes`);
+        },
       },
     ],
   },
