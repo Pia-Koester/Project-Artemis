@@ -161,6 +161,7 @@ export default function ClassDetails() {
           location={activity.location}
         />
       </div>
+
       <aside className="card w-96 bg-base-100 shadow-2xl flex flex-col p-4 m-2">
         <h1 className="text-2xl font-bold mb-4 lg:hidden">{activity.title}</h1>
         <div>
@@ -372,7 +373,10 @@ export default function ClassDetails() {
         >
           Waitlist
         </button>
+
       </aside>
+      </div> 
+      </div>
     </div>
   );
 }
