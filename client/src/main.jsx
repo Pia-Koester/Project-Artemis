@@ -5,16 +5,13 @@ import "./index.css";
 //IMPORTING THINGS FOR ROUTER
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Rootlayout from "./layout/RootLayout.jsx";
-import UserLayout from "./layout/UserLayout.jsx";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
-
 import ClassSchedule from "./pages/ClassSchedule";
 
 //loader Functions
 import { getActivities, getActivity } from "./api/activities.js";
 import ClassDetails from "./pages/ClassDetails";
-
 import UserMemberships from "./components/UserProfile/UserMemberships.jsx";
 import UserActivities from "./components/UserProfile/UserActivities.jsx";
 import UserInformation from "./components/UserProfile/UserInformation.jsx";
@@ -46,27 +43,20 @@ const router = createBrowserRouter([
         path: "membershipPlans",
         element: <MembershipPlans />,
       },
-    ],
-  },
-
-  {
-    path: "/userProfile",
-    element: <UserLayout />,
-    children: [
       {
-        path: "memberships",
+        path: "/userProfile/memberships",
         element: <UserMemberships />,
       },
       {
-        path: "activities",
+        path: "/userProfile/activities",
         element: <UserActivities />,
       },
       {
-        path: "details",
+        path: "/userProfile/details",
         element: <UserInformation />,
       },
       {
-        path: "details/update",
+        path: "/userProfile/details/update",
         element: <UserUpdateInformation />,
       },
     ],
@@ -75,6 +65,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
   </React.StrictMode>
 );

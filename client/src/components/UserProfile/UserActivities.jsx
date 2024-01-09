@@ -1,26 +1,24 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { handleCancelation } from "../../api/cancelationAcitvity";
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
+import clsx from "clsx";
 
 export default function UserActivities() {
+
+  const { userActivity } = useContext(AuthContext);
+  
+  // const startTime = new Date(userActivity?.startTime)
+  // const today = new Date()
+  // console.log(startTime)
+  // const [past, setPast] = useState(startTime < today)
+
   const navigate = useNavigate();
 
-  const [userActivity, setUserActivity] = useState(null);
+  const currentDate = new Date();
 
-  useEffect(() => {
-    getUser("http://localhost:8080/users/profile");
-  }, []);
-
-  const getUser = async (url) => {
-    try {
-      const response = await axios.get(url, { withCredentials: true });
-      setUserActivity(response.data.classesRegistered);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-based, so we add 1
+  const currentDay = currentDate.getDate();
 
   return (
     <>
@@ -37,14 +35,38 @@ export default function UserActivities() {
 
           const getEndDate = userActivity.endTime;
           const formatEndDate = getEndDate.split("T");
-          const FormatEndTime = formatEndDate[1].split(".");
+          const formatEndTime = formatEndDate[1].split(".");
+
+          const utcTimeString = userActivity.startTime;
+          const date = new Date(utcTimeString);
+
+          const year = date.getFullYear();
+          const month = date.getMonth() + 1; // JavaScript months are 0-based, so we add 1
+          const day = date.getDate();
+
+          let pastDate = false;
+
+          if(currentYear > year) {
+            pastDate = true
+            return
+          } else {
+            if(currentMonth > month) {
+              pastDate = true;
+              return
+            } else {
+              if(currentDay >= day) {
+                pastDate = true;
+              }
+            }
+          } 
+
 
           return (
             <div
               key={userActivity._id}
               className="mb-4 lg:w-6/12 w-11/12 mx-auto"
             >
-              <div className="card bg-primary text-primary-content grid lg:grid-cols-2">
+              <div className={clsx("card bg-primary text-primary-content grid lg:grid-cols-2", pastDate && "opacity-50")}>
                 <div className="card-body">
                   <h2 className="card-title">{userActivity.title}</h2>
 
@@ -57,7 +79,7 @@ export default function UserActivities() {
                   </p>
                   <p>
                     <span className="font-medium">End time: </span>
-                    {formatEndDate[0] + " at " + FormatEndTime[0].slice(0, 5)}
+                    {formatEndDate[0] + " at " + formatEndTime[0].slice(0, 5)}
                   </p>
                   <p>
                     <span className="font-medium">Location:</span>{" "}
@@ -65,17 +87,28 @@ export default function UserActivities() {
                   </p>
 
                   <div className="flex justify-between items-end">
-                    <div className="badge badge-secondary">
+
+                    <div className={clsx("badge badge-secondary", pastDate && "hidden")}>
+
                       <button
                         onClick={() => {
                           handleCancelation(userActivity._id);
                           window.location.reload();
                         }}
                       >
-                        Cancel
+
+                        Cancel Booking
                       </button>
+                      
+                    </div>
+                    <div className={clsx("badge badge-neutral", !pastDate && "hidden")}>
+                      <button>
+                        Class Finished
+                      </button>
+
                     </div>
                   </div>
+
                 </div>
                 <div className="avatar flex-col items-end card-body hidden sm:flex">
                   <div className="w-24 mask mask-hexagon mr-4">

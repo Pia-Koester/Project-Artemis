@@ -8,6 +8,7 @@ const handleCancelation = (id) => {
         `http://localhost:8080/activities/${id}/cancel`,
         {},
         { withCredentials: true }
+        
       )
       .then((response) => {
         console.log("Data from api", response)

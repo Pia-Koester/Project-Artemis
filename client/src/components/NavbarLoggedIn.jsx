@@ -1,25 +1,17 @@
 import { Link, NavLink } from "react-router-dom";
 import navLogo from "../assets/logos/WortBildmarkeMAINLOGO_anthra.svg";
 import userIcon from "../assets/logos/avatar.jpg";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthProvider";
 
 export default function Navbar() {
-  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    getUser("http://localhost:8080/users/profile");
-  }, []);
+  const {user, logout} = useContext(AuthContext);
 
-  const getUser = async (url) => {
-    try {
-      const response = await axios.get(url, { withCredentials: true });
-      setUser(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const handleLogout = () => {
+    logout()
+  }
+
   return (
     <>
       <div className="navbar bg-base-100">
@@ -71,7 +63,7 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
-                <a>Logout</a>
+                <Link onClick={handleLogout}>Logout</Link>
               </li>
             </ul>
           </div>

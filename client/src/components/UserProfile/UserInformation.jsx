@@ -1,24 +1,10 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
 
 export default function UserInformation() {
 
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    getUser("http://localhost:8080/users/profile");
-  }, []);
-
-  const getUser = async (url) => {
-    try {
-      const response = await axios.get(url, { withCredentials: true });
-      setUser(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const {user} = useContext(AuthContext);
 
   const formatRegisterDate = user?.dateOfRegistration.split("T");
   const formatDateOfBirth = user?.dateOfBirth.split("T");
