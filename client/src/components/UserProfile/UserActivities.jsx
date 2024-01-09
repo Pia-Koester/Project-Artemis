@@ -4,12 +4,15 @@ import { AuthContext } from "../context/AuthProvider";
 import clsx from "clsx";
 
 export default function UserActivities() {
+
   const { userActivity } = useContext(AuthContext);
   
   // const startTime = new Date(userActivity?.startTime)
   // const today = new Date()
   // console.log(startTime)
   // const [past, setPast] = useState(startTime < today)
+
+  const navigate = useNavigate();
 
   const currentDate = new Date();
 
@@ -80,17 +83,20 @@ export default function UserActivities() {
                   </p>
                   <p>
                     <span className="font-medium">Location:</span>{" "}
-                    {userActivity.location}, 20357, Hamburg
+                    {userActivity.location.address}, 20357, Hamburg
                   </p>
 
                   <div className="flex justify-between items-end">
+
                     <div className={clsx("badge badge-secondary", pastDate && "hidden")}>
+
                       <button
                         onClick={() => {
                           handleCancelation(userActivity._id);
                           window.location.reload();
                         }}
                       >
+
                         Cancel Booking
                       </button>
                       
@@ -99,7 +105,7 @@ export default function UserActivities() {
                       <button>
                         Class Finished
                       </button>
-                      
+
                     </div>
                   </div>
 

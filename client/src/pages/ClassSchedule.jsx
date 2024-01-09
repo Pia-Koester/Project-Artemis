@@ -6,6 +6,7 @@ export default function ClassSchedule() {
   const response = useLoaderData();
   const activities = response.activities;
   console.log(response);
+  const activitytypes = response.activitytypes;
 
   //array of weekdays for the grid columns
   const weekdays = [
@@ -22,11 +23,21 @@ export default function ClassSchedule() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [trainer, setTrainer] = useState("");
   const [skip, setSkip] = useState(0);
+  const [worktouttype, setWorkouttype] = useState("");
+
+  //function to take care of trainer filter
   const handleTrainer = (e) => {
     console.log(e.target.value);
     setTrainer(e.target.value);
     setSearchParams(`instructor=${e.target.value}`);
   };
+
+  // //function to take care of activitytyp /workouttype filter
+  // const handleType = (e) => {
+  //   setWorkouttype(e.target.value);
+  //   setTrainer("");
+  //   setSearchParams(`type=${e.target.value}`);
+  // };
 
   //pagination based on week logic
   const handleNext = () => {
@@ -62,17 +73,32 @@ export default function ClassSchedule() {
         <select
           className="select select-secondary w-full max-w-xs"
           onChange={handleTrainer}
+          value={trainer}
         >
           <option selected disabled>
             Pick trainer
           </option>
-          {/* TO DO: map through all the activities and if the trainer is not yet listed create a option with trainer name
-        TO DO: create logic to show only the classes for this trainer */}
           <option>All</option>
           {response.instructors.map((instructor) => {
             return <option>{instructor}</option>;
           })}
         </select>
+        {/* <select
+          className="select select-secondary w-full max-w-xs"
+          onChange={handleType}
+          value={worktouttype}
+        >
+          <option selected disabled>
+            Pick Class
+          </option>
+          <option>All</option>
+          {activitytypes.map((type) => {
+            if (!type) {
+              return;
+            }
+            return <option>{type}</option>;
+          })}
+        </select> */}
       </div>
       <div className="grid lg:grid-cols-7 grid-cols-1 gap-4 md:w-full">
         {weekdays.map((day) => {

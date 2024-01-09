@@ -1,19 +1,39 @@
 const url = "http://localhost:8080/activities";
 import axios from "axios";
 import { defineWeek } from "../helper/defineweek.js";
+import axiosClient from "./axiosClient.jsx";
 
 const getActivities = async ({ request }) => {
   try {
     const parameterurl = new URL(request.url);
     const instructor = parameterurl.searchParams.get("instructor");
     const skip = parameterurl.searchParams.get("skip");
+    const type = parameterurl.searchParams.get("type");
 
     const week = defineWeek(skip);
 
-    const response = await axios.get(
-      `${url}?instructor=${instructor}&mon=${week.formattedMondayDate}&sun=${week.formattedSundayDate}`
-    );
+    const queryParams = {
+      mon: week.formattedMondayDate,
+      sun: week.formattedSundayDate,
+    };
 
+    if (
+      instructor !== null &&
+      instructor !== undefined &&
+      instructor !== "All"
+    ) {
+      queryParams.instructor = instructor;
+    }
+
+    if (type !== null && type !== undefined) {
+      queryParams.type = type;
+    }
+
+    const queryString = new URLSearchParams(queryParams);
+    console.log(queryString);
+    const response = await axiosClient.get(`activities?${queryString}`);
+
+    //TO DO: wo muss entschieden werden ob ein type mitgeschickt wird oder nicht. Wie können die Daten dann gefetched werden?
     const instructors = [];
     const activitytypes = [];
     console.log(response);
@@ -26,10 +46,11 @@ const getActivities = async ({ request }) => {
         if (!instructors.includes(instructor)) {
           instructors.push(instructor);
         }
+        console.log(type?.type);
 
-        // if (!activitytypes.includes(type.type)) {
-        //   activitytypes.push(type.type);
-        // } //QUESTION: why is this not getting populated as expected?
+        if (!activitytypes.includes(type?.type)) {
+          activitytypes.push(type?.type);
+        }
 
         return accumulator;
       },
@@ -41,7 +62,7 @@ const getActivities = async ({ request }) => {
       weekend: week.formattedSunday,
       activities: activitiesByWeekday,
       instructors: instructors,
-      // activitytypes,
+      activitytypes,
     };
 
     return data;
