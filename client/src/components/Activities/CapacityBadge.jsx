@@ -1,10 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
 
-export default function CapacityBadge({ activity }) {
-  const [openSlots, setOpenSlots] = useState(
-    activity.capacity - activity.registeredUsers.length
-  );
+export default function CapacityBadge({ openSlots }) {
   //colors for conditional capacity badge
   const capacityColors = {
     0: "badge-error",

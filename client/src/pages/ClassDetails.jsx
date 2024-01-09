@@ -144,7 +144,7 @@ export default function ClassDetails() {
             <FaPersonDress className="text-2xl" />
             <p className="font-bold">Capacity</p>
           </div>
-          <CapacityBadge activity={activity} />
+          <CapacityBadge openSlots={openSlots} />
         </div>
 
         <div className="avatar self-center mt-3 sm:flex gap-2">
@@ -202,7 +202,7 @@ export default function ClassDetails() {
                   <FaPersonDress className="text-2xl" />
                   <p className="font-bold">Capacity </p>
                 </div>
-                <p>capacity with color indicating fullness</p>
+                <CapacityBadge openSlots={openSlots} className="m-2" />
               </div>
 
               <div className="avatar mt-1">

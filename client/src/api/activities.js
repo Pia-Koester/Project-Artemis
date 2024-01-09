@@ -1,6 +1,7 @@
 const url = "http://localhost:8080/activities";
 import axios from "axios";
 import { defineWeek } from "../helper/defineweek.js";
+import axiosClient from "./axiosClient.jsx";
 
 const getActivities = async ({ request }) => {
   try {
@@ -11,9 +12,27 @@ const getActivities = async ({ request }) => {
 
     const week = defineWeek(skip);
 
-    const response = await axios.get(
-      `${url}?instructor=${instructor}&type=${type}&mon=${week.formattedMondayDate}&sun=${week.formattedSundayDate}`
-    );
+    const queryParams = {
+      mon: week.formattedMondayDate,
+      sun: week.formattedSundayDate,
+    };
+
+    if (
+      instructor !== null &&
+      instructor !== undefined &&
+      instructor !== "All"
+    ) {
+      queryParams.instructor = instructor;
+    }
+
+    if (type !== null && type !== undefined) {
+      queryParams.type = type;
+    }
+
+    const queryString = new URLSearchParams(queryParams);
+    console.log(queryString);
+    const response = await axiosClient.get(`activities?${queryString}`);
+
     //TO DO: wo muss entschieden werden ob ein type mitgeschickt wird oder nicht. Wie können die Daten dann gefetched werden?
     const instructors = [];
     const activitytypes = [];

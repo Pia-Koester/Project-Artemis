@@ -1,6 +1,7 @@
 const Activity = require("../models/activities-model.js");
 const ErrorResponse = require("../utils/errorResponse.js");
 const asyncWrapper = require("../utils/asyncWrapper.js");
+const mongoose = require("mongoose");
 
 const createActivity = asyncWrapper(async (req, res, next) => {
   const {
@@ -37,6 +38,7 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun, type } = req.query;
+  console.log(req.query);
 
   let filter = {
     startTime: {
@@ -45,43 +47,26 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     },
   };
 
-  if (!instructor || instructor === "All" || instructor === "null") {
-    if (!mon && !sun) {
-      const activities = await Activity.find({}).populate("type").sort({
-        startTime: "asc",
-      });
-      res.json(activities);
+  const queryParams = { instructor }; //TO DO: put back type to be able to filter for it
+
+  for (const key of Object.keys(queryParams)) {
+    const value = queryParams[key];
+    if (value !== undefined) {
+      if (key === "type") {
+        filter["type._id"] = value;
+      } else {
+        filter[key] = value;
+      }
     }
-    const activities = await Activity.find(filter)
-      .sort({
-        startTime: "asc",
-      })
-      .populate("type");
-
-    res.json(activities);
   }
-  // else if (type) {
-  //   const activities = awaitActivity
-  //     .find({
-  //       $and: [filter, { instructor }],
-  //     })
-  //     .sort({
-  //       startTime: "asc",
-  //     })
-  //     .populate("type");
 
-  //   res.json(activities);
-  // }
-  else {
-    const activities = await Activity.find({
-      $and: [filter, { instructor }],
-    })
-      .populate("type")
-      .sort({
-        startTime: "asc",
-      });
-    res.json(activities);
-  }
+  console.log(filter);
+
+  const activities = await Activity.find(filter).populate("type").sort({
+    startTime: "asc",
+  });
+  console.log(activities);
+  res.json(activities);
 });
 
 const getActivity = asyncWrapper(async (req, res, next) => {
