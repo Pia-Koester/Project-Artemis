@@ -18,6 +18,10 @@ import UserInformation from "./components/UserProfile/UserInformation.jsx";
 import MembershipPlans from "./components/Memberships/MembershipPlans.jsx";
 import UserUpdateInformation from "./components/UserProfile/UserUpdateInformation.jsx";
 import Protected from "./pages/Protected";
+import UsersOverview from "./components/AdminProfile/UsersOverview.jsx";
+import SingleUserInformation from "./components/AdminProfile/SingleUserInformation.jsx";
+import CreateMembership from "./components/AdminProfile/CreateMembership.jsx";
+import EditUserInformation from "./components/AdminProfile/EditUserInformation.jsx";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +67,22 @@ const router = createBrowserRouter([
           {
             path: "/userProfile/details/update",
             element: <UserUpdateInformation />,
+          },
+          {
+            path: "/userProfile/usersOverview",
+            element: <UsersOverview />,
+          },
+          {
+            path: "/userProfile/usersOverview/:id",
+            element: <SingleUserInformation />,
+          },
+          {
+            path: "/userProfile/createMembership",
+            element: <CreateMembership />,
+          },
+          {
+            path: "/userProfile/usersOverview/:id/update",
+            element: <EditUserInformation />,
           },
         ],
       },
