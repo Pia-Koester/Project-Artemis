@@ -1,12 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import { badCredentials } from "../../utils/badCredentials";
 
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
   const [userActivity, setUserActivity] = useState(null);
@@ -14,11 +14,11 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/users/profile", {withCredentials: true})
+      .get("http://localhost:8080/users/profile", { withCredentials: true })
       .then((response) => {
         setUser(response.data);
-        setUserActivity(response.data.classesRegistered)
-        console.log(response.data)
+        setUserActivity(response.data.classesRegistered);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -26,26 +26,27 @@ export default function AuthProvider({ children }) {
         // if(error.response.status.toString() === "403") {
         //     navigate("/login")
         // }
-      }).finally(() => {
-        setIsLoading(false)
       })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const login = async (data) => {
     axios
-      .post("http://localhost:8080/login", data, {withCredentials: true})
+      .post("http://localhost:8080/login", data, { withCredentials: true })
       .then((response) => {
         setUser(response.data);
-        console.log(response.data)
+        console.log(response.data);
         //Set timout function needs to run after successful login in order to retrieve data after the post request, otherwise the data does not show
-        navigate("/")
+        navigate("/");
         setTimeout(() => {
-          window.location.reload()
+          window.location.reload();
         }, 100);
       })
       .catch((error) => {
         console.log(error);
-        badCredentials()
+        badCredentials();
         setUser(null);
       })
       .finally(() => {
@@ -55,7 +56,7 @@ export default function AuthProvider({ children }) {
 
   const logout = async () => {
     axios
-      .get("http://localhost:8080/logout", {withCredentials: true})
+      .get("http://localhost:8080/logout", { withCredentials: true })
       .then((response) => {
         setUser(null);
         navigate("/login");
@@ -78,11 +79,20 @@ export default function AuthProvider({ children }) {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   return (
     <>
-      <AuthContext.Provider value={{ user, userActivity, isLoading, login, logout, updateUserProfile }}>
+      <AuthContext.Provider
+        value={{
+          user,
+          userActivity,
+          isLoading,
+          login,
+          logout,
+          updateUserProfile,
+        }}
+      >
         {children}
       </AuthContext.Provider>
     </>
