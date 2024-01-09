@@ -17,6 +17,7 @@ import UserActivities from "./components/UserProfile/UserActivities.jsx";
 import UserInformation from "./components/UserProfile/UserInformation.jsx";
 import MembershipPlans from "./components/Memberships/MembershipPlans.jsx";
 import UserUpdateInformation from "./components/UserProfile/UserUpdateInformation.jsx";
+import Protected from "./pages/Protected";
 
 const router = createBrowserRouter([
   {
@@ -44,20 +45,26 @@ const router = createBrowserRouter([
         element: <MembershipPlans />,
       },
       {
-        path: "/userProfile/memberships",
-        element: <UserMemberships />,
-      },
-      {
-        path: "/userProfile/activities",
-        element: <UserActivities />,
-      },
-      {
-        path: "/userProfile/details",
-        element: <UserInformation />,
-      },
-      {
-        path: "/userProfile/details/update",
-        element: <UserUpdateInformation />,
+        path: "/",
+        element: <Protected />,
+        children: [
+          {
+            path: "/userProfile/memberships",
+            element: <UserMemberships />,
+          },
+          {
+            path: "/userProfile/activities",
+            element: <UserActivities />,
+          },
+          {
+            path: "/userProfile/details",
+            element: <UserInformation />,
+          },
+          {
+            path: "/userProfile/details/update",
+            element: <UserUpdateInformation />,
+          },
+        ],
       },
     ],
   },
@@ -65,6 +72,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-      <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
