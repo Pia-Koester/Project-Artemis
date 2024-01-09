@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CapacityBadge from "./CapacityBadge";
 import { useState } from "react";
+import clsx from "clsx";
 
 export default function ActivityCard({ activity }) {
   //TODO: make transition to card Details
-
+  const navigate = useNavigate();
   //calculating the start time based on the provided date
   const startTime = new Date(activity.startTime);
   const formattedStartTime = startTime.toLocaleTimeString([], {
@@ -21,6 +22,8 @@ export default function ActivityCard({ activity }) {
   const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
 
   //TO DO: change color of card based on if the time and day have already passed
+  const today = new Date();
+  const [past, setPast] = useState(startTime < today);
 
   //instructor images based on name
   const photos = {
@@ -38,11 +41,19 @@ export default function ActivityCard({ activity }) {
 
   return (
     <motion.div
-      whileHover={{ scale: 1.1 }}
-      className="card  w-full bg-primary text-primary-content flex flex-col"
+      whileHover={past ? {} : { scale: 1.1 }}
+      className={clsx(
+        "card  w-full  text-primary-content bg-primary flex flex-col",
+        past && "opacity-40"
+      )}
     >
       {/* QUESTION: Why is the text running outside the box on medium sizes?  */}
-      <Link to={`/details/${activity._id}`}>
+      <Link
+        onClick={(e) => {
+          e.preventDefault();
+          if (!past) navigate(`/details/${activity._id}`);
+        }}
+      >
         <div className="card-body overflow-hidden">
           <p>
             {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
