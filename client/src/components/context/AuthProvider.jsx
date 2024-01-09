@@ -23,9 +23,9 @@ export default function AuthProvider({ children }) {
       .catch((error) => {
         console.log(error);
         setUser(null);
-        if(error.response.status.toString() === "403") {
-            navigate("/login")
-        }
+        // if(error.response.status.toString() === "403") {
+        //     navigate("/login")
+        // }
       }).finally(() => {
         setIsLoading(false)
       })
@@ -37,7 +37,11 @@ export default function AuthProvider({ children }) {
       .then((response) => {
         setUser(response.data);
         console.log(response.data)
+        //Set timout function needs to run after successful login in order to retrieve data after the post request, otherwise the data does not show
         navigate("/")
+        setTimeout(() => {
+          window.location.reload()
+        }, 500);
       })
       .catch((error) => {
         console.log(error);
