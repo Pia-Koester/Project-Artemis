@@ -5,7 +5,8 @@ import clsx from "clsx";
 
 export default function UserActivities() {
 
-  const { userActivity } = useContext(AuthContext);
+  const { user: {classesRegistered: userActivity} } = useContext(AuthContext);
+
   
   // const startTime = new Date(userActivity?.startTime)
   // const today = new Date()
