@@ -22,6 +22,9 @@ import UsersOverview from "./components/AdminProfile/UsersOverview.jsx";
 import SingleUserInformation from "./components/AdminProfile/SingleUserInformation.jsx";
 import CreateMembership from "./components/AdminProfile/CreateMembership.jsx";
 import EditUserInformation from "./components/AdminProfile/EditUserInformation.jsx";
+import CreateActivity from "./components/Admin/CreateActivity";
+import CreateActivityType from "./components/Admin/CreateActivityType";
+
 
 const router = createBrowserRouter([
   {
@@ -86,6 +89,14 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "/createActivity",
+        element: <CreateActivity />,
+        loader: async () => {
+          return fetch(`http://localhost:8080/activityTypes`);
+        },
+      },
+      { path: "/createType", element: <CreateActivityType /> },
     ],
   },
 ]);

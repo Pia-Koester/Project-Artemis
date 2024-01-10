@@ -4,9 +4,8 @@ import { AuthContext } from "../context/AuthProvider";
 import clsx from "clsx";
 
 export default function UserActivities() {
-
   const { userActivity } = useContext(AuthContext);
-  
+
   // const startTime = new Date(userActivity?.startTime)
   // const today = new Date()
   // console.log(startTime)
@@ -50,27 +49,31 @@ export default function UserActivities() {
 
           let pastDate = false;
 
-          if(currentYear > year) {
-            pastDate = true
-            return
+          if (currentYear > year) {
+            pastDate = true;
+            return;
           } else {
-            if(currentMonth > month) {
+            if (currentMonth > month) {
               pastDate = true;
-              return
+              return;
             } else {
-              if(currentDay >= day) {
+              if (currentDay >= day) {
                 pastDate = true;
               }
             }
-          } 
-
+          }
 
           return (
             <div
               key={userActivity._id}
               className="mb-4 lg:w-6/12 w-11/12 mx-auto"
             >
-              <div className={clsx("card bg-primary text-primary-content grid lg:grid-cols-2", pastDate && "opacity-50")}>
+              <div
+                className={clsx(
+                  "card bg-primary text-primary-content grid lg:grid-cols-2",
+                  pastDate && "opacity-50"
+                )}
+              >
                 <div className="card-body">
                   <h2 className="card-title">{userActivity.title}</h2>
 
@@ -91,28 +94,30 @@ export default function UserActivities() {
                   </p>
 
                   <div className="flex justify-between items-end">
-
-                    <div className={clsx("badge badge-secondary", pastDate && "hidden")}>
-
+                    <div
+                      className={clsx(
+                        "badge badge-secondary",
+                        pastDate && "hidden"
+                      )}
+                    >
                       <button
                         onClick={() => {
                           handleCancelation(userActivity._id);
                           window.location.reload();
                         }}
                       >
-
                         Cancel Booking
                       </button>
-                      
                     </div>
-                    <div className={clsx("badge badge-neutral", !pastDate && "hidden")}>
-                      <button>
-                        Class Finished
-                      </button>
-
+                    <div
+                      className={clsx(
+                        "badge badge-neutral",
+                        !pastDate && "hidden"
+                      )}
+                    >
+                      <button>Class Finished</button>
                     </div>
                   </div>
-
                 </div>
                 <div className="avatar flex-col items-end card-body hidden sm:flex">
                   <div className="w-24 mask mask-hexagon mr-4">

@@ -104,7 +104,7 @@ const setUserActivity = asyncWrapper(async (req, res, next) => {
     id,
     { $push: { classesRegistered: activity_id } },
     { new: true }
-  )
+  );
 
   req.user = updatedUser;
 
@@ -151,7 +151,11 @@ const login = asyncWrapper(async (req, res, next) => {
     throw new ErrorResponse("Incorrect Password!", 401);
   }
 
-  const payload = { id: user._id, email: user.email };
+  const payload = {
+    id: user._id,
+    email: user.email,
+    firstName: user.firstName,
+  };
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: "480m",
   });
