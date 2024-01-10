@@ -1,12 +1,15 @@
 import axios from "axios";
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../context/AuthProvider";
 
 export default function MembershipCard({ plan, user }) {
   const modalRef = useRef(null);
   const navigate = useNavigate();
+
+  const {setUser} = useContext(AuthContext)
 
   const handlePurchase = () => {
     axios
@@ -19,6 +22,7 @@ export default function MembershipCard({ plan, user }) {
         console.log("Data from api", response.data);
         closeModal();
         notify();
+        setUser((prev) => {return {...prev, activeMembership: response.data}})
         setTimeout(() => {
           navigate("/")
         }, 3000);

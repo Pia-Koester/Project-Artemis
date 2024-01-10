@@ -1,17 +1,17 @@
 const bcrypt = require("bcrypt");
 const { Schema, model } = require("mongoose");
 
-const emergencyContactSchema = new Schema({
-  firstName: { type: String },
-  lastName: { type: String },
-  phone: { type: String },
-});
+// const emergencyContactSchema = new Schema({
+//   firstName: { type: String },
+//   lastName: { type: String },
+//   phoneNumberEmergency: { type: String },
+// });
 
 const userSchema = new Schema({
   email: { type: String, required: true, unique: true, lowercase: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  phone: { type: String, required: true, unique: true }, // TODO - ask Isabella
+  phoneNumber: { type: String, required: true, unique: true }, // TODO - ask Isabella
   password: { type: String, required: true, select: false },
   dateOfRegistration: { type: Date, default: Date.now() },
   lastParticipationDate: { type: Date },
@@ -33,7 +33,7 @@ const userSchema = new Schema({
   dateOfBirth: { type: Date, required: true },
   termsOfUse: { type: Boolean, required: true },
   dataProtectionInfo: { type: Boolean, required: true },
-  emergencyContact: emergencyContactSchema,
+  // emergencyContact: emergencyContactSchema,
 });
 
 //creating mongoose middleware to hash passwords and make sure mail adress is lowercase

@@ -18,8 +18,9 @@ import clsx from "clsx";
 
 export default function ClassDetails() {
   const { id } = useParams();
+  const { user, setUser } = useContext(AuthContext);
+
   const activity = useLoaderData();
-  const { user } = useContext(AuthContext);
 
   const [openSlots, setOpenSlots] = useState(
     activity.capacity - activity.registeredUsers.length
@@ -41,7 +42,8 @@ export default function ClassDetails() {
           response.data.capacity - response.data.registeredUsers.length
         );
         notify();
-        revalidator.revalidate();
+        setUser((prev) => {return {...prev, classesRegistered: response.data}})
+        revalidator.revalidate(); 
         console.log("Data from api", response);
       })
       .catch((err) => {
@@ -113,7 +115,6 @@ export default function ClassDetails() {
       "https://static.wixstatic.com/media/87046c_2a44f60d1a8a47faad745a9a3b2e4fa1~mv2.jpg/v1/fill/w_656,h_920,fp_0.48_0.34,q_85,usm_0.66_1.00_0.01,enc_auto/87046c_2a44f60d1a8a47faad745a9a3b2e4fa1~mv2.jpg",
     Rolf: "https://static.wixstatic.com/media/87046c_8b75e3d5339f4d46b34471ccee515c3f~mv2.jpg/v1/fill/w_656,h_1040,fp_0.47_0.37,q_85,usm_0.66_1.00_0.01,enc_auto/87046c_8b75e3d5339f4d46b34471ccee515c3f~mv2.jpg",
   };
-  console.log(user?.activeMembership);
   return (
 
     <div className="flex md:flex-row flex-col-reverse">

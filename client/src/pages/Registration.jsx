@@ -5,6 +5,10 @@ import { useState } from "react";
 import clsx from "clsx";
 
 export default function Registration() {
+  const [step, setStep] = useState(1);
+  const [loginInfo, setLoginInfo] = useState();
+  const [personalInfo, setPersonalInfo] = useState();
+
   const {
     register,
     handleSubmit,
@@ -12,21 +16,7 @@ export default function Registration() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Data from form", data);
-    axiosClient
-      .post("signup", data)
-      .then((response) => {
-        console.log("Data from api", response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   //TO DO: create 3 forms with each a submit function and the own validation
-  const [loginInfo, setLoginInfo] = useState();
-  const [personalInfo, setPersonalInfo] = useState();
 
   const registrationSubmit = (data) => {
     console.log(data, step);
@@ -58,12 +48,11 @@ export default function Registration() {
   };
 
   //TO DO: split registration into first only asking for mail and password and then onboarding on different screen
-  const [step, setStep] = useState(1);
-  const handleFormSteps = () => {
-    setStep((prev) => {
-      return Math.min(prev + 1, 3);
-    });
-  };
+  // const handleFormSteps = () => {
+  //   setStep((prev) => {
+  //     return Math.min(prev + 1, 3);
+  //   });
+  // };
 
   const handleBacksteps = () => {
     setStep((prev) => {
@@ -222,13 +211,13 @@ export default function Registration() {
                   <input
                     placeholder="Phonenumber"
                     className="input input-bordered w-full max-w-xs input-primary "
-                    {...register("phone", {
+                    {...register("phoneNumber", {
                       required: "You must enter your phone Number",
                     })}
                   />{" "}
-                  {errors.phone?.type === "required" && (
+                  {errors.phoneNumber?.type === "required" && (
                     <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                      {errors.phone.message}
+                      {errors.phoneNumber.message}
                     </span>
                   )}
                   <div className="label self-start">
