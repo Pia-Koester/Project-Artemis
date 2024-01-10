@@ -13,10 +13,7 @@ export default function UserCard({ user }) {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response)
-        //To Do - Ask Besslan why does not the app navigate after successfull delete request
-        navigate("/userProfile/usersOverview");
-
+        window.location.reload()
       })
       .catch((err) => {
         console.log(err);

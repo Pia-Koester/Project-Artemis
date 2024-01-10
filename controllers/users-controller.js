@@ -8,7 +8,7 @@ const asyncWrapper = require("../utils/asyncWrapper.js");
 const createUser = asyncWrapper(async (req, res, next) => {
   const {
     email,
-    phone,
+    phoneNumber,
     password,
     firstName,
     lastName,
@@ -27,7 +27,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
 
   const user = await User.create({
     email,
-    phone,
+    phoneNumber,
     password,
     firstName,
     lastName,
