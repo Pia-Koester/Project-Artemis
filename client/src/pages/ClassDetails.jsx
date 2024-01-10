@@ -313,7 +313,7 @@ export default function ClassDetails() {
                   )}
                   onClick={() => {
                     handleCancelation(id, setUser);
-                    // window.location.reload();
+                    window.location.reload();
                   }}
                 >
                   Cancel Booking

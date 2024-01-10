@@ -8,7 +8,7 @@ const {
 const { authenticate } = require("../middlewares/authentication.js");
 
 const membershipPlanRouter = express.Router();
-membershipPlanRouter.get("/", getMembershipPlans); //gets all available memberships
+membershipPlanRouter.get("/",authenticate, getMembershipPlans); //gets all available memberships
 membershipPlanRouter.post("/create",authenticate, createMembershipPlan); //create new membership
 membershipPlanRouter.get("/:id", getMembershipPlan); // gets one individual membership based on the _id
 
