@@ -19,6 +19,7 @@ import MembershipPlans from "./components/Memberships/MembershipPlans.jsx";
 import UserUpdateInformation from "./components/UserProfile/UserUpdateInformation.jsx";
 import Protected from "./pages/Protected";
 import CreateActivity from "./components/Admin/CreateActivity";
+import CreateActivityType from "./components/Admin/CreateActivityType";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,7 @@ const router = createBrowserRouter([
           return fetch(`http://localhost:8080/activityTypes`);
         },
       },
+      { path: "/createType", element: <CreateActivityType /> },
     ],
   },
 ]);
