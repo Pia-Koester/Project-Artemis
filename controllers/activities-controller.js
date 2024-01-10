@@ -43,11 +43,11 @@ const getActivities = asyncWrapper(async (req, res, next) => {
 
   let filter = {
     startTime: {
-      $gte: new Date(mon).toLocaleDateString("en-US"),
-      $lt: new Date(sun).toLocaleDateString("en-US"),
+      $gte: new Date(mon),
+      $lte: new Date(sun),
     },
   };
-
+  console.log(filter);
   const queryParams = { instructor }; //TO DO: put back type to be able to filter for it
 
   for (const key of Object.keys(queryParams)) {
