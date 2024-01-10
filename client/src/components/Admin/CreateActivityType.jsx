@@ -9,16 +9,30 @@ export default function CreateActivityType() {
     formState: { errors },
   } = useForm();
 
+  const changeMultipleFiles = (e) => {
+    if (e.target.files) {
+      const imageArray = Array.from(e.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setMultipleImages((prevImages) => prevImages.concat(imageArray));
+    }
+  };
+
   const onSubmit = (data) => {
     console.log(data);
     const formData = new FormData();
     formData.append("type", data.type);
-    formData.append("images", data.images);
-
-    console.log(data.images);
+    // formData.append("images", data.images);
+    data.images.forEach((img) => {
+      formData.append("images", img);
+    });
 
     axios
-      .post("http://localhost:8080/activityTypes", formData)
+      .post("http://localhost:8080/activityTypes", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => {
         console.log(response.data);
       })
@@ -26,8 +40,6 @@ export default function CreateActivityType() {
         console.log(err);
       });
   };
-
-  console.log(watch("example")); // watch input value by passing the name of it
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -73,6 +85,7 @@ export default function CreateActivityType() {
                 {...register("images", { required: true })}
                 type="file"
                 multiple
+                onChange={changeMultipleFiles}
               />
             </div>
             <button

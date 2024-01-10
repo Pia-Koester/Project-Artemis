@@ -5,10 +5,12 @@ const {
   getTypes,
 } = require("../controllers/activityTypes-controller.js");
 const { authenticate } = require("../middlewares/authentication.js");
-const upload = require("../middlewares/uploadImage.js");
+// const upload = require("../middlewares/uploadmultipleImages.js");
+const multer = require("multer");
+const upload = multer({ dest: "../uploads/" });
 
 const typeRouter = express.Router();
 
-typeRouter.route("/").post(upload.array("images"), createType).get(getTypes);
+typeRouter.post("/", upload.array("images"), createType);
 
 module.exports = typeRouter;
