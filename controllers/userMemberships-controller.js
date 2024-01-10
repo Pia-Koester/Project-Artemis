@@ -64,8 +64,8 @@ const cancelUserMembershipCredit = asyncWrapper(async (req, res, next) => {
     { $inc: { usedCredits: -1 } },
     { new: true }
   );
-  console.log(userMembership);
-  res.send(activity);
+  
+  res.send({activity, user: {...req.user, activeMembership: userMembership}});
 });
 
 module.exports = {

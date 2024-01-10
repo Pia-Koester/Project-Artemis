@@ -134,7 +134,7 @@ const cancelUserActivity = asyncWrapper(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(
     id,
     { classesRegistered: activityArray },
-    { new: true }
+    { new: true, populate: "classesRegistered" }
   );
   req.user = updatedUser;
   next();

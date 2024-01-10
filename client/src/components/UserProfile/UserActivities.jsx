@@ -98,7 +98,7 @@ export default function UserActivities() {
                       <button
                         onClick={() => {
                           handleCancelation(userActivity._id);
-                          window.location.reload();
+                          // window.location.reload();
                         }}
                       >
 
