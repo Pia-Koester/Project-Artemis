@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useState } from "react";
 
 export default function CreateActivityType() {
   const {
@@ -9,6 +10,7 @@ export default function CreateActivityType() {
     formState: { errors },
   } = useForm();
 
+  const [multipleImages, setMultipleImages] = useState([]);
   const changeMultipleFiles = (e) => {
     if (e.target.files) {
       const imageArray = Array.from(e.target.files).map((file) =>
@@ -18,15 +20,20 @@ export default function CreateActivityType() {
     }
   };
 
+  const render = (data) => {
+    return data.map((image) => {
+      return <img className="image" src={image} alt="" key={image} />;
+    });
+  };
+
   const onSubmit = (data) => {
     console.log(data);
     const formData = new FormData();
     formData.append("type", data.type);
     // formData.append("images", data.images);
-    data.images.forEach((img) => {
-      formData.append("images", img);
-    });
-
+    for (const key of Object.keys(multipleImages)) {
+      formData.append("images", data.file[key]);
+    }
     axios
       .post("http://localhost:8080/activityTypes", formData, {
         headers: {
@@ -84,6 +91,7 @@ export default function CreateActivityType() {
                 placeholder="Product Image"
                 {...register("images", { required: true })}
                 type="file"
+                name="images"
                 multiple
                 onChange={changeMultipleFiles}
               />
@@ -95,6 +103,7 @@ export default function CreateActivityType() {
               Update
             </button>
           </form>
+          {render(multipleImages)}
         </div>
       </div>
     </div>

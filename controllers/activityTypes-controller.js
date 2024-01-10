@@ -9,6 +9,26 @@ const createType = asyncWrapper(async (req, res, next) => {
   console.log(req.files);
   // const fileurl = req.file.path;
   // const publicId = req.file.filename;
+  if (!req.files) {
+    res.send({
+      status: "failed",
+      message: "No file",
+    });
+  } else {
+    let file = req.files.file;
+    console.log(req.files);
+    file.mv("./uploads/" + file.name);
+    res.send({
+      status: "success",
+      message: "File successfully uploaded",
+      data: {
+        name: file.name,
+        mimetype: file.mimetype,
+        size: file.size,
+      },
+    });
+  }
+
   // const image = { url: fileurl, publicId, alt: "a group cycling on the road" };
 
   // const activitytype = await ActivityType.create({ type, images });
