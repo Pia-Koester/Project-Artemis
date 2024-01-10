@@ -25,7 +25,13 @@ export default function UserActivities() {
       {!userActivity ? (
         <p>Loading...</p>
       ) : (
-        userActivity.map((userActivity) => {
+        userActivity.sort((a, b) => {
+          if(a.startTime < b.startTime) {
+            return 1
+          } else {
+            return -1
+          }
+        }).map((userActivity) => {
           const getStartDate = userActivity.startTime;
           const formatStartDate = getStartDate.split("T");
           const formatStartTime = formatStartDate[1].split(".");

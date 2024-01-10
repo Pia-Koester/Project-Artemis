@@ -8,7 +8,7 @@ const asyncWrapper = require("../utils/asyncWrapper.js");
 const createUser = asyncWrapper(async (req, res, next) => {
   const {
     email,
-    phone,
+    phoneNumber,
     password,
     firstName,
     lastName,
@@ -27,7 +27,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
 
   const user = await User.create({
     email,
-    phone,
+    phoneNumber,
     password,
     firstName,
     lastName,
@@ -45,7 +45,11 @@ const createUser = asyncWrapper(async (req, res, next) => {
 //Gets all the users
 //TODO don't return the passwords
 const getUsers = asyncWrapper(async (req, res, next) => {
-  const users = await User.find({});
+  const users = await User.find({}).populate("classesRegistered")
+  .populate({
+    path: "activeMembership",
+    populate: { path: "plan", model: "MembershipPlan" },
+  });;
   res.json(users);
 });
 
@@ -158,7 +162,7 @@ const login = asyncWrapper(async (req, res, next) => {
 
   res
     .cookie("access_token", token, { httpOnly: true, maxAge: 28800000 })
-    .json(payload);
+    .json({...payload, activeMembership: user.activeMembership, firstName: user.firstName});
 });
 
 //User logout
@@ -181,6 +185,43 @@ const getProfile = asyncWrapper(async (req, res, next) => {
   res.json(user);
 });
 
+const getUser = asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id)
+    .populate("classesRegistered")
+    .populate({
+      path: "activeMembership",
+      populate: { path: "plan", model: "MembershipPlan" },
+    });
+  res.json(user);
+});
+
+//Update single user from the admin page
+const updateUser = asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
+  const { firstName, lastName, phone, address, dateOfBirth, role } = req.body;
+
+  const user = await User.findByIdAndUpdate(
+    id,
+    { firstName, lastName, phone, address, dateOfBirth, role },
+    { new: true }
+  );
+  res.json(user);
+});
+
+const deleteUser = asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await User.findByIdAndDelete(id);
+
+  if(!user) {
+    throw new ErrorResponse("User not found", 404)
+  } else {
+    res.json({ message: 'User deleted successfully' });
+  }
+});
+
 module.exports = {
   createUser,
   getUsers,
@@ -191,4 +232,7 @@ module.exports = {
   setUserMembership,
   setUserActivity,
   cancelUserActivity,
+  getUser,
+  updateUser,
+  deleteUser
 };

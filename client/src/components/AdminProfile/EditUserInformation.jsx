@@ -1,13 +1,26 @@
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/logos/avatar.jpg";
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthProvider";
 
-export default function UserUpdateInformation() {
+export default function EditUserInformation() {
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const {user, updateUserProfile} = useContext(AuthContext);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/users/${id}`, { withCredentials: true })
+      .then((response) => {
+        setUser(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const {
     register,
@@ -17,7 +30,17 @@ export default function UserUpdateInformation() {
   } = useForm();
 
   const onSubmit = (data) => {
-    updateUserProfile(data)
+    axios
+      .post(`http://localhost:8080/users/${id}/update`, data, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response.data);
+        navigate(`/userProfile/usersOverview/${id}`)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const formatedDate = user?.dateOfBirth.split("T")[0];
@@ -42,10 +65,10 @@ export default function UserUpdateInformation() {
                 </div>
               </div>
               <h2 className="text-2xl font-semibold text-center mb-4">
-                Update user profile
+                {user.firstName + " " + user.lastName}
               </h2>
               <p className="text-gray-600 text-center mb-6">
-                Enter details to update your user profile
+                Enter details to update the user profile
               </p>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid grid-cols-2 gap-x-5">
@@ -159,6 +182,24 @@ export default function UserUpdateInformation() {
                       </span>
                     )}
                   </div>
+
+                  <div className="mb-4">
+                    <label
+                      htmlFor="role"
+                      className="block text-gray-700 text-sm font-semibold mb-2"
+                    >
+                      Role
+                    </label>
+                    <select
+                      id="role"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      {...register("role")}
+                    >
+                      <option selected value="student">Student</option>
+                      <option value="teacher">Teacher</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
                 </div>
 
                 <button
@@ -168,7 +209,7 @@ export default function UserUpdateInformation() {
                   Update
                 </button>
                 <button
-                  onClick={() => navigate("/userProfile/details")}
+                  onClick={() => navigate(`/userProfile/usersOverview/${id}`)}
                   className="w-full bg-neutral text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 >
                   Go back
