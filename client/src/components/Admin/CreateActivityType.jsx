@@ -31,8 +31,10 @@ export default function CreateActivityType() {
     const formData = new FormData();
     formData.append("type", data.type);
     // formData.append("images", data.images);
+    console.log(multipleImages);
+    console.log(data.images);
     for (const key of Object.keys(multipleImages)) {
-      formData.append("images", data.file[key]);
+      formData.append("images", data.images[key]);
     }
     axios
       .post("http://localhost:8080/activityTypes", formData, {
@@ -42,6 +44,7 @@ export default function CreateActivityType() {
       })
       .then((response) => {
         console.log(response.data);
+        setMultipleImages([]);
       })
       .catch((err) => {
         console.log(err);
