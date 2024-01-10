@@ -8,12 +8,13 @@ const createActivity = asyncWrapper(async (req, res, next) => {
     title,
     description,
     capacity,
-    waitlist,
+    // waitlist,
     instructor,
-    location,
+    //location,
     startTime,
     endTime,
-    registeredUsers,
+    // registeredUsers,
+    type,
   } = req.body;
 
   //defining the weekdays for different filter functions
@@ -25,13 +26,14 @@ const createActivity = asyncWrapper(async (req, res, next) => {
     title,
     description,
     capacity,
-    waitlist,
+
     instructor,
-    location,
+
     startTime: start,
     endTime,
-    registeredUsers,
+
     weekday,
+    type,
   });
   res.status(201).json(activity);
 });

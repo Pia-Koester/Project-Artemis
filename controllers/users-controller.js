@@ -108,6 +108,7 @@ const setUserActivity = asyncWrapper(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(
     id,
     { $push: { classesRegistered: activity_id } },
+
     { new: true, populate: "classesRegistered" }
   )
 
@@ -156,7 +157,11 @@ const login = asyncWrapper(async (req, res, next) => {
     throw new ErrorResponse("Incorrect Password!", 401);
   }
 
-  const payload = { id: user._id, email: user.email };
+  const payload = {
+    id: user._id,
+    email: user.email,
+    firstName: user.firstName,
+  };
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: "480m",
   });
