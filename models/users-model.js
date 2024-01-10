@@ -4,7 +4,7 @@ const { Schema, model } = require("mongoose");
 const emergencyContactSchema = new Schema({
   firstName: { type: String },
   lastName: { type: String },
-  phone: { type: String, unique: true },
+  phone: { type: String },
 });
 
 const userSchema = new Schema({
@@ -24,7 +24,11 @@ const userSchema = new Schema({
     default: "student",
   },
   status: { type: String, enum: ["active", "inactive"], default: "active" },
-  activeMembership: { type: Schema.Types.ObjectId, ref: "UserMembership", default: null },
+  activeMembership: {
+    type: Schema.Types.ObjectId,
+    ref: "UserMembership",
+    default: null,
+  },
   classesRegistered: [{ type: Schema.Types.ObjectId, ref: "Activitie" }],
   dateOfBirth: { type: Date, required: true },
   termsOfUse: { type: Boolean, required: true },

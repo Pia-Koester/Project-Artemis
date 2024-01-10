@@ -9,6 +9,6 @@ const upload = require("../middlewares/uploadImage.js");
 
 const typeRouter = express.Router();
 
-typeRouter.route("/").post(upload.single("image"), createType).get(getTypes);
+typeRouter.route("/").post(upload.array("images"), createType).get(getTypes);
 
 module.exports = typeRouter;

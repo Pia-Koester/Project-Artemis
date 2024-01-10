@@ -13,7 +13,9 @@ export default function CreateActivityType() {
     console.log(data);
     const formData = new FormData();
     formData.append("type", data.type);
-    formData.append("image", data.image[0]);
+    formData.append("images", data.images);
+
+    console.log(data.images);
 
     axios
       .post("http://localhost:8080/activityTypes", formData)
@@ -68,8 +70,9 @@ export default function CreateActivityType() {
               <input
                 className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
                 placeholder="Product Image"
-                {...register("image", { required: true })}
+                {...register("images", { required: true })}
                 type="file"
+                multiple
               />
             </div>
             <button
