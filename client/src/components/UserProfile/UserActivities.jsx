@@ -4,12 +4,9 @@ import { AuthContext } from "../context/AuthProvider";
 import clsx from "clsx";
 
 export default function UserActivities() {
-  const { userActivity } = useContext(AuthContext);
 
-  // const startTime = new Date(userActivity?.startTime)
-  // const today = new Date()
-  // console.log(startTime)
-  // const [past, setPast] = useState(startTime < today)
+  const { user: {classesRegistered: userActivity}, setUser } = useContext(AuthContext);
+
 
   const currentDate = new Date();
 
@@ -102,8 +99,8 @@ export default function UserActivities() {
                     >
                       <button
                         onClick={() => {
-                          handleCancelation(userActivity._id);
-                          window.location.reload();
+                          handleCancelation(userActivity._id, setUser);
+                          // window.location.reload();
                         }}
                       >
                         Cancel Booking

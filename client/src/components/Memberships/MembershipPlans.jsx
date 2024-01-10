@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import MembershipCard from "./MembershipCard";
 
 export default function CreateUserMembership() {
-  const [membershipPlan, setMembershipPlan] = useState(null);
+  const [membershipPlan, setMembershipPlan] = useState([]);
   const [user, setUser] = useState(null);
 
   useEffect(() => {

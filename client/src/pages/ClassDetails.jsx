@@ -39,12 +39,14 @@ export default function ClassDetails() {
       )
       .then((response) => {
         setOpenSlots(
-          response.data.capacity - response.data.registeredUsers.length
+          response.data.activity.capacity - response.data.activity.registeredUsers.length
         );
         notify();
-        setUser((prev) => {return {...prev, classesRegistered: response.data}})
-        revalidator.revalidate(); 
-        console.log("Data from api", response);
+        setUser((prev) => {
+          return {...prev, classesRegistered: [...prev.classesRegistered, response.data.activity], activeMembership: response.data.user.activeMembership}
+        })
+          revalidator.revalidate(); 
+        // console.log("Data from api", response);
       })
       .catch((err) => {
         console.log(err.response.status);
@@ -310,8 +312,8 @@ export default function ClassDetails() {
                       .includes(user?._id) && "hidden"
                   )}
                   onClick={() => {
-                    handleCancelation(id);
-                    window.location.reload();
+                    handleCancelation(id, setUser);
+                    // window.location.reload();
                   }}
                 >
                   Cancel Booking

@@ -73,9 +73,14 @@ const setUserMembership = asyncWrapper(async (req, res, next) => {
   const membershipHolder = await User.findByIdAndUpdate(
     user,
     { activeMembership: _id },
-    { new: true }
+    { new: true, populate: {
+      path: "activeMembership",
+      populate: { path: "plan", model: "MembershipPlan" }
+    }}
   );
-  res.json(membershipHolder);
+    console.log(membershipHolder)
+
+  res.json(membershipHolder.activeMembership);
 });
 
 const setUserActivity = asyncWrapper(async (req, res, next) => {
@@ -103,8 +108,9 @@ const setUserActivity = asyncWrapper(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(
     id,
     { $push: { classesRegistered: activity_id } },
-    { new: true }
-  );
+
+    { new: true, populate: "classesRegistered" }
+  )
 
   req.user = updatedUser;
 
@@ -129,7 +135,7 @@ const cancelUserActivity = asyncWrapper(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(
     id,
     { classesRegistered: activityArray },
-    { new: true }
+    { new: true, populate: "classesRegistered" }
   );
   req.user = updatedUser;
   next();
