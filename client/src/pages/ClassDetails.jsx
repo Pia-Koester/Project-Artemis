@@ -312,8 +312,8 @@ export default function ClassDetails() {
                       .includes(user?._id) && "hidden"
                   )}
                   onClick={() => {
-                    handleCancelation(id);
-                    window.location.reload();
+                    handleCancelation(id, setUser);
+                    // window.location.reload();
                   }}
                 >
                   Cancel Booking

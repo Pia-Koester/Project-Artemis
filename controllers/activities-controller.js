@@ -38,7 +38,6 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun, type } = req.query;
-  console.log(req.query);
 
   let filter = {
     startTime: {
@@ -60,12 +59,9 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     }
   }
 
-  console.log(filter);
-
   const activities = await Activity.find(filter).populate("type").sort({
     startTime: "asc",
   });
-  console.log(activities);
   res.json(activities);
 });
 
