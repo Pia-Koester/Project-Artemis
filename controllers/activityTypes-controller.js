@@ -29,9 +29,6 @@ const createType = asyncWrapper(async (req, res, next) => {
     });
   }
 
-  // const image = { url: fileurl, publicId, alt: "a group cycling on the road" };
-
-  // const activitytype = await ActivityType.create({ type, images });
   res.status(201);
 });
 
@@ -40,4 +37,15 @@ const getTypes = asyncWrapper(async (req, res, next) => {
   res.json(activitytype);
 });
 
-module.exports = { createType, getTypes };
+const updateTypes = asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
+  const { type } = req.body;
+  const updatedType = await ActivityType.findByIdAndUpdate(
+    id,
+    { type },
+    { new: true }
+  );
+  res.json(updatedType);
+});
+
+module.exports = { createType, getTypes, updateTypes };
