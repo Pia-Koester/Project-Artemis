@@ -181,7 +181,6 @@ export default function ClassDetails() {
               location={activity.location}
             />
           </div>
-
           <aside className="card w-96 bg-base-100 shadow-2xl flex flex-col p-4 m-2">
             <h1 className="text-2xl font-bold mb-4 lg:hidden">
               {activity.title}
@@ -260,40 +259,6 @@ export default function ClassDetails() {
                 Go Back
               </button>
             </div>
-
-            <div className="modal-action">
-              <form method="dialog">
-                <button
-                  className={clsx(
-                    "btn btn-primary mr-3 self-center mt-2",
-                    registeredUsers
-                      .map((item) => {
-                        return item._id;
-                      })
-                      .includes(user?._id) && "hidden"
-                  )}
-                  onClick={() => {
-                    handleBooking();
-                  }}
-                >
-                  Confirm
-                </button>
-                <button
-                  className={clsx(
-                    "btn btn-secondary mr-3 self-center mt-2",
-                    !registeredUsers
-                      .map((item) => {
-                        return item._id;
-                      })
-                      .includes(user?._id) && "hidden"
-                  )}
-                  onClick={() => {
-                    handleCancelation(id, setUser);
-                    window.location.reload();
-                  }}
-                >
-                  Cancel Booking
-                </button>
 
             <dialog id="my_modal_1" className="modal">
               <div
@@ -440,5 +405,6 @@ export default function ClassDetails() {
         </div>
       </div>
     </div>
-  );
+    
+      );
 }
