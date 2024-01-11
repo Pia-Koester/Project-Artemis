@@ -4,6 +4,7 @@ import CapacityBadge from "./CapacityBadge";
 import { useState, useContext } from "react";
 import clsx from "clsx";
 import { AuthContext } from "../context/AuthProvider";
+import { FaPencil, FaRegTrashCan } from "react-icons/fa6";
 
 export default function ActivityCard({ activity }) {
   //TODO: make transition to card Details
@@ -45,6 +46,9 @@ export default function ActivityCard({ activity }) {
   const registeredUsers = activity?.registeredUsers;
   const [isBooked, setIsBooked] = useState(registeredUsers.includes(user?._id));
 
+  //admin rights for editing function
+  const [admin, setAdmin] = useState(user.role === "admin");
+
   return (
     <motion.div
       whileHover={past ? {} : { scale: 1.1 }}
@@ -63,10 +67,16 @@ export default function ActivityCard({ activity }) {
         }}
       >
         <div className="card-body overflow-hidden">
-          <p>
-            {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
-          </p>
-
+          <div className="flex">
+            <p>
+              {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
+            </p>
+            {admin && !past && (
+              <button>
+                <FaPencil className="text-neutral text-xl" />
+              </button>
+            )}
+          </div>
           <h2 className="card-title text-wrap ">{activity.title}</h2>
           <p>{activity.description}</p>
           <div className="flex justify-between items-end">

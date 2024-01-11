@@ -1,12 +1,17 @@
 import { useLoaderData, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ActivityCard from "../components/Activities/ActivityCard";
+import { AuthContext } from "../components/context/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import { FaCirclePlus } from "react-icons/fa6";
 
 export default function ClassSchedule() {
   const response = useLoaderData();
   const activities = response.activities;
-  console.log(response);
+  const { user } = useContext(AuthContext);
+  console.log(user?.role);
   const activitytypes = response.activitytypes;
+  const navigate = useNavigate();
 
   //array of weekdays for the grid columns
   const weekdays = [
@@ -55,6 +60,9 @@ export default function ClassSchedule() {
     });
   };
 
+  //role check to render stuff conditionally
+  const [admin, setAdmin] = useState(user.role === "admin");
+
   return (
     <div className="flex gap-3 flex-col items-center p-5">
       <div className="flex flex-col md:flex-row w-full gap-2 md:justify-center items-center">
@@ -75,12 +83,10 @@ export default function ClassSchedule() {
           onChange={handleTrainer}
           value={trainer}
         >
-          <option selected disabled>
-            Pick trainer
-          </option>
+          <option disabled>Pick trainer</option>
           <option>All</option>
           {response.instructors.map((instructor) => {
-            return <option>{instructor}</option>;
+            return <option key={instructor}>{instructor}</option>;
           })}
         </select>
         {/* <select
@@ -99,6 +105,14 @@ export default function ClassSchedule() {
             return <option>{type}</option>;
           })}
         </select> */}
+        {admin && (
+          <button
+            className="text-4xl text-secondary"
+            onClick={() => navigate("/createActivity")}
+          >
+            <FaCirclePlus />
+          </button>
+        )}
       </div>
       <div className="grid lg:grid-cols-7 grid-cols-1 gap-4 md:w-full">
         {weekdays.map((day) => {
