@@ -12,7 +12,6 @@ export default function AuthProvider({ children }) {
 
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState(null);
-  const [userActivity, setUserActivity] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -20,7 +19,6 @@ export default function AuthProvider({ children }) {
       .get("http://localhost:8080/users/profile", { withCredentials: true })
       .then((response) => {
         setUser(response.data);
-        setUserActivity(response.data.classesRegistered);
         console.log(response.data);
       })
       .catch((error) => {
@@ -30,17 +28,6 @@ export default function AuthProvider({ children }) {
       })
       .finally(() => {
         setIsLoading(false);
-      });
-
-    //TO DO: move get users to the admin page with users out of the authcontext
-    axiosClient
-      .get("/users")
-      .then((response) => {
-        setUsers(response.data);
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }, []);
 
@@ -97,7 +84,7 @@ export default function AuthProvider({ children }) {
           user,
           users,
           setUser,
-          userActivity,
+
           isLoading,
           login,
           logout,

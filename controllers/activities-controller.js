@@ -61,7 +61,6 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     }
   }
 
-
   const activities = await Activity.find(filter).populate("type").sort({
     startTime: "asc",
   });
@@ -77,6 +76,7 @@ const getActivity = asyncWrapper(async (req, res, next) => {
   if (!activity) {
     throw new ErrorResponse("Activity not found", 404);
   }
+  console.log(activity);
   res.json(activity);
 });
 

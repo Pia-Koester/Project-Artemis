@@ -59,9 +59,7 @@ export default function ClassSchedule() {
       return newSkip;
     });
   };
-
-  //role check to render stuff conditionally
-  const [admin, setAdmin] = useState(user.role === "admin");
+  console.log(user);
 
   return (
     <div className="flex gap-3 flex-col items-center p-5">
@@ -105,7 +103,7 @@ export default function ClassSchedule() {
             return <option>{type}</option>;
           })}
         </select> */}
-        {admin && (
+        {user?.role === "admin" && (
           <button
             className="text-4xl text-secondary"
             onClick={() => navigate("/createActivity")}
@@ -120,7 +118,16 @@ export default function ClassSchedule() {
             <div className="flex flex-col gap-2 items-center" key={day}>
               <h3>{day}</h3>
               {activities[day.toLowerCase()]?.map((activity) => {
-                return <ActivityCard activity={activity} key={activity._id} />;
+                console.log(activity.registeredUsers.includes(user?._id));
+                return (
+                  <ActivityCard
+                    activity={activity}
+                    key={activity._id}
+                    role={user?.role}
+                    isBooked={activity.registeredUsers.includes(user?._id)}
+                    // TO DO: check the classesRegistered Array for the activity._id
+                  />
+                );
               })}
             </div>
           );

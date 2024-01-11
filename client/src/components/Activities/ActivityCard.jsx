@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { AuthContext } from "../context/AuthProvider";
 import { FaPencil, FaRegTrashCan } from "react-icons/fa6";
 
-export default function ActivityCard({ activity }) {
+export default function ActivityCard({ activity, role = "student", isBooked }) {
   //TODO: make transition to card Details
   const navigate = useNavigate();
   //calculating the start time based on the provided date
@@ -43,19 +43,18 @@ export default function ActivityCard({ activity }) {
 
   //getting user info to check if class is booked or not
   const { user } = useContext(AuthContext);
-  const registeredUsers = activity?.registeredUsers;
-  const [isBooked, setIsBooked] = useState(registeredUsers.includes(user?._id));
+  // const registeredUsers = activity?.registeredUsers;
+  // const [isBooked, setIsBooked] = useState(registeredUsers.includes(user?._id));
 
-  //admin rights for editing function
-  const [admin, setAdmin] = useState(user.role === "admin");
+  console.log(isBooked);
 
   return (
     <motion.div
       whileHover={past ? {} : { scale: 1.1 }}
       className={clsx(
-        "card  w-full  text-primary-content bg-primary flex flex-col",
+        "card  w-full  text-primary-content flex flex-col bg-gradient-to-r from-primary to-[#7ddaf2] shadow-lg",
         past && "opacity-40",
-        isBooked && "bg-success",
+        isBooked && "bg-gradient-to-r from-success to-[#3fea8c]",
         !past && !isBooked && "bg-primary"
       )}
     >
@@ -71,7 +70,7 @@ export default function ActivityCard({ activity }) {
             <p>
               {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
             </p>
-            {admin && !past && (
+            {role === "admin" && !past && (
               <button>
                 <FaPencil className="text-neutral text-xl" />
               </button>

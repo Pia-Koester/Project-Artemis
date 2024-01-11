@@ -22,23 +22,9 @@ export default function ClassDetails() {
   const activity = useLoaderData();
   console.log(user);
 
-  //TO DO: look at the user and the classesRegistered Array, then find  the id of the params in there.
-  //then if you know the index of it do user.classesregistered[index].capacity - user.classesRegistered[index.registeredUsers.length]
-
-  const indexInRegisteredClasses = user?.classesRegistered?.indexOf(id);
-  console.log(indexInRegisteredClasses);
-
-  const determinSlots = () => {
-    if (indexInRegisteredClasses === -1) {
-      return activity.capacity - activity.registeredUsers.length;
-    } else
-      return (
-        user?.classesRegistered[indexInRegisteredClasses].capacity -
-        user?.classesRegistered[indexInRegisteredClasses].registeredUsers.length
-      );
-  };
-
-  const [openSlots, setOpenSlots] = useState(determinSlots());
+  const [openSlots, setOpenSlots] = useState(
+    activity.capacity - activity.registeredUsers.length
+  );
 
   const revalidator = useRevalidator();
 
@@ -329,7 +315,7 @@ export default function ClassDetails() {
                         .includes(user?._id) && "hidden"
                     )}
                     onClick={() => {
-                      handleCancelation(id, setUser);
+                      handleCancelation(id, setUser, setOpenSlots);
                       // window.location.reload();
                     }}
                   >
