@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"
-import axiosClient from "../../api/axiosClient"
+import axios from "axios";
+import axiosClient from "../../api/axiosClient";
 
 import { badCredentials } from "../../utils/badCredentials";
 
@@ -11,7 +11,7 @@ export default function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
-  const [users, setUsers] = useState(null)
+  const [users, setUsers] = useState(null);
   const [userActivity, setUserActivity] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -24,25 +24,23 @@ export default function AuthProvider({ children }) {
         console.log(response.data);
       })
       .catch((error) => {
-
-        console.log(error)
-        setUser(null)
-        navigate("/")
-      }).finally(() => {
-        setIsLoading(false)
-      })
-
-      axiosClient
-      .get("/users")
-      .then((response) => {
-        setUsers(response.data)
-        console.log(response.data)
-      })
-      .catch((err) => {
-        console.log(err)
+        console.log(error);
+        setUser(null);
+        navigate("/");
       })
       .finally(() => {
         setIsLoading(false);
+      });
+
+    //TO DO: move get users to the admin page with users out of the authcontext
+    axiosClient
+      .get("/users")
+      .then((response) => {
+        setUsers(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
@@ -53,7 +51,7 @@ export default function AuthProvider({ children }) {
         setUser(response.data);
         console.log(response.data);
         //Set timout function needs to run after successful login in order to retrieve data after the post request, otherwise the data does not show
-        navigate("/")
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -94,8 +92,18 @@ export default function AuthProvider({ children }) {
 
   return (
     <>
-
-      <AuthContext.Provider value={{ user, users, setUser, userActivity, isLoading, login, logout, updateUserProfile }}>
+      <AuthContext.Provider
+        value={{
+          user,
+          users,
+          setUser,
+          userActivity,
+          isLoading,
+          login,
+          logout,
+          updateUserProfile,
+        }}
+      >
         {children}
       </AuthContext.Provider>
     </>

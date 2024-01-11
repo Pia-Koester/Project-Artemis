@@ -19,6 +19,16 @@ const authenticate = (req, res, next) => {
   }
 };
 
+const authorize = (role) => {
+  return (req, res, next) => {
+    if (role === req.user.role) {
+      return next();
+    }
+    res.status(401).send("unauthorized");
+  };
+};
+
 module.exports = {
   authenticate,
+  authorize,
 };
