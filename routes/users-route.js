@@ -24,6 +24,6 @@ userRouter.route("/logout").get(logout);
 userRouter.route("/users/profile").get(authenticate, getProfile).put(authenticate, updateProfile);
 userRouter.route("/users").get(authenticate, getUsers);
 userRouter.route("/users/:id").get(authenticate, getUser).delete(authenticate, deleteUser);
-userRouter.route("/users/:id/update").post(authenticate, updateUser);
+userRouter.route("/users/:id/update").put(authenticate, updateUser);
 
 module.exports = userRouter;

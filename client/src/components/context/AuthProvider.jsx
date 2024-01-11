@@ -13,7 +13,6 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState(null)
   const [userActivity, setUserActivity] = useState(null);
-  const [memberships, setMemberhsips] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -45,20 +44,6 @@ export default function AuthProvider({ children }) {
       .finally(() => {
         setIsLoading(false);
       });
-
-      axios
-      .get("http://localhost:8080/plan", {withCredentials: true})
-      .then((response) => {
-        setMemberhsips(response.data)
-        console.log(response.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-      
   }, []);
 
   const login = async (data) => {
@@ -110,7 +95,7 @@ export default function AuthProvider({ children }) {
   return (
     <>
 
-      <AuthContext.Provider value={{ user, users, setUser, memberships, userActivity, isLoading, login, logout, updateUserProfile }}>
+      <AuthContext.Provider value={{ user, users, setUser, userActivity, isLoading, login, logout, updateUserProfile }}>
         {children}
       </AuthContext.Provider>
     </>
