@@ -21,9 +21,11 @@ const defineWeek = (skip) => {
 
   const formattedMondayDate = new Date(today);
   formattedMondayDate.setDate(currentDay + mondayOffset); //this sets the date for the monday of our week
+  formattedMondayDate.setHours(0, 0, 0, 0);
 
   const formattedSundayDate = new Date(today);
   formattedSundayDate.setDate(currentDay + sundayOffset);
+  formattedSundayDate.setHours(23, 59, 59, 999);
 
   // Formatting options for the final output
   const formattedOptions = {
