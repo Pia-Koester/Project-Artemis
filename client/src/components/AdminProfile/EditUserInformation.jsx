@@ -31,7 +31,7 @@ export default function EditUserInformation() {
 
   const onSubmit = (data) => {
     axios
-      .post(`http://localhost:8080/users/${id}/update`, data, {
+      .put(`http://localhost:8080/users/${id}/update`, data, {
         withCredentials: true,
       })
       .then((response) => {

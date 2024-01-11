@@ -261,6 +261,40 @@ export default function ClassDetails() {
               </button>
             </div>
 
+            <div className="modal-action">
+              <form method="dialog">
+                <button
+                  className={clsx(
+                    "btn btn-primary mr-3 self-center mt-2",
+                    registeredUsers
+                      .map((item) => {
+                        return item._id;
+                      })
+                      .includes(user?._id) && "hidden"
+                  )}
+                  onClick={() => {
+                    handleBooking();
+                  }}
+                >
+                  Confirm
+                </button>
+                <button
+                  className={clsx(
+                    "btn btn-secondary mr-3 self-center mt-2",
+                    !registeredUsers
+                      .map((item) => {
+                        return item._id;
+                      })
+                      .includes(user?._id) && "hidden"
+                  )}
+                  onClick={() => {
+                    handleCancelation(id, setUser);
+                    window.location.reload();
+                  }}
+                >
+                  Cancel Booking
+                </button>
+
             <dialog id="my_modal_1" className="modal">
               <div
                 className={clsx(
@@ -271,6 +305,7 @@ export default function ClassDetails() {
                 <div className="card-body items-center text-center">
                   <h3 className="font-bold text-lg">Booking Overview</h3>
                 </div>
+
 
                 <div className="grid grid-cols-2">
                   <div>

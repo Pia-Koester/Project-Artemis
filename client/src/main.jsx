@@ -24,6 +24,8 @@ import CreateMembership from "./components/AdminProfile/CreateMembership.jsx";
 import EditUserInformation from "./components/AdminProfile/EditUserInformation.jsx";
 import CreateActivity from "./components/Admin/CreateActivity";
 import CreateActivityType from "./components/Admin/CreateActivityType";
+import MembershipsOverview from "./components/AdminProfile/MembershipsOverview.jsx";
+import EditMembershipInformation from "./components/AdminProfile/EditMembershipInformation.jsx";
 
 
 const router = createBrowserRouter([
@@ -80,12 +82,20 @@ const router = createBrowserRouter([
             element: <SingleUserInformation />,
           },
           {
+            path: "/userProfile/usersOverview/:id/update",
+            element: <EditUserInformation />,
+          },
+          {
             path: "/userProfile/createMembership",
             element: <CreateMembership />,
           },
           {
-            path: "/userProfile/usersOverview/:id/update",
-            element: <EditUserInformation />,
+            path: "/userProfile/membershipsOverview",
+            element: <MembershipsOverview />,
+          },
+          {
+            path: "/userProfile/membershipsOverview/:id",
+            element: <EditMembershipInformation />,
           },
         ],
       },

@@ -15,7 +15,8 @@ const createMembershipPlan = asyncWrapper(async (req, res, next) => {
 
 // get all the available memberships
 const getMembershipPlans = asyncWrapper(async (req, res, next) => {
-  const membershipplans = await MembershipPlan.find({});
+  const membershipplans = await MembershipPlan.find({})
+  
   res.json(membershipplans);
 });
 
@@ -29,8 +30,21 @@ const getMembershipPlan = asyncWrapper(async (req, res, next) => {
   res.json(plan);
 });
 
+//Update single membership plan
+const updateMembershipPlan = asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
+  const {title, price, totalCredits} = req.body
+  
+  const plan = await MembershipPlan.findByIdAndUpdate(id, {title, price, totalCredits});
+  if (!plan) {
+    throw new ErrorResponse("No Membership Plan found", 404);
+  }
+  res.json(plan);
+});
+
 module.exports = {
   createMembershipPlan,
   getMembershipPlans,
   getMembershipPlan,
+  updateMembershipPlan
 };
