@@ -152,7 +152,6 @@ export default function ClassDetails() {
         pauseOnHover={false}
         theme="light"
       />
-      <div className="Kurs-Informationen card bg-base-100 shadow-xl flex flex-col p-4 m-2">
         <div className="flex md:flex-row flex-col-reverse justify-center">
           <div className="Kurs-Informationen card bg-base-100 shadow-xl flex flex-col p-4 m-2 min-w-96">
             {/* To Do: block für Kursinformationen erstellen */}
@@ -404,7 +403,6 @@ export default function ClassDetails() {
           </aside>
         </div>
       </div>
-    </div>
     
       );
 }
