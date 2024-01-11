@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useState } from "react";
 
 export default function CreateActivityType() {
   const {
@@ -9,23 +10,46 @@ export default function CreateActivityType() {
     formState: { errors },
   } = useForm();
 
+  const [multipleImages, setMultipleImages] = useState([]);
+  const changeMultipleFiles = (e) => {
+    if (e.target.files) {
+      const imageArray = Array.from(e.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setMultipleImages((prevImages) => prevImages.concat(imageArray));
+    }
+  };
+
+  const render = (data) => {
+    return data.map((image) => {
+      return <img className="image" src={image} alt="" key={image} />;
+    });
+  };
+
   const onSubmit = (data) => {
     console.log(data);
     const formData = new FormData();
     formData.append("type", data.type);
-    formData.append("image", data.image[0]);
-
+    // formData.append("images", data.images);
+    console.log(multipleImages);
+    console.log(data.images);
+    for (const key of Object.keys(multipleImages)) {
+      formData.append("images", data.images[key]);
+    }
     axios
-      .post("http://localhost:8080/activityTypes", formData)
+      .post("http://localhost:8080/activityTypes", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => {
         console.log(response.data);
+        setMultipleImages([]);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  console.log(watch("example")); // watch input value by passing the name of it
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -68,8 +92,11 @@ export default function CreateActivityType() {
               <input
                 className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
                 placeholder="Product Image"
-                {...register("image", { required: true })}
+                {...register("images", { required: true })}
                 type="file"
+                name="images"
+                multiple
+                onChange={changeMultipleFiles}
               />
             </div>
             <button
@@ -79,6 +106,7 @@ export default function CreateActivityType() {
               Update
             </button>
           </form>
+          {render(multipleImages)}
         </div>
       </div>
     </div>
