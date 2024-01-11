@@ -18,6 +18,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
     termsOfUse,
     dataProtectionInfo,
     address,
+    role = "student",
   } = req.body;
 
   const found = await User.findOne({ email });
@@ -37,6 +38,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
     termsOfUse,
     dataProtectionInfo,
     address,
+    role,
   });
 
   res.status(201).json(user);
@@ -45,11 +47,12 @@ const createUser = asyncWrapper(async (req, res, next) => {
 //Gets all the users
 //TODO don't return the passwords
 const getUsers = asyncWrapper(async (req, res, next) => {
-  const users = await User.find({}).populate("classesRegistered")
-  .populate({
-    path: "activeMembership",
-    populate: { path: "plan", model: "MembershipPlan" },
-  });;
+  const users = await User.find({})
+    .populate("classesRegistered")
+    .populate({
+      path: "activeMembership",
+      populate: { path: "plan", model: "MembershipPlan" },
+    });
   res.json(users);
 });
 
@@ -73,12 +76,15 @@ const setUserMembership = asyncWrapper(async (req, res, next) => {
   const membershipHolder = await User.findByIdAndUpdate(
     user,
     { activeMembership: _id },
-    { new: true, populate: {
-      path: "activeMembership",
-      populate: { path: "plan", model: "MembershipPlan" }
-    }}
+    {
+      new: true,
+      populate: {
+        path: "activeMembership",
+        populate: { path: "plan", model: "MembershipPlan" },
+      },
+    }
   );
-    console.log(membershipHolder)
+  console.log(membershipHolder);
 
   res.json(membershipHolder.activeMembership);
 });
@@ -110,7 +116,7 @@ const setUserActivity = asyncWrapper(async (req, res, next) => {
     { $push: { classesRegistered: activity_id } },
 
     { new: true, populate: "classesRegistered" }
-  )
+  );
 
   req.user = updatedUser;
 
@@ -161,14 +167,17 @@ const login = asyncWrapper(async (req, res, next) => {
     id: user._id,
     email: user.email,
     firstName: user.firstName,
+    role: user.role,
   };
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: "480m",
   });
 
-  res
-    .cookie("access_token", token, { httpOnly: true, maxAge: 28800000 })
-    .json({...payload, activeMembership: user.activeMembership, firstName: user.firstName});
+  res.cookie("access_token", token, { httpOnly: true, maxAge: 28800000 }).json({
+    ...payload,
+    activeMembership: user.activeMembership,
+    firstName: user.firstName,
+  });
 });
 
 //User logout
@@ -221,10 +230,10 @@ const deleteUser = asyncWrapper(async (req, res, next) => {
 
   const user = await User.findByIdAndDelete(id);
 
-  if(!user) {
-    throw new ErrorResponse("User not found", 404)
+  if (!user) {
+    throw new ErrorResponse("User not found", 404);
   } else {
-    res.json({ message: 'User deleted successfully' });
+    res.json({ message: "User deleted successfully" });
   }
 });
 
@@ -240,5 +249,5 @@ module.exports = {
   cancelUserActivity,
   getUser,
   updateUser,
-  deleteUser
+  deleteUser,
 };

@@ -26,7 +26,7 @@ import CreateActivity from "./components/Admin/CreateActivity";
 import CreateActivityType from "./components/Admin/CreateActivityType";
 import MembershipsOverview from "./components/AdminProfile/MembershipsOverview.jsx";
 import EditMembershipInformation from "./components/AdminProfile/EditMembershipInformation.jsx";
-
+import Authorize from "./pages/Authorize";
 
 const router = createBrowserRouter([
   {
@@ -73,40 +73,47 @@ const router = createBrowserRouter([
             path: "/userProfile/details/update",
             element: <UserUpdateInformation />,
           },
+
           {
-            path: "/userProfile/usersOverview",
-            element: <UsersOverview />,
-          },
-          {
-            path: "/userProfile/usersOverview/:id",
-            element: <SingleUserInformation />,
-          },
-          {
-            path: "/userProfile/usersOverview/:id/update",
-            element: <EditUserInformation />,
-          },
-          {
-            path: "/userProfile/createMembership",
-            element: <CreateMembership />,
-          },
-          {
-            path: "/userProfile/membershipsOverview",
-            element: <MembershipsOverview />,
-          },
-          {
-            path: "/userProfile/membershipsOverview/:id",
-            element: <EditMembershipInformation />,
+            path: "/",
+            element: <Authorize role={"admin"} />,
+            children: [
+              {
+                path: "/userProfile/usersOverview",
+                element: <UsersOverview />,
+              },
+              {
+                path: "/userProfile/usersOverview/:id",
+                element: <SingleUserInformation />,
+              },
+              {
+                path: "/userProfile/usersOverview/:id/update",
+                element: <EditUserInformation />,
+              },
+              {
+                path: "/userProfile/createMembership",
+                element: <CreateMembership />,
+              },
+              {
+                path: "/userProfile/membershipsOverview",
+                element: <MembershipsOverview />,
+              },
+              {
+                path: "/userProfile/membershipsOverview/:id",
+                element: <EditMembershipInformation />,
+              },
+              {
+                path: "/createActivity",
+                element: <CreateActivity />,
+                loader: async () => {
+                  return fetch(`http://localhost:8080/activityTypes`);
+                },
+              },
+              { path: "/createType", element: <CreateActivityType /> },
+            ],
           },
         ],
       },
-      {
-        path: "/createActivity",
-        element: <CreateActivity />,
-        loader: async () => {
-          return fetch(`http://localhost:8080/activityTypes`);
-        },
-      },
-      { path: "/createType", element: <CreateActivityType /> },
     ],
   },
 ]);
