@@ -5,19 +5,18 @@ import axios from "axios";
 export default function UserCard({ user }) {
   const navigate = useNavigate();
 
-  console.log(`http://localhost:8080/users/${user._id}`);
-
   const deleteUser = async () => {
     axios
       .delete(`http://localhost:8080/users/${user._id}`, {
         withCredentials: true,
       })
       .then((response) => {
-        window.location.reload()
+        //To do replace function with something better
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   };
 
   return (
@@ -81,7 +80,7 @@ export default function UserCard({ user }) {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="w-6 h-6 "
               >
                 <path
                   strokeLinecap="round"
@@ -112,13 +111,17 @@ export default function UserCard({ user }) {
                 <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
               </svg>
               <span class="sr-only">Info</span>
-              <h3 class="text-lg font-medium">Warning! You are about the delete the profile of: <span className="font-bold">{user.firstName + " " + user.lastName}</span></h3>
+              <h3 class="text-lg font-medium">
+                Warning! You are about the delete the profile of:{" "}
+                <span className="font-bold">
+                  {user.firstName + " " + user.lastName}
+                </span>
+              </h3>
             </div>
+            <div class="mt-2 mb-4 text-sm"></div>
             <div class="mt-2 mb-4 text-sm">
-              
-            </div>
-            <div class="mt-2 mb-4 text-sm">
-              After clicking "Confirm" button this action can no longer be reverted!
+              After clicking the "Confirm" button this action can no longer be
+              reverted!
             </div>
             <div class="mt-2 mb-4 text-sm">
               Are you sure you want to delte the user profile?
@@ -131,20 +134,12 @@ export default function UserCard({ user }) {
               >
                 Confirm
               </button>
-              <button
-                type="button"
-                class="text-red-800 bg-transparent border border-red-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-red-600 dark:border-red-600 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800"
-                data-dismiss-target="#alert-additional-content-2"
-                aria-label="Close"
-              >
-                Cancel
-              </button>
+              <form method="dialog">
+                <button class="text-red-800 bg-transparent border border-red-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-red-600 dark:border-red-600 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800">
+                  Cancel
+                </button>
+              </form>
             </div>
-          </div>
-          <div className="modal-action">
-            <form method="dialog">
-              <button className="btn">Close</button>
-            </form>
           </div>
         </div>
       </dialog>

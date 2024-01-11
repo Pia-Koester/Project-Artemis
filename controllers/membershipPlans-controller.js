@@ -42,9 +42,20 @@ const updateMembershipPlan = asyncWrapper(async (req, res, next) => {
   res.json(plan);
 });
 
+//Delete single membership plan
+const deleteMembershipPlan = asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
+  
+  const plan = await MembershipPlan.findByIdAndDelete(id);
+  if (!plan) {
+    throw new ErrorResponse("No Membership Plan found", 404);
+  }
+  res.json(plan);
+});
 module.exports = {
   createMembershipPlan,
   getMembershipPlans,
   getMembershipPlan,
-  updateMembershipPlan
+  updateMembershipPlan,
+  deleteMembershipPlan
 };

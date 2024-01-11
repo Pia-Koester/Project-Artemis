@@ -136,15 +136,10 @@ export default function EditMembershipInformation() {
                 >
                   Go back
                 </button>
-
-
               </form>
-             
             </div>
           </div>
-         
         </div>
-
       )}
 
     </>
