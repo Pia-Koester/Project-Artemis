@@ -3,8 +3,6 @@ import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 export default function LocationMap({ location }) {
   const position = location.coordinates;
   const address = location.address;
-  console.log(location);
-  console.log(position);
 
   return (
     <MapContainer

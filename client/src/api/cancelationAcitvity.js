@@ -1,6 +1,10 @@
 import axios from "axios"
+// import { useContext } from "react";
+// import { AuthContext } from "../components/context/AuthProvider";
 
-const handleCancelation = (id) => {
+const handleCancelation = (id, setUser) => {
+  // const {setUser} = useContext(AuthContext);
+
 
     console.log("id of the activity:", id)
     axios
@@ -11,7 +15,10 @@ const handleCancelation = (id) => {
         
       )
       .then((response) => {
-        console.log("Data from api", response)
+        console.log("Data from api", response.data)
+        setUser((prev) => {
+          return {...prev, classesRegistered: response.data.classesRegistered, activeMembership: response.data.activeMembership}
+        })
       })
       .catch((err) => {
         console.log(err);

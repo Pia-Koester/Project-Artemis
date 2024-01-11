@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import CapacityBadge from "./CapacityBadge";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import clsx from "clsx";
+import { AuthContext } from "../context/AuthProvider";
 
 export default function ActivityCard({ activity }) {
   //TODO: make transition to card Details
@@ -39,12 +40,19 @@ export default function ActivityCard({ activity }) {
     activity.capacity - activity.registeredUsers.length
   );
 
+  //getting user info to check if class is booked or not
+  const { user } = useContext(AuthContext);
+  const registeredUsers = activity?.registeredUsers;
+  const [isBooked, setIsBooked] = useState(registeredUsers.includes(user?._id));
+
   return (
     <motion.div
       whileHover={past ? {} : { scale: 1.1 }}
       className={clsx(
         "card  w-full  text-primary-content bg-primary flex flex-col",
-        past && "opacity-40"
+        past && "opacity-40",
+        isBooked && "bg-success",
+        !past && !isBooked && "bg-primary"
       )}
     >
       {/* QUESTION: Why is the text running outside the box on medium sizes?  */}
@@ -62,9 +70,8 @@ export default function ActivityCard({ activity }) {
           <h2 className="card-title text-wrap ">{activity.title}</h2>
           <p>{activity.description}</p>
           <div className="flex justify-between items-end">
-
             <CapacityBadge openSlots={openSlots} />
-              
+
             <div className="avatar">
               <div className="w-24 mask mask-hexagon">
                 <img src={photos[activity.instructor]} />
