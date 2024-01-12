@@ -14,6 +14,8 @@ import LocationMap from "../components/Activities/LocationMap";
 import { ToastContainer, toast } from "react-toastify";
 import { AuthContext } from "../components/context/AuthProvider";
 import clsx from "clsx";
+import EditActivity from "../components/AdminProfile/EditActivity";
+import userIcon from "../assets/logos/avatar.jpg";
 
 export default function ClassDetails() {
   const { id } = useParams();
@@ -124,7 +126,7 @@ export default function ClassDetails() {
     Rolf: "https://static.wixstatic.com/media/87046c_8b75e3d5339f4d46b34471ccee515c3f~mv2.jpg/v1/fill/w_656,h_1040,fp_0.47_0.37,q_85,usm_0.66_1.00_0.01,enc_auto/87046c_8b75e3d5339f4d46b34471ccee515c3f~mv2.jpg",
   };
   return (
-    <div className="flex md:flex-row flex-col-reverse">
+    <div className="flex md:flex-row flex-col-reverse justify-center items-start">
       <ToastContainer
         position="top-center"
         autoClose={1500}
@@ -138,8 +140,8 @@ export default function ClassDetails() {
         pauseOnHover={false}
         theme="light"
       />
-      <div className="flex md:flex-row flex-col-reverse justify-center">
-        <div className="Kurs-Informationen card bg-base-100 shadow-xl flex flex-col p-4 m-2 min-w-96">
+      <div className="flex md:flex-row flex-col-reverse justify-center   ">
+        <div className="Kurs-Informationen card bg-white shadow-xl flex flex-col p-4 m-2 min-w-96">
           {/* To Do: block für Kursinformationen erstellen */}
           <h1 className="text-2xl font-bold mb-4">{activity.title}</h1>
           <div className="carousel carousel-center rounded-box w-96 self-center">
@@ -166,7 +168,7 @@ export default function ClassDetails() {
             location={activity.location}
           />
         </div>
-        <aside className="card w-96 bg-base-100 shadow-2xl flex flex-col p-4 m-2">
+        <aside className="card w-96 bg-white shadow-2xl flex flex-col p-4 m-2 self-start">
           <h1 className="text-2xl font-bold mb-4 lg:hidden">
             {activity.title}
           </h1>
@@ -205,34 +207,43 @@ export default function ClassDetails() {
             </div>
           </div>
           <div className="grid grid-cols-2">
-            <button
-              className={clsx(
-                "btn btn-primary mr-3 self-center mt-2",
-                registeredUsers
-                  .map((item) => {
-                    return item._id;
-                  })
-                  .includes(user?._id) && "hidden"
-              )}
-              onClick={() => document.getElementById("my_modal_1").showModal()}
-              disabled={openSlots <= 0}
-            >
-              Book Now
-            </button>
-            <button
-              className={clsx(
-                "btn btn-secondary mr-3 self-center mt-2",
-                !registeredUsers
-                  .map((item) => {
-                    return item._id;
-                  })
-                  .includes(user?._id) && "hidden"
-              )}
-              onClick={() => document.getElementById("my_modal_1").showModal()}
-              disabled={openSlots <= 0}
-            >
-              Cancel Booking
-            </button>
+            {user.role === "student" && (
+              <button
+                className={clsx(
+                  "btn btn-primary mr-3 self-center mt-2",
+                  registeredUsers
+                    .map((item) => {
+                      return item._id;
+                    })
+                    .includes(user?._id) && "hidden"
+                )}
+                onClick={() =>
+                  document.getElementById("my_modal_1").showModal()
+                }
+                disabled={openSlots <= 0}
+              >
+                Book Now
+              </button>
+            )}
+            {user.role === "student" && (
+              <button
+                className={clsx(
+                  "btn btn-secondary mr-3 self-center mt-2",
+                  !registeredUsers
+                    .map((item) => {
+                      return item._id;
+                    })
+                    .includes(user?._id) && "hidden"
+                )}
+                onClick={() =>
+                  document.getElementById("my_modal_1").showModal()
+                }
+                disabled={openSlots <= 0}
+              >
+                Cancel Booking
+              </button>
+            )}
+
             <button
               className="btn btn-neutral mr-3 self-center mt-2"
               onClick={() => navigate(`/`)}
@@ -373,15 +384,42 @@ export default function ClassDetails() {
               </div>
             </div>
           </dialog>
-
-          <button
-            className="btn btn-primary w-4/5 self-center m-2"
-            disabled={openSlots > 0}
-          >
-            Waitlist
-          </button>
+          {user.role === "student" && (
+            <button
+              className="btn btn-primary w-4/5 self-center m-2"
+              disabled={openSlots > 0}
+            >
+              Waitlist
+            </button>
+          )}
+          <div>
+            <h3 className="font-bold mt-10">Registered Users</h3>
+            <table className="table p-2 m-2">
+              <tbody>
+                {registeredUsers.map((student) => {
+                  return (
+                    <tr key={student._id}>
+                      <th>
+                        <div className="w-10 rounded-full">
+                          <img
+                            alt="Tailwind CSS Navbar component"
+                            src={userIcon}
+                          />
+                        </div>
+                      </th>
+                      <td>
+                        <div>{student.lastName}</div>
+                      </td>
+                      <td>{student.firstName}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </aside>
       </div>
+      {user.role === "admin" && <EditActivity activity={activity} />}
     </div>
   );
 }

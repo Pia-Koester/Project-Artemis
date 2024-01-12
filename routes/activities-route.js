@@ -6,6 +6,7 @@ const {
   getActivity,
   updateActivity,
   cancelActivity,
+  adminUpdateActivity,
 } = require("../controllers/activities-controller.js");
 const { authenticate, authorize } = require("../middlewares/authentication.js");
 const {
@@ -23,12 +24,17 @@ activityRouter
   .route("/")
   .post(authenticate, authorize("admin"), createActivity)
   .get(getActivities);
+
+activityRouter
+  .route("/admin/:activity_id")
+  .get(getActivity)
+  .put(authenticate, authorize("admin"), adminUpdateActivity);
+
 activityRouter
   .route("/:activity_id")
   .get(getActivity)
   .put(authenticate, updateActivity, setUserActivity, updateUserMembership);
-//QUESTION: how can we make sure that loged in users get the user data in the response but not logged in users can still see the page?
-//TO DO: create put request updating the activities
+
 activityRouter
   .route("/:activity_id/cancel")
   .put(
