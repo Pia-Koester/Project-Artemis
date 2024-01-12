@@ -4,7 +4,7 @@ import "./index.css";
 
 //IMPORTING THINGS FOR ROUTER
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Rootlayout from "./layout/RootLayout.jsx";
+
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import ClassSchedule from "./pages/ClassSchedule";
@@ -30,6 +30,7 @@ import Authorize from "./pages/Authorize";
 import Types from "./pages/Types";
 import EditActivityType from "./components/AdminProfile/EditActivityType";
 import Landingpage from "./pages/Landingpage";
+import Rootlayout from "./layout/Rootlayout";
 
 const router = createBrowserRouter([
   {
