@@ -72,7 +72,7 @@ export default function UserInformation() {
                   Phone number
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {user.phone}
+                  {user.phoneNumber}
                 </dd>
               </div>
             </dl>

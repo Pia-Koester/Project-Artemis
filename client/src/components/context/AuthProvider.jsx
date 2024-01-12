@@ -11,8 +11,6 @@ export default function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
-
-
   const [checkUserMembership, setCheckUserMembership] = useState(null);
   const [userActivity, setUserActivity] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
