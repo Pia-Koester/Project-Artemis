@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import logo from "../assets/logos/phoenix-color.png";
 import { useNavigate } from "react-router-dom";
 
-export default function Landingpage() {
+export default function Landingpage({ setClicked }) {
   const navigate = useNavigate();
 
   return (

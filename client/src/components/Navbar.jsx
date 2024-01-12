@@ -60,7 +60,7 @@ export default function Navbar() {
                   )}{" "}
                   {user.role === "admin" && (
                     <li>
-                      <Link to={" "}>Admin Dashboard</Link>
+                      <Link to={"/dashboard "}>Admin Dashboard</Link>
                     </li>
                   )}
                   {/* <li>

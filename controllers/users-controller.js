@@ -151,7 +151,13 @@ const cancelUserActivity = asyncWrapper(async (req, res, next) => {
 const login = asyncWrapper(async (req, res, next) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ email })
+    .select("+password")
+    .populate("classesRegistered")
+    .populate({
+      path: "activeMembership",
+      populate: { path: "plan", model: "MembershipPlan" },
+    });
 
   if (!user) {
     throw new ErrorResponse("User does not exist!", 404);
@@ -173,15 +179,11 @@ const login = asyncWrapper(async (req, res, next) => {
     expiresIn: "480m",
   });
 
-  res.cookie("access_token", token, { httpOnly: true, maxAge: 28800000 }).json({
-    _id: user._id,
-    email: user.email,
-    firstName: user.firstName,
-    role: user.role,
-    activeMembership: user.activeMembership,
-    firstName: user.firstName,
-    classesRegistered: user.classesRegistered,
-  });
+  delete user.password;
+
+  res
+    .cookie("access_token", token, { httpOnly: true, maxAge: 28800000 })
+    .json(user);
 });
 
 //User logout
@@ -219,7 +221,8 @@ const getUser = asyncWrapper(async (req, res, next) => {
 //Update single user from the admin page
 const updateUser = asyncWrapper(async (req, res, next) => {
   const { id } = req.params;
-  const { firstName, lastName, phoneNumber, address, dateOfBirth, role } = req.body;
+  const { firstName, lastName, phoneNumber, address, dateOfBirth, role } =
+    req.body;
 
   const user = await User.findByIdAndUpdate(
     id,

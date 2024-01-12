@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../components/context/AuthProvider";
+import Landingpage from "../pages/Landingpage";
 
 export default function Rootlayout() {
   const { isLoading } = useContext(AuthContext);

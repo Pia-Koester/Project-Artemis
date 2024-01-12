@@ -224,9 +224,7 @@ export default function Dashboard() {
                 </div>
 
                 <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
-                <div
-                  class="chart-container"
-                >
+                <div class="chart-container">
                   <div class="flex justify-center border rounded-lg">
                     <ul class="bg-white rounded-lg w-96 text-gray-900">
                       {!memberships ? (
@@ -252,7 +250,7 @@ export default function Dashboard() {
                   <h2 class="text-gray-500 text-lg font-semibold pb-1">
                     Activity Types
                   </h2>
-                  <button class="bg-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 rounded w-1/4 mb-2">
+                  <button class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/4 mb-2">
                     Create New
                   </button>
                 </div>
@@ -286,7 +284,7 @@ export default function Dashboard() {
                   <h2 class="text-gray-500 text-lg font-semibold pb-1">
                     Classes
                   </h2>
-                  <button class="bg-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 rounded w-1/4 mb-2">
+                  <button class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/4 mb-2">
                     Create New
                   </button>
                 </div>

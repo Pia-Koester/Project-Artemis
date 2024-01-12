@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthProvider";
 export default function UserUpdateInformation() {
   const navigate = useNavigate();
 
-  const {user, updateUserProfile} = useContext(AuthContext);
+  const { user, updateUserProfile } = useContext(AuthContext);
 
   const {
     register,
@@ -17,7 +17,7 @@ export default function UserUpdateInformation() {
   } = useForm();
 
   const onSubmit = (data) => {
-    updateUserProfile(data)
+    updateUserProfile(data);
   };
 
   const formatedDate = user?.dateOfBirth.split("T")[0];
@@ -168,7 +168,7 @@ export default function UserUpdateInformation() {
                   Update
                 </button>
                 <button
-                  onClick={() => navigate("/userProfile/details")}
+                  onClick={() => navigate(-1)}
                   className="w-full bg-neutral text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 >
                   Go back

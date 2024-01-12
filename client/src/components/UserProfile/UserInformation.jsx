@@ -3,11 +3,10 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 
 export default function UserInformation() {
+  const { user } = useContext(AuthContext);
 
-  const {user} = useContext(AuthContext);
-
-  const formatRegisterDate = user?.dateOfRegistration.split("T");
-  const formatDateOfBirth = user?.dateOfBirth.split("T");
+  const formatRegisterDate = user?.dateOfRegistration?.split("T");
+  const formatDateOfBirth = user?.dateOfBirth?.split("T");
 
   return (
     <>
@@ -30,13 +29,13 @@ export default function UserInformation() {
                   First name
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {user.firstName}
+                  {user?.firstName}
                 </dd>
               </div>
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">Last name</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {user.lastName}
+                  {user?.lastName}
                 </dd>
               </div>
               <div className="bg-gray-200 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -44,13 +43,13 @@ export default function UserInformation() {
                   Date of birth
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {formatDateOfBirth[0]}
+                  {user?.dateOfRegistration?.split("T")[0]}
                 </dd>
               </div>
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">E-mail</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {user.email}
+                  {user?.email}
                 </dd>
               </div>
               <div className="bg-gray-200 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -58,13 +57,13 @@ export default function UserInformation() {
                   Member since
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {formatRegisterDate[0]}
+                  {user?.dateOfRegistration?.split("T")[0]}
                 </dd>
               </div>
               <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt className="text-sm font-medium text-gray-500">Address</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {user.address}
+                  {user?.address}
                 </dd>
               </div>
               <div className="bg-gray-200 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -72,7 +71,7 @@ export default function UserInformation() {
                   Phone number
                 </dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  {user.phoneNumber}
+                  {user?.phoneNumber}
                 </dd>
               </div>
             </dl>
