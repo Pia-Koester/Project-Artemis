@@ -139,10 +139,32 @@ const cancelActivity = asyncWrapper(async (req, res, next) => {
   next();
 });
 
+const adminUpdateActivity = asyncWrapper(async (req, res, next) => {
+  const { activity_id } = req.params;
+  const { title, description, instructor, capacity, startTime, endTime, type } =
+    req.body;
+  console.log("I am now updaten", title);
+  const updatedActivity = await Activity.findByIdAndUpdate(
+    activity_id,
+    {
+      title,
+      description,
+      instructor,
+      capacity,
+      startTime,
+      endTime,
+      type,
+    },
+    { new: true }
+  );
+  res.json(updatedActivity);
+});
+
 module.exports = {
   createActivity,
   getActivities,
   getActivity,
   updateActivity,
   cancelActivity,
+  adminUpdateActivity,
 };

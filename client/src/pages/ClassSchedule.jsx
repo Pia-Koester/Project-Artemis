@@ -64,8 +64,7 @@ export default function ClassSchedule() {
 
   return (
     <div className="flex gap-3 flex-col items-center p-5">
-      <img src={logo} className="w-24 justify-self-start" />
-      <h1 className="text-3xl mb-6">Class Overview</h1>
+      <h1 className="text-3xl mb-6">Find your next class here</h1>
       <div className="flex flex-col md:flex-row w-full gap-2 md:justify-center items-center">
         <div className="join">
           <button className="join-item btn" onClick={handlePrev}>
