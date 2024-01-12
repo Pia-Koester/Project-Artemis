@@ -1,9 +1,23 @@
-import { AuthContext } from "../context/AuthProvider";
-import { useContext } from "react";
+import { useState, useEffect } from "react";
 import UserCard from "./UserCard";
+import axios from "axios";
 
 export default function UsersOverview() {
-  const { users } = useContext(AuthContext);
+  const [users, setUsers] = useState(null)
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/users", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setUsers(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <>

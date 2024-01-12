@@ -12,6 +12,7 @@ export default function AuthProvider({ children }) {
 
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState(null);
+  const [checkUserMembership, setCheckUserMembership] = useState(null);
   const [userActivity, setUserActivity] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,6 +22,7 @@ export default function AuthProvider({ children }) {
       .then((response) => {
         setUser(response.data);
         setUserActivity(response.data.classesRegistered);
+        setCheckUserMembership(response.data.activeMembership);
         console.log(response.data);
       })
       .catch((error) => {
@@ -96,6 +98,7 @@ export default function AuthProvider({ children }) {
         value={{
           user,
           users,
+          checkUserMembership,
           setUser,
           userActivity,
           isLoading,

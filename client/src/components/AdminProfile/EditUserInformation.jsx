@@ -125,15 +125,15 @@ export default function EditUserInformation() {
                     </label>
                     <input
                       className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
-                      {...register("phone", {
+                      {...register("phoneNumber", {
                         required: "Phone number is required",
                       })}
-                      defaultValue={user.phone}
+                      defaultValue={user.phoneNumber}
                       placeholder="Phone number"
                     />
-                    {errors.phone?.type === "required" && (
+                    {errors.phoneNumber?.type === "required" && (
                       <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        {errors.phone.message}
+                        {errors.phoneNumber.message}
                       </span>
                     )}
                   </div>
@@ -193,13 +193,26 @@ export default function EditUserInformation() {
                     <select
                       id="role"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      {...register("role")}
+                        
+                      {...register("role", {
+                        minLength: {
+                          value: 2,
+                          message: "Select a valid role",
+                        }
+                      })}
                     >
-                      <option selected value="student">Student</option>
+                      <option value="A">Chose a role</option>
+                      <option value="student">Student</option>
                       <option value="teacher">Teacher</option>
                       <option value="admin">Admin</option>
                     </select>
+                    {errors.role?.type === "minLength" && (
+                      <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                        {errors.role.message}
+                      </span>
+                    )}
                   </div>
+
                 </div>
 
                 <button

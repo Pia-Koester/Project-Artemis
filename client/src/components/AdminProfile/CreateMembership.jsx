@@ -18,7 +18,7 @@ export default function CreateMembership() {
         .then((response) => {
           console.log(response.data)
           //Set timout function needs to run after successful login in order to retrieve data after the post request, otherwise the data does not show
-          navigate("/")
+          navigate("/userProfile/membershipsOverview")
         })
         .catch((error) => {
           console.log(error);
@@ -99,6 +99,26 @@ export default function CreateMembership() {
                       </span>
                     )}
                   </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="validity"
+                      className="block text-gray-700 text-sm font-semibold mb-2"
+                    >
+                      Validity {`(in days)`}:
+                    </label>
+                    <input
+                      className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                      {...register("validity", {
+                        required: "Validity is required",
+                      })}
+                      placeholder="Validity"
+                    />
+                    {errors.validity?.type === "required" && (
+                      <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                        {errors.totalCredits.message}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <button
@@ -108,7 +128,7 @@ export default function CreateMembership() {
                   Create
                 </button>
                 <button
-                  onClick={() => navigate("/")}
+                  onClick={() => navigate("/userProfile/membershipsOverview")}
                   className="w-full bg-neutral text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 >
                   Go back
