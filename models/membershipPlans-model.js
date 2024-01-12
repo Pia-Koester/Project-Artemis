@@ -5,7 +5,7 @@ const membershipPlanSchema = new Schema({
   price: { type: Number, required: true },
   validity: { type: Number }, //- TODO - must be milliseconds to be able to add it to the purchaseDate to calculate the expiration
   totalCredits: { type: Number, required: true },
-
+ 
 });
 
 const MembershipPlan = model("MembershipPlan", membershipPlanSchema);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 import MembershipInformationCard from "./MembershipInformationCard";
+import { Link } from "react-router-dom";
 
 export default function MembershipsOverview() {
   const [memberships, setMemberships] = useState(null);
@@ -20,7 +20,7 @@ export default function MembershipsOverview() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-col items-center justify-center px-4 py-5 sm:px-6">
+      <div className="flex flex-col items-center justify-center px-4 py-3 sm:px-6">
         <h3 className="text-lg leading-6 font-medium text-gray-900">
           Membership plan overview
         </h3>
@@ -28,6 +28,13 @@ export default function MembershipsOverview() {
           Details and informations about membership plans
         </p>
       </div>
+      <Link
+        to={"/userProfile/createMembership"}
+        type="submit"
+        className=" bg-success text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-4"
+      >
+        Create New Membership +
+      </Link>
       {!memberships ? (
         <p>Loading...</p>
       ) : (

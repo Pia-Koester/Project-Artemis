@@ -215,11 +215,11 @@ const getUser = asyncWrapper(async (req, res, next) => {
 //Update single user from the admin page
 const updateUser = asyncWrapper(async (req, res, next) => {
   const { id } = req.params;
-  const { firstName, lastName, phone, address, dateOfBirth, role } = req.body;
+  const { firstName, lastName, phoneNumber, address, dateOfBirth, role } = req.body;
 
   const user = await User.findByIdAndUpdate(
     id,
-    { firstName, lastName, phone, address, dateOfBirth, role },
+    { firstName, lastName, phoneNumber, address, dateOfBirth, role },
     { new: true }
   );
   res.json(user);

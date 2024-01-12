@@ -11,7 +11,10 @@ export default function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
-  const [users, setUsers] = useState(null);
+
+
+  const [checkUserMembership, setCheckUserMembership] = useState(null);
+  const [userActivity, setUserActivity] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -19,6 +22,8 @@ export default function AuthProvider({ children }) {
       .get("http://localhost:8080/users/profile", { withCredentials: true })
       .then((response) => {
         setUser(response.data);
+        setUserActivity(response.data.classesRegistered);
+        setCheckUserMembership(response.data.activeMembership);
         console.log(response.data);
       })
       .catch((error) => {
@@ -83,6 +88,7 @@ export default function AuthProvider({ children }) {
         value={{
           user,
           users,
+          checkUserMembership,
           setUser,
 
           isLoading,

@@ -1,9 +1,61 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import axios from "axios"
+import { ToastContainer, toast } from "react-toastify";
 
 export default function MembershipInformationCard({ membership }) {
+  const modalRef = useRef(null);
+  const navigate = useNavigate();
+
+  const deleteMembership = () => {
+    axios
+    .delete(`http://localhost:8080/plan/delete/${membership._id}`, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      closeModal();
+      notify();
+      setTimeout(() => {
+        navigate("/")
+      }, 3000);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+  const notify = () =>
+  toast.success('--Deleted Successfully-- Redirecting to the admin dashboard', {
+    position: "top-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+
+  const closeModal = () => {
+    modalRef.current.close(); // Close the modal
+  };
+
   return (
     <>
       <div className="collapse bg-base-200 mb-5 sm:w-full lg:w-1/3 ">
+      <ToastContainer
+            position="top-center"
+            autoClose={1500}
+            limit={1}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover={false}
+            theme="light"
+          />
         <input type="checkbox" />
         <div className="collapse-title text-xl font-medium">
           {membership.title}
@@ -22,9 +74,9 @@ export default function MembershipInformationCard({ membership }) {
               <h2 className="card-title">{membership.title}</h2>
               <div className="stats bg-primary text-primary-content">
                 <div className="stat">
-                  <div className="stat-title text-base">Maximum usage</div>
+                  <div className="stat-title text-base">Bookings</div>
                   <div className="stat-value text-base">
-                    {membership.totalCredits + " BOOKINGS"}
+                    {membership.totalCredits + " CREDITS"}
                   </div>
                 </div>
 
@@ -34,11 +86,16 @@ export default function MembershipInformationCard({ membership }) {
                     {membership.price + ",00€"}
                   </div>
                 </div>
+                <div className="stat">
+                  <div className="stat-title text-base">Validity</div>
+                  <div className="stat-value text-base">
+                    {membership.validity + " DAYS"}
+                  </div>
+                </div>
               </div>
               <Link
                 to={`/userProfile/membershipsOverview/${membership._id}`}
                 className="w-full bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-
               >
                 Edit Membership
               </Link>
@@ -46,13 +103,13 @@ export default function MembershipInformationCard({ membership }) {
               <button
                 className="w-full bg-error text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 onClick={() =>
-                  document.getElementById("my_modal_1").showModal()
+                  modalRef.current.showModal()
                 }
               >
                 Delete Membership
               </button>
 
-              <dialog id="my_modal_1" className="modal">
+              <dialog ref={modalRef} className="modal">
                 <div className="modal-box">
                   <div
                     id="alert-additional-content-2"
@@ -77,14 +134,15 @@ export default function MembershipInformationCard({ membership }) {
                     </div>
                     <div class="mt-2 mb-4 text-sm"></div>
                     <div class="mt-2 mb-4 text-sm">
-                      After clicking "Confirm" button this action can no longer
-                      be reverted!
+                      After clicking the "Confirm" button this action can no
+                      longer be reverted!
                     </div>
                     <div class="mt-2 mb-4 text-sm">
                       Are you sure you want to delte the membership plan?
                     </div>
                     <div class="flex">
                       <button
+                        onClick={deleteMembership}
                         type="button"
                         class="text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                       >
