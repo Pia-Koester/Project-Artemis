@@ -54,7 +54,7 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
       className={clsx(
         "card  w-full  text-primary-content flex flex-col bg-gradient-to-r from-primary to-[#7ddaf2] shadow-lg",
         past && "opacity-40",
-        isBooked && "bg-gradient-to-r from-success to-[#3fea8c]",
+        isBooked && "bg-gradient-to-r from-success to-[#3de287]",
         !past && !isBooked && "bg-primary"
       )}
     >

@@ -4,7 +4,7 @@ import "./index.css";
 
 //IMPORTING THINGS FOR ROUTER
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Rootlayout from "./layout/RootLayout.jsx";
+
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import ClassSchedule from "./pages/ClassSchedule";
@@ -29,94 +29,106 @@ import EditMembershipInformation from "./components/AdminProfile/EditMembershipI
 import Authorize from "./pages/Authorize";
 import Types from "./pages/Types";
 import EditActivityType from "./components/AdminProfile/EditActivityType";
+import Rootlayout from "./layout/Rootlayout";
+import Parentlayout from "./layout/Parentlayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Rootlayout />,
+    element: <Parentlayout />,
     children: [
       {
         path: "/",
-        element: <ClassSchedule />,
-        loader: getActivities, //send the date with the request, and only specific trainers?
-        index: true,
-      },
-      {
-        path: "signup",
-        element: <Registration />,
-      },
-      {
-        path: "login",
-        element: <Login />,
-      },
-
-      { path: "details/:id", element: <ClassDetails />, loader: getActivity },
-      {
-        path: "membershipPlans",
-        element: <MembershipPlans />,
-      },
-      {
-        path: "/",
-        element: <Protected />,
+        element: <Rootlayout />,
         children: [
           {
-            path: "/userProfile/memberships",
-            element: <UserMemberships />,
+            path: "/",
+            element: <ClassSchedule />,
+            loader: getActivities, //send the date with the request, and only specific trainers?
+            index: true,
           },
           {
-            path: "/userProfile/activities",
-            element: <UserActivities />,
+            path: "signup",
+            element: <Registration />,
           },
           {
-            path: "/userProfile/details",
-            element: <UserInformation />,
-          },
-          {
-            path: "/userProfile/details/update",
-            element: <UserUpdateInformation />,
+            path: "login",
+            element: <Login />,
           },
 
           {
+            path: "details/:id",
+            element: <ClassDetails />,
+            loader: getActivity,
+          },
+          {
+            path: "membershipPlans",
+            element: <MembershipPlans />,
+          },
+          {
             path: "/",
-            element: <Authorize role={"admin"} />,
+            element: <Protected />,
             children: [
               {
-                path: "/userProfile/usersOverview",
-                element: <UsersOverview />,
+                path: "/userProfile/memberships",
+                element: <UserMemberships />,
               },
               {
-                path: "/userProfile/usersOverview/:id",
-                element: <SingleUserInformation />,
+                path: "/userProfile/activities",
+                element: <UserActivities />,
               },
               {
-                path: "/userProfile/usersOverview/:id/update",
-                element: <EditUserInformation />,
+                path: "/userProfile/details",
+                element: <UserInformation />,
               },
               {
-                path: "/userProfile/createMembership",
-                element: <CreateMembership />,
+                path: "/userProfile/details/update",
+                element: <UserUpdateInformation />,
               },
+
               {
-                path: "/userProfile/membershipsOverview",
-                element: <MembershipsOverview />,
-              },
-              {
-                path: "/userProfile/membershipsOverview/:id",
-                element: <EditMembershipInformation />,
-              },
-              {
-                path: "/createActivity",
-                element: <CreateActivity />,
-                loader: async () => {
-                  return fetch(`http://localhost:8080/activityTypes`);
-                },
-              },
-              {
-                path: "/createType",
-                element: <Types />,
-                loader: async () => {
-                  return fetch(`http://localhost:8080/activityTypes`);
-                },
+                path: "/",
+                element: <Authorize role={"admin"} />,
+                children: [
+                  {
+                    path: "/userProfile/usersOverview",
+                    element: <UsersOverview />,
+                  },
+                  {
+                    path: "/userProfile/usersOverview/:id",
+                    element: <SingleUserInformation />,
+                  },
+                  {
+                    path: "/userProfile/usersOverview/:id/update",
+                    element: <EditUserInformation />,
+                  },
+                  {
+                    path: "/userProfile/createMembership",
+                    element: <CreateMembership />,
+                  },
+                  {
+                    path: "/userProfile/membershipsOverview",
+                    element: <MembershipsOverview />,
+                  },
+                  {
+                    path: "/userProfile/membershipsOverview/:id",
+                    element: <EditMembershipInformation />,
+                  },
+                  {
+                    path: "/createActivity",
+                    element: <CreateActivity />,
+                    loader: async () => {
+                      return fetch(`http://localhost:8080/activityTypes`);
+                    },
+                  },
+                  {
+                    path: "/createType",
+                    element: <Types />,
+                    loader: async () => {
+                      return fetch(`http://localhost:8080/activityTypes`);
+                    },
+                  },
+                ],
               },
             ],
           },

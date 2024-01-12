@@ -174,9 +174,13 @@ const login = asyncWrapper(async (req, res, next) => {
   });
 
   res.cookie("access_token", token, { httpOnly: true, maxAge: 28800000 }).json({
-    ...payload,
+    _id: user._id,
+    email: user.email,
+    firstName: user.firstName,
+    role: user.role,
     activeMembership: user.activeMembership,
     firstName: user.firstName,
+    classesRegistered: user.classesRegistered,
   });
 });
 
