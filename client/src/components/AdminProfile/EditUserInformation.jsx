@@ -36,7 +36,7 @@ export default function EditUserInformation() {
       })
       .then((response) => {
         console.log(response.data);
-        navigate(`/userProfile/usersOverview/${id}`)
+        navigate(`/userProfile/usersOverview/${id}`);
       })
       .catch((error) => {
         console.log(error);
@@ -193,12 +193,11 @@ export default function EditUserInformation() {
                     <select
                       id="role"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        
                       {...register("role", {
                         minLength: {
                           value: 2,
                           message: "Select a valid role",
-                        }
+                        },
                       })}
                     >
                       <option value="A">Chose a role</option>
@@ -212,18 +211,17 @@ export default function EditUserInformation() {
                       </span>
                     )}
                   </div>
-
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2"
+                  className="w-full btn btn-primary text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2"
                 >
                   Update
                 </button>
                 <button
                   onClick={() => navigate(`/userProfile/usersOverview/${id}`)}
-                  className="w-full bg-neutral text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  className="w-full btn btn-neutral text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 >
                   Go back
                 </button>

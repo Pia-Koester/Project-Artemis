@@ -199,7 +199,7 @@ export default function EditActivity({ activity }) {
           </button>
           <button
             onClick={() => navigate("/userProfile/details")}
-            className="w-full btn btn-neutralpx-4 py-2  hover:bg-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50"
+            className="w-full btn btn-neutral px-4 py-2  hover:bg-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50"
           >
             Go back
           </button>
