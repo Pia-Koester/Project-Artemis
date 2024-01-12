@@ -11,7 +11,8 @@ export default function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
-  const [users, setUsers] = useState(null);
+
+
   const [checkUserMembership, setCheckUserMembership] = useState(null);
   const [userActivity, setUserActivity] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,17 +33,6 @@ export default function AuthProvider({ children }) {
       })
       .finally(() => {
         setIsLoading(false);
-      });
-
-    //TO DO: move get users to the admin page with users out of the authcontext
-    axiosClient
-      .get("/users")
-      .then((response) => {
-        setUsers(response.data);
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
       });
   }, []);
 
@@ -100,7 +90,7 @@ export default function AuthProvider({ children }) {
           users,
           checkUserMembership,
           setUser,
-          userActivity,
+
           isLoading,
           login,
           logout,

@@ -6,7 +6,5 @@ export default function Protected() {
   const { isLoading, user } = useContext(AuthContext);
   console.log(user, isLoading);
 
-  return (
-    <>{!isLoading && <>{user ? <Outlet /> : <Navigate to="/login" />}</>}</>
-  );
+  return <>{user ? <Outlet /> : <Navigate to="/login" />}</>;
 }

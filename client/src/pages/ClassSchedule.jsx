@@ -1,12 +1,18 @@
 import { useLoaderData, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ActivityCard from "../components/Activities/ActivityCard";
+import { AuthContext } from "../components/context/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import { FaCirclePlus } from "react-icons/fa6";
+import logo from "../assets/logos/phoenix-color.png";
 
 export default function ClassSchedule() {
   const response = useLoaderData();
   const activities = response.activities;
-  console.log(response);
+  const { user } = useContext(AuthContext);
+  console.log(user?.role);
   const activitytypes = response.activitytypes;
+  const navigate = useNavigate();
 
   //array of weekdays for the grid columns
   const weekdays = [
@@ -54,9 +60,12 @@ export default function ClassSchedule() {
       return newSkip;
     });
   };
+  console.log(user);
 
   return (
     <div className="flex gap-3 flex-col items-center p-5">
+      <img src={logo} className="w-24 justify-self-start" />
+      <h1 className="text-3xl mb-6">Class Overview</h1>
       <div className="flex flex-col md:flex-row w-full gap-2 md:justify-center items-center">
         <div className="join">
           <button className="join-item btn" onClick={handlePrev}>
@@ -75,12 +84,10 @@ export default function ClassSchedule() {
           onChange={handleTrainer}
           value={trainer}
         >
-          <option selected disabled>
-            Pick trainer
-          </option>
+          <option disabled>Pick trainer</option>
           <option>All</option>
           {response.instructors.map((instructor) => {
-            return <option>{instructor}</option>;
+            return <option key={instructor}>{instructor}</option>;
           })}
         </select>
         {/* <select
@@ -99,6 +106,14 @@ export default function ClassSchedule() {
             return <option>{type}</option>;
           })}
         </select> */}
+        {user?.role === "admin" && (
+          <button
+            className="text-4xl text-secondary"
+            onClick={() => navigate("/createActivity")}
+          >
+            <FaCirclePlus />
+          </button>
+        )}
       </div>
       <div className="grid lg:grid-cols-7 grid-cols-1 gap-4 md:w-full">
         {weekdays.map((day) => {
@@ -106,7 +121,16 @@ export default function ClassSchedule() {
             <div className="flex flex-col gap-2 items-center" key={day}>
               <h3>{day}</h3>
               {activities[day.toLowerCase()]?.map((activity) => {
-                return <ActivityCard activity={activity} key={activity._id} />;
+                console.log(activity.registeredUsers.includes(user?._id));
+                return (
+                  <ActivityCard
+                    activity={activity}
+                    key={activity._id}
+                    role={user?.role}
+                    isBooked={activity.registeredUsers.includes(user?._id)}
+                    // TO DO: check the classesRegistered Array for the activity._id
+                  />
+                );
               })}
             </div>
           );

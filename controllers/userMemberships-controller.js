@@ -48,6 +48,7 @@ const updateUserMembership = asyncWrapper(async (req, res, next) => {
 
   const userMembership = await UserMembership.findByIdAndUpdate(
     activeMembership,
+
     { $inc: { usedCredits: 1 }  },
     { new: true, populate: "plan"}
   );
@@ -66,6 +67,7 @@ const updateUserMembership = asyncWrapper(async (req, res, next) => {
   }
 
   res.send({activity, user: {...req.user, activeMembership: userMembership}});
+
 });
 
 const cancelUserMembershipCredit = asyncWrapper(async (req, res, next) => {
@@ -75,16 +77,20 @@ const cancelUserMembershipCredit = asyncWrapper(async (req, res, next) => {
   const userMembership = await UserMembership.findByIdAndUpdate(
     activeMembership,
     { $inc: { usedCredits: -1 } },
-    { new: true, populate: "plan"  }
+    { new: true, populate: "plan" }
   );
+
 
   if (userMembership.usedCredits < userMembership.plan.totalCredits) {
     userMembership.status = 'active';
     await userMembership.save();
   }
 
-  res.send({...req.user._doc, activeMembership: userMembership});
-  
+
+  res.send({
+    user: { ...req.user._doc, activeMembership: userMembership },
+    activity,
+  });
 });
 
 module.exports = {

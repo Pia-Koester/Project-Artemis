@@ -30,13 +30,13 @@ const getActivities = async ({ request }) => {
     }
 
     const queryString = new URLSearchParams(queryParams);
-    console.log(queryString);
+
     const response = await axiosClient.get(`activities?${queryString}`);
 
     //TO DO: wo muss entschieden werden ob ein type mitgeschickt wird oder nicht. Wie können die Daten dann gefetched werden?
     const instructors = [];
     const activitytypes = [];
-    console.log(response);
+
     const activitiesByWeekday = response.data.reduce(
       (accumulator, activity) => {
         const { weekday, instructor, type } = activity;
@@ -46,7 +46,6 @@ const getActivities = async ({ request }) => {
         if (!instructors.includes(instructor)) {
           instructors.push(instructor);
         }
-        console.log(type?.type);
 
         if (!activitytypes.includes(type?.type)) {
           activitytypes.push(type?.type);

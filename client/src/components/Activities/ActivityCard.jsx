@@ -4,8 +4,9 @@ import CapacityBadge from "./CapacityBadge";
 import { useState, useContext } from "react";
 import clsx from "clsx";
 import { AuthContext } from "../context/AuthProvider";
+import { FaPencil, FaRegTrashCan } from "react-icons/fa6";
 
-export default function ActivityCard({ activity }) {
+export default function ActivityCard({ activity, role = "student", isBooked }) {
   //TODO: make transition to card Details
   const navigate = useNavigate();
   //calculating the start time based on the provided date
@@ -42,17 +43,19 @@ export default function ActivityCard({ activity }) {
 
   //getting user info to check if class is booked or not
   const { user } = useContext(AuthContext);
-  const registeredUsers = activity?.registeredUsers;
-  const [isBooked, setIsBooked] = useState(registeredUsers.includes(user?._id));
+  // const registeredUsers = activity?.registeredUsers;
+  // const [isBooked, setIsBooked] = useState(registeredUsers.includes(user?._id));
+
+  console.log(isBooked);
 
   return (
     <motion.div
       whileHover={past ? {} : { scale: 1.1 }}
       className={clsx(
-        "card  w-full  text-primary-content bg-primary flex flex-col",
-        past && "opacity-40",
-        isBooked && "bg-success",
-        !past && !isBooked && "bg-primary"
+        "card  w-full  text-primary-content flex flex-col shadow-lg",
+        past && "opacity-40 bg-gradient-to-r from-primary to-[#7ddaf2] ",
+        isBooked && "bg-gradient-to-r from-success to-[#3fea8c]",
+        !past && !isBooked && "bg-gradient-to-r from-primary to-[#7ddaf2] "
       )}
     >
       {/* QUESTION: Why is the text running outside the box on medium sizes?  */}
@@ -63,10 +66,16 @@ export default function ActivityCard({ activity }) {
         }}
       >
         <div className="card-body overflow-hidden">
-          <p>
-            {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
-          </p>
-
+          <div className="flex">
+            <p>
+              {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
+            </p>
+            {role === "admin" && !past && (
+              <button>
+                <FaPencil className="text-neutral text-xl" />
+              </button>
+            )}
+          </div>
           <h2 className="card-title text-wrap ">{activity.title}</h2>
           <p>{activity.description}</p>
           <div className="flex justify-between items-end">
