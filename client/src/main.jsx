@@ -29,8 +29,12 @@ import EditMembershipInformation from "./components/AdminProfile/EditMembershipI
 import Authorize from "./pages/Authorize";
 import Types from "./pages/Types";
 import EditActivityType from "./components/AdminProfile/EditActivityType";
+
 import Rootlayout from "./layout/Rootlayout";
 import Parentlayout from "./layout/Parentlayout";
+
+import Landingpage from "./pages/Landingpage";
+
 
 const router = createBrowserRouter([
   {
@@ -136,6 +140,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  { path: "/landingpage", element: <Landingpage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

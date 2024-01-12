@@ -52,10 +52,12 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
     <motion.div
       whileHover={past ? {} : { scale: 1.1 }}
       className={clsx(
-        "card  w-full  text-primary-content flex flex-col bg-gradient-to-r from-primary to-[#7ddaf2] shadow-lg",
-        past && "opacity-40",
-        isBooked && "bg-gradient-to-r from-success to-[#3de287]",
-        !past && !isBooked && "bg-primary"
+
+        "card  w-full  text-primary-content flex flex-col shadow-lg",
+        past && "opacity-40 bg-gradient-to-r from-primary to-[#7ddaf2] ",
+        isBooked && "bg-gradient-to-r from-success to-[#3fea8c]",
+        !past && !isBooked && "bg-gradient-to-r from-primary to-[#7ddaf2] "
+
       )}
     >
       {/* QUESTION: Why is the text running outside the box on medium sizes?  */}
