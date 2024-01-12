@@ -34,6 +34,7 @@ import Rootlayout from "./layout/Rootlayout";
 import Parentlayout from "./layout/Parentlayout";
 
 import Landingpage from "./pages/Landingpage";
+import Dashboard from "./components/AdminProfile/Dashboard.jsx";
 
 
 const router = createBrowserRouter([
@@ -117,6 +118,9 @@ const router = createBrowserRouter([
                   {
                     path: "/userProfile/membershipsOverview/:id",
                     element: <EditMembershipInformation />,
+                  },                  {
+                    path: "/dashboard",
+                    element: <Dashboard />,
                   },
                   {
                     path: "/createActivity",

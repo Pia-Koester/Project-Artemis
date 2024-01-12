@@ -61,6 +61,13 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     }
   }
 
+  if(!mon && !sun) {
+    const activities = await Activity.find({}).populate("type").sort({
+      startTime: "desc",
+    });
+    res.json(activities);
+  }
+
   const activities = await Activity.find(filter).populate("type").sort({
     startTime: "asc",
   });

@@ -102,15 +102,15 @@ export default function UserUpdateInformation() {
                     </label>
                     <input
                       className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
-                      {...register("phone", {
+                      {...register("phoneNumber", {
                         required: "Phone number is required",
                       })}
-                      defaultValue={user.phone}
+                      defaultValue={user.phoneNumber}
                       placeholder="Phone number"
                     />
-                    {errors.phone?.type === "required" && (
+                    {errors.phoneNumber?.type === "required" && (
                       <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        {errors.phone.message}
+                        {errors.phoneNumber.message}
                       </span>
                     )}
                   </div>
