@@ -87,7 +87,6 @@ export default function AuthProvider({ children }) {
       <AuthContext.Provider
         value={{
           user,
-          users,
           checkUserMembership,
           setUser,
 
