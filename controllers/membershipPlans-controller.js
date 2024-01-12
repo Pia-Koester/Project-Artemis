@@ -33,9 +33,9 @@ const getMembershipPlan = asyncWrapper(async (req, res, next) => {
 //Update single membership plan
 const updateMembershipPlan = asyncWrapper(async (req, res, next) => {
   const { id } = req.params;
-  const {title, price, totalCredits} = req.body
+  const {title, price, totalCredits, validity} = req.body
   
-  const plan = await MembershipPlan.findByIdAndUpdate(id, {title, price, totalCredits});
+  const plan = await MembershipPlan.findByIdAndUpdate(id, {title, price, totalCredits, validity});
   if (!plan) {
     throw new ErrorResponse("No Membership Plan found", 404);
   }

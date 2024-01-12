@@ -48,9 +48,22 @@ const updateUserMembership = asyncWrapper(async (req, res, next) => {
 
   const userMembership = await UserMembership.findByIdAndUpdate(
     activeMembership,
-    { $inc: { usedCredits: 1 } },
+    { $inc: { usedCredits: 1 }  },
     { new: true, populate: "plan"}
   );
+
+  if (userMembership.usedCredits === userMembership.plan.totalCredits) {
+    userMembership.status = 'inactive';
+
+    await userMembership.save();
+  }
+
+  if(userMembership.usedCredits > userMembership.plan.totalCredits) {
+    userMembership.usedCredits = userMembership.plan.totalCredits
+    await userMembership.save();
+
+    throw new ErrorResponse("No credits remaining!", 409)
+  }
 
   res.send({activity, user: {...req.user, activeMembership: userMembership}});
 });
@@ -64,7 +77,11 @@ const cancelUserMembershipCredit = asyncWrapper(async (req, res, next) => {
     { $inc: { usedCredits: -1 } },
     { new: true, populate: "plan"  }
   );
-  console.log({...req.user._doc, activeMembership: userMembership})
+
+  if (userMembership.usedCredits < userMembership.plan.totalCredits) {
+    userMembership.status = 'active';
+    await userMembership.save();
+  }
 
   res.send({...req.user._doc, activeMembership: userMembership});
   

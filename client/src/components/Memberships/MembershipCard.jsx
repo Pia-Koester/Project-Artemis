@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,11 +11,25 @@ export default function MembershipCard({ plan, user }) {
 
   const {setUser} = useContext(AuthContext)
 
+  useEffect(() => {
+    axios
+    .get(`http://localhost:8080/plan/${plan?._id}`, {withCredentials: true})
+    .then((response) => {
+
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, [])
+
+  const currentDate = new Date();
+  const expiryDate = new Date(currentDate.setDate(currentDate.getDate() + plan?.validity));
+
   const handlePurchase = () => {
     axios
       .post(
         "http://localhost:8080/memberships",
-        { plan: plan?._id, user: user?._id },
+        { plan: plan?._id, user: user?._id, expiryDate: expiryDate.toISOString()},
         { withCredentials: true }
       )
       .then((response) => {
@@ -61,12 +75,18 @@ const notify = () =>
           <h2 className="card-title">{plan.title}</h2>
           <div className="stats bg-primary text-primary-content">
             <div className="stat">
-              <div className="stat-title text-base">Maximum usage</div>
+              <div className="stat-title text-base">Bookings</div>
               <div className="stat-value text-base">
-                {plan.totalCredits + " BOOKINGS"}
+                {plan.totalCredits + " CREDITS"}
               </div>
-            </div>
 
+            </div>
+            <div className="stat">
+                  <div className="stat-title text-base">Validity</div>
+                  <div className="stat-value text-base">
+                    {plan.validity + " DAYS"}
+                  </div>
+                </div>
             <div className="stat">
               <div className="stat-title text-base">Price</div>
               <div className="stat-value text-base">{plan.price + ",00€"}</div>
@@ -107,9 +127,9 @@ const notify = () =>
                   <h2 className="card-title">{plan.title}</h2>
                   <div className="stats bg-primary text-primary-content">
                     <div className="stat">
-                      <div className="stat-title text-base">Maximum usage</div>
+                      <div className="stat-title text-base">Bookings</div>
                       <div className="stat-value text-base">
-                        {plan.totalCredits + " BOOKINGS"}
+                        {plan.totalCredits + " CREDITS"}
                       </div>
                     </div>
 
@@ -119,6 +139,12 @@ const notify = () =>
                         {plan.price + ",00€"}
                       </div>
                     </div>
+                    <div className="stat">
+                  <div className="stat-title text-base">Validity</div>
+                  <div className="stat-value text-base">
+                    {plan.validity + " DAYS"}
+                  </div>
+                </div>
                   </div>
                 </div>
               </div>

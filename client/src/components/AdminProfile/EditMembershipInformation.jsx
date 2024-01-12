@@ -121,6 +121,27 @@ export default function EditMembershipInformation() {
                       </span>
                     )}
                   </div>
+                  <div className="mb-4">
+                    <label
+                      htmlFor="validity"
+                      className="block text-gray-700 text-sm font-semibold mb-2"
+                    >
+                      Validity {`(in days)`}:
+                    </label>
+                    <input
+                      className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                      defaultValue={singleMembershipPlan.validity}
+                      {...register("validity", {
+                        required: "Validity is required",
+                      })}
+                      placeholder="Validity"
+                    />
+                    {errors.validity?.type === "required" && (
+                      <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                        {errors.totalCredits.message}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <button

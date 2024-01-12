@@ -74,9 +74,9 @@ export default function MembershipInformationCard({ membership }) {
               <h2 className="card-title">{membership.title}</h2>
               <div className="stats bg-primary text-primary-content">
                 <div className="stat">
-                  <div className="stat-title text-base">Maximum usage</div>
+                  <div className="stat-title text-base">Bookings</div>
                   <div className="stat-value text-base">
-                    {membership.totalCredits + " BOOKINGS"}
+                    {membership.totalCredits + " CREDITS"}
                   </div>
                 </div>
 
@@ -84,6 +84,12 @@ export default function MembershipInformationCard({ membership }) {
                   <div className="stat-title text-base">Price</div>
                   <div className="stat-value text-base">
                     {membership.price + ",00€"}
+                  </div>
+                </div>
+                <div className="stat">
+                  <div className="stat-title text-base">Validity</div>
+                  <div className="stat-value text-base">
+                    {membership.validity + " DAYS"}
                   </div>
                 </div>
               </div>
