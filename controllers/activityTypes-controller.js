@@ -5,31 +5,18 @@ const cloudinary = require("cloudinary").v2;
 
 const createType = asyncWrapper(async (req, res, next) => {
   const { type } = req.body;
-  console.log(req.body);
-  console.log(req.files);
-  // const fileurl = req.file.path;
-  // const publicId = req.file.filename;
-  if (!req.files) {
-    res.send({
-      status: "failed",
-      message: "No file",
-    });
-  } else {
-    let file = req.files.file;
-    console.log(req.files);
-    file.mv("./uploads/" + file.name);
-    res.send({
-      status: "success",
-      message: "File successfully uploaded",
-      data: {
-        name: file.name,
-        mimetype: file.mimetype,
-        size: file.size,
-      },
-    });
-  }
 
-  res.status(201);
+  const { uploadedImages } = req;
+  const imagesData = uploadedImages.map((image) => ({
+    url: image.url,
+    publicId: image.public_id,
+  }));
+  const newActivityType = await ActivityType.create({
+    type: type.toLowerCase(),
+    images: imagesData,
+  });
+
+  res.status(201).json(newActivityType);
 });
 
 const getTypes = asyncWrapper(async (req, res, next) => {

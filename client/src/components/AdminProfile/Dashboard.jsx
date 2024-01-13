@@ -2,12 +2,15 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import UserCard from "./UserCard";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const [users, setUsers] = useState(null);
   const [type, setType] = useState(null);
   const [activities, setActivities] = useState(null);
   const [memberships, setMemberships] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -250,7 +253,12 @@ export default function Dashboard() {
                   <h2 class="text-gray-500 text-lg font-semibold pb-1">
                     Activity Types
                   </h2>
-                  <button class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/4 mb-2">
+                  <button
+                    class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/4 mb-2"
+                    onClick={() => {
+                      navigate("/createType");
+                    }}
+                  >
                     Create New
                   </button>
                 </div>

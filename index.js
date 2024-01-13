@@ -2,7 +2,6 @@ require("./db.js");
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const fileupload = require("express-fileupload");
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -17,7 +16,7 @@ const typeRouter = require("./routes/activityType-route.js");
 const errorHandler = require("./middlewares/errorHandler.js");
 
 //MiddleWare
-app.use(fileupload({ createParentPath: true }));
+
 app.use(
   cors({
     origin: ["http://localhost:5173"],
