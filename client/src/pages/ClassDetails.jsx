@@ -22,7 +22,6 @@ export default function ClassDetails() {
   const { user, setUser } = useContext(AuthContext);
 
   const activity = useLoaderData();
-  console.log(user);
 
   const [openSlots, setOpenSlots] = useState(
     activity.capacity - activity.registeredUsers.length
@@ -125,6 +124,10 @@ export default function ClassDetails() {
       "https://static.wixstatic.com/media/87046c_2a44f60d1a8a47faad745a9a3b2e4fa1~mv2.jpg/v1/fill/w_656,h_920,fp_0.48_0.34,q_85,usm_0.66_1.00_0.01,enc_auto/87046c_2a44f60d1a8a47faad745a9a3b2e4fa1~mv2.jpg",
     Rolf: "https://static.wixstatic.com/media/87046c_8b75e3d5339f4d46b34471ccee515c3f~mv2.jpg/v1/fill/w_656,h_1040,fp_0.47_0.37,q_85,usm_0.66_1.00_0.01,enc_auto/87046c_8b75e3d5339f4d46b34471ccee515c3f~mv2.jpg",
   };
+
+  // check if user is admin
+  const isAdmin = user && user.role === "admin";
+
   return (
     <div className="flex md:flex-row flex-col-reverse justify-center items-start">
       <ToastContainer
@@ -343,12 +346,12 @@ export default function ClassDetails() {
                 user?.activeMembership?.status === "active" && "hidden"
               )}
             >
-              <div class="w-full mx-auto">
-                <div class="flex flex-col p-5 rounded-lg shadow bg-white">
-                  <div class="flex flex-col items-center text-center">
-                    <div class="inline-block p-4 bg-yellow-50 rounded-full">
+              <div className="w-full mx-auto">
+                <div className="flex flex-col p-5 rounded-lg shadow bg-white">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="inline-block p-4 bg-yellow-50 rounded-full">
                       <svg
-                        class="w-12 h-12 fill-current text-yellow-500"
+                        className="w-12 h-12 fill-current text-yellow-500"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                       >
@@ -356,10 +359,10 @@ export default function ClassDetails() {
                         <path d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z" />
                       </svg>
                     </div>
-                    <h2 class="mt-2 font-semibold text-gray-800">
+                    <h2 className="mt-2 font-semibold text-gray-800">
                       Warning! No credits available
                     </h2>
-                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">
+                    <p className="mt-2 text-sm text-gray-600 leading-relaxed">
                       You dont have an any more credits available with your
                       current membership plan. In order to book a class, please
                       purchase another membership plan.
@@ -367,13 +370,17 @@ export default function ClassDetails() {
                   </div>
                   <div className="modal-action">
                     <form method="dialog">
-                      <button class="flex-1 btn px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium">
+
+                      <button className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
+
                         Cancel
                       </button>
 
                       <button
                         onClick={() => navigate("/membershipPlans")}
-                        class="flex-1 btn px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium "
+
+                        className="flex-1 px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium rounded-md"
+
                       >
                         Purchase Membership Plan
                       </button>
@@ -388,12 +395,12 @@ export default function ClassDetails() {
                 user?.activeMembership !== null && "hidden"
               )}
             >
-              <div class="w-full mx-auto">
-                <div class="flex flex-col p-5 rounded-lg shadow bg-white">
-                  <div class="flex flex-col items-center text-center">
-                    <div class="inline-block p-4 bg-yellow-50 rounded-full">
+              <div className="w-full mx-auto">
+                <div className="flex flex-col p-5 rounded-lg shadow bg-white">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="inline-block p-4 bg-yellow-50 rounded-full">
                       <svg
-                        class="w-12 h-12 fill-current text-yellow-500"
+                        className="w-12 h-12 fill-current text-yellow-500"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                       >
@@ -401,10 +408,10 @@ export default function ClassDetails() {
                         <path d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z" />
                       </svg>
                     </div>
-                    <h2 class="mt-2 font-semibold text-gray-800">
+                    <h2 className="mt-2 font-semibold text-gray-800">
                       No active membership plan
                     </h2>
-                    <p class="mt-2 text-sm text-gray-600 leading-relaxed">
+                    <p className="mt-2 text-sm text-gray-600 leading-relaxed">
                       You dont have an active membership plan. In order to book
                       a class, please purchase one of the available membership
                       plans
@@ -412,13 +419,17 @@ export default function ClassDetails() {
                   </div>
                   <div className="modal-action">
                     <form method="dialog">
-                      <button class="flex-1 px-4 btn py-2 btn-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
+
+                      <button className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
+
                         Cancel
                       </button>
 
                       <button
                         onClick={() => navigate("/membershipPlans")}
-                        class="flex-1 px-4 btn py-2 ml-2 btn-primary hover:bg-success text-white text-sm font-medium rounded-md"
+
+                        className="flex-1 px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium rounded-md"
+
                       >
                         Purchase Membership Plan
                       </button>
@@ -436,34 +447,37 @@ export default function ClassDetails() {
               Waitlist
             </button>
           )}
-          <div>
-            <h3 className="font-bold mt-10">Registered Users</h3>
-            <table className="table p-2 m-2">
-              <tbody>
-                {registeredUsers.map((student) => {
-                  return (
-                    <tr key={student._id}>
-                      <th>
-                        <div className="w-10 rounded-full">
-                          <img
-                            alt="Tailwind CSS Navbar component"
-                            src={userIcon}
-                          />
-                        </div>
-                      </th>
-                      <td>
-                        <div>{student.lastName}</div>
-                      </td>
-                      <td>{student.firstName}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          {user && user.role === "admin" && (
+            <div>
+              <h3 className="font-bold mt-10">Registered Users</h3>
+              <table className="table p-2 m-2">
+                <tbody>
+                  {registeredUsers.map((student) => {
+                    return (
+                      <tr key={student._id}>
+                        <th>
+                          <div className="w-10 rounded-full">
+                            <img
+                              alt="Tailwind CSS Navbar component"
+                              src={userIcon}
+                            />
+                          </div>
+                        </th>
+                        <td>
+                          <div>{student.lastName}</div>
+                        </td>
+                        <td>{student.firstName}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
         </aside>
       </div>
-      {user?.role === "admin" && <EditActivity activity={activity} />}
+      {user && user.role === "admin" && <EditActivity activity={activity} />}
+      <div></div>
     </div>
   );
 }

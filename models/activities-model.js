@@ -10,7 +10,7 @@ const activitySchema = new Schema({
   description: { type: String, required: true },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
-  weekday: { type: String },
+  weekday: { type: String, lowercase: true },
   capacity: { type: Number },
   waitlist: waitlistSchema,
   instructor: { type: String },

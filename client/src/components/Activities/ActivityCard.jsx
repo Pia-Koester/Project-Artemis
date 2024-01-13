@@ -23,7 +23,7 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
   const endMilliseconds = endTime.getTime();
   const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
 
-  //TO DO: change color of card based on if the time and day have already passed
+  //change color of card based on if the time and day have already passed
   const today = new Date();
   const [past, setPast] = useState(startTime < today);
 
@@ -45,8 +45,6 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
   const { user } = useContext(AuthContext);
   // const registeredUsers = activity?.registeredUsers;
   // const [isBooked, setIsBooked] = useState(registeredUsers.includes(user?._id));
-
-  console.log(isBooked);
 
   return (
     <motion.div

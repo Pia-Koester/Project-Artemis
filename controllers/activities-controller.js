@@ -26,12 +26,9 @@ const createActivity = asyncWrapper(async (req, res, next) => {
     title,
     description,
     capacity,
-
     instructor,
-
     startTime: start,
     endTime,
-
     weekday,
     type,
   });
@@ -61,7 +58,7 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     }
   }
 
-  if(!mon && !sun) {
+  if (!mon && !sun) {
     const activities = await Activity.find({}).populate("type").sort({
       startTime: "desc",
     });
@@ -143,7 +140,13 @@ const adminUpdateActivity = asyncWrapper(async (req, res, next) => {
   const { activity_id } = req.params;
   const { title, description, instructor, capacity, startTime, endTime, type } =
     req.body;
-  console.log("I am now updaten", title);
+
+  const start = new Date(startTime);
+  const options = { weekday: "long" };
+  const weekday = new Intl.DateTimeFormat("en-En", options)
+    .format(start)
+    .toLowerCase();
+
   const updatedActivity = await Activity.findByIdAndUpdate(
     activity_id,
     {
@@ -154,6 +157,7 @@ const adminUpdateActivity = asyncWrapper(async (req, res, next) => {
       startTime,
       endTime,
       type,
+      weekday,
     },
     { new: true }
   );
