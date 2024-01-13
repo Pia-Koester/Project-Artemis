@@ -367,13 +367,13 @@ export default function ClassDetails() {
                   </div>
                   <div className="modal-action">
                     <form method="dialog">
-                      <button class="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
+                      <button class="flex-1 btn px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium">
                         Cancel
                       </button>
 
                       <button
                         onClick={() => navigate("/membershipPlans")}
-                        class="flex-1 px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium rounded-md"
+                        class="flex-1 btn px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium "
                       >
                         Purchase Membership Plan
                       </button>
@@ -412,13 +412,13 @@ export default function ClassDetails() {
                   </div>
                   <div className="modal-action">
                     <form method="dialog">
-                      <button class="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
+                      <button class="flex-1 px-4 btn py-2 btn-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
                         Cancel
                       </button>
 
                       <button
                         onClick={() => navigate("/membershipPlans")}
-                        class="flex-1 px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium rounded-md"
+                        class="flex-1 px-4 btn py-2 ml-2 btn-primary hover:bg-success text-white text-sm font-medium rounded-md"
                       >
                         Purchase Membership Plan
                       </button>
