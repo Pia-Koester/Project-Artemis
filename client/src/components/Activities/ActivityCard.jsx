@@ -25,6 +25,7 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
 
   //change color of card based on if the time and day have already passed
   const today = new Date();
+  console.log(startTime)
   const [past, setPast] = useState(startTime < today);
 
   //instructor images based on name
