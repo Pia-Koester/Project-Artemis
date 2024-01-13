@@ -113,11 +113,7 @@ export default function ClassDetails() {
   };
 
   const registeredUsers = activity?.registeredUsers;
-  console.log(
-    !user.classesRegistered.find((activity) => {
-      return activity._id === id;
-    })
-  );
+
   //TO DO: upload images for all types and create more types
 
   //instructor images based on name
@@ -214,29 +210,33 @@ export default function ClassDetails() {
             </div>
           </div>
           <div className="grid grid-cols-2">
-            {user?.role !== "admin" &&
-            !user.classesRegistered.find((activity) => {
-              return activity._id === id;
-            }) ? (
-              <button
-                className="btn btn-primary mr-3 self-center mt-2"
-                onClick={() =>
-                  document.getElementById("my_modal_1").showModal()
-                }
-                disabled={openSlots <= 0}
-              >
-                Book Now
-              </button>
-            ) : (
-              <button
-                className="btn btn-secondary mr-3 self-center mt-2"
-                onClick={() =>
-                  document.getElementById("my_modal_1").showModal()
-                }
-                disabled={openSlots <= 0}
-              >
-                Cancel Booking
-              </button>
+            {user?.role !== "admin" && (
+              <>
+                {!user ||
+                !user.classesRegistered.find((activity) => {
+                  return activity._id === id;
+                }) ? (
+                  <button
+                    className="btn btn-primary mr-3 self-center mt-2"
+                    onClick={() =>
+                      document.getElementById("my_modal_1").showModal()
+                    }
+                    disabled={openSlots <= 0}
+                  >
+                    Book Now
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-secondary mr-3 self-center mt-2"
+                    onClick={() =>
+                      document.getElementById("my_modal_1").showModal()
+                    }
+                    disabled={openSlots <= 0}
+                  >
+                    Cancel Booking
+                  </button>
+                )}
+              </>
             )}
 
             <button
@@ -296,7 +296,8 @@ export default function ClassDetails() {
 
               <div className="modal-action">
                 <form method="dialog">
-                  {!user.classesRegistered.find((activity) => {
+                  {!user ||
+                  !user.classesRegistered.find((activity) => {
                     return activity._id === id;
                   }) ? (
                     <button

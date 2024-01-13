@@ -94,7 +94,7 @@ export default function UserMemberships() {
                         </p>
                       </div>
                       <div class="">
-                        <p class="font-light text-xs text-xs"></p>
+                        <p class="font-light text-xs "></p>
                         Expiry date:
                         <p class="font-bold tracking-wider text-sm">
                           {formatExpiryDate[0]}
@@ -105,7 +105,10 @@ export default function UserMemberships() {
                         <p class="font-light text-xs"></p>
                         Status
                         <p class="font-bold tracking-more-wider text-sm">
-                          {user?.activeMembership?.status.charAt(0).toUpperCase() + user?.activeMembership?.status.slice(1)}
+                          {user?.activeMembership?.status
+                            .charAt(0)
+                            .toUpperCase() +
+                            user?.activeMembership?.status.slice(1)}
                         </p>
                       </div>
                     </div>
