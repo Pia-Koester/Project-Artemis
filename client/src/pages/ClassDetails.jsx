@@ -116,15 +116,6 @@ export default function ClassDetails() {
 
   //TO DO: upload images for all types and create more types
 
-  //instructor images based on name
-  const photos = {
-    Isabella:
-      "https://static.wixstatic.com/media/87046c_459fa56301054dbe9d58e76c7284634c~mv2.jpg/v1/fill/w_378,h_520,fp_0.45_0.35,q_80,usm_0.66_1.00_0.01,enc_auto/87046c_459fa56301054dbe9d58e76c7284634c~mv2.jpg",
-    Cosima:
-      "https://static.wixstatic.com/media/87046c_2a44f60d1a8a47faad745a9a3b2e4fa1~mv2.jpg/v1/fill/w_656,h_920,fp_0.48_0.34,q_85,usm_0.66_1.00_0.01,enc_auto/87046c_2a44f60d1a8a47faad745a9a3b2e4fa1~mv2.jpg",
-    Rolf: "https://static.wixstatic.com/media/87046c_8b75e3d5339f4d46b34471ccee515c3f~mv2.jpg/v1/fill/w_656,h_1040,fp_0.47_0.37,q_85,usm_0.66_1.00_0.01,enc_auto/87046c_8b75e3d5339f4d46b34471ccee515c3f~mv2.jpg",
-  };
-
   // check if user is admin
   const isAdmin = user && user.role === "admin";
 
@@ -203,10 +194,10 @@ export default function ClassDetails() {
           <div className="avatar self-center mt-3 sm:flex gap-2">
             <div className="grid grid-rows-2 mt-5">
               <p className="font-bold">Instructor:</p>
-              <p>{activity.instructor}</p>
+              <p>{activity.instructor.firstName}</p>
             </div>
             <div className="w-24 mask mask-hexagon">
-              <img src={photos[activity.instructor]} />
+              <img src={activity.instructor.image.url} />
             </div>
           </div>
           <div className="grid grid-cols-2">
@@ -287,9 +278,9 @@ export default function ClassDetails() {
 
                 <div className="avatar mt-1">
                   <span className="font-bold mt-10">Instructor</span>
-                  <p className="mt-10">: {activity.instructor}</p>
+                  <p className="mt-10">: {activity.instructor.firstName}</p>
                   <div className="w-24 mask mask-hexagon">
-                    <img src={photos[activity.instructor]} />
+                    <img src={activity.instructor.image.url} />
                   </div>
                 </div>
               </div>

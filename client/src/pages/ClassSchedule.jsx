@@ -100,7 +100,9 @@ export default function ClassSchedule() {
           <option>All</option>
           {instructors.map((instructor) => {
             return (
-              <option key={instructor.firstName}>{instructor.firstName}</option>
+              <option key={instructor.firstName} value={instructor._id}>
+                {instructor.firstName}
+              </option>
             );
           })}
         </select>
