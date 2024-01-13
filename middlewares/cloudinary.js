@@ -12,12 +12,8 @@ const cloudinaryUpload = async (req, res, next) => {
     const { files } = req;
     const uploadedImages = [];
     for (const file of files.images) {
-      const result = await cloudinary.uploader.upload(file.path, {
-        upload_preset: process.env.UPLOAD_PRESET,
-      });
+      const result = await cloudinary.uploader.upload(file.path);
 
-      // Add Cloudinary URL and local path to the result
-      result.localPath = file.path;
       uploadedImages.push(result);
       await fs.unlink(file.path);
     }

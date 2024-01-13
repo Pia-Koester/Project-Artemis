@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
+import axiosClient from "../../api/axiosClient";
 
 export default function CreateActivity() {
   const activityTypes = useLoaderData();
@@ -28,7 +29,7 @@ export default function CreateActivity() {
     console.log(index);
     console.log(data);
 
-    axios
+    axiosClient
       .post("http://localhost:8080/activities", data)
       .then((response) => {
         console.log(response.data);

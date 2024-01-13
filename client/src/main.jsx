@@ -23,31 +23,30 @@ import SingleUserInformation from "./components/AdminProfile/SingleUserInformati
 import CreateMembership from "./components/AdminProfile/CreateMembership.jsx";
 import EditUserInformation from "./components/AdminProfile/EditUserInformation.jsx";
 import CreateActivity from "./components/AdminProfile/CreateActivity";
-import CreateActivityType from "./components/AdminProfile/CreateActivityType";
 import MembershipsOverview from "./components/AdminProfile/MembershipsOverview.jsx";
 import EditMembershipInformation from "./components/AdminProfile/EditMembershipInformation.jsx";
 import Authorize from "./pages/Authorize";
 import Types from "./pages/Types";
-import EditActivityType from "./components/AdminProfile/EditActivityType";
 
-import Rootlayout from "./layout/Rootlayout";
-import Parentlayout from "./layout/Parentlayout";
+import Parentlayout from "./layout/Rootlayout";
 
 import Landingpage from "./pages/Landingpage";
 import Dashboard from "./components/AdminProfile/Dashboard.jsx";
-
+import Authlayout from "./layout/Authlayout";
+import Rootlayout from "./layout/Rootlayout";
 
 const router = createBrowserRouter([
+  { path: "/landingpage", element: <Landingpage /> },
   {
     path: "/",
-    element: <Parentlayout />,
+    element: <Rootlayout />,
     children: [
       {
-        path: "/",
-        element: <Rootlayout />,
+        path: "",
+        element: <Authlayout />,
         children: [
           {
-            path: "/",
+            path: "",
             element: <ClassSchedule />,
             loader: getActivities, //send the date with the request, and only specific trainers?
             index: true,
@@ -71,66 +70,67 @@ const router = createBrowserRouter([
             element: <MembershipPlans />,
           },
           {
-            path: "/",
+            path: "",
             element: <Protected />,
             children: [
               {
-                path: "/userProfile/memberships",
+                path: "userProfile/memberships",
                 element: <UserMemberships />,
               },
               {
-                path: "/userProfile/activities",
+                path: "userProfile/activities",
                 element: <UserActivities />,
               },
               {
-                path: "/userProfile/details",
+                path: "userProfile/details",
                 element: <UserInformation />,
               },
               {
-                path: "/userProfile/details/update",
+                path: "userProfile/details/update",
                 element: <UserUpdateInformation />,
               },
 
               {
-                path: "/",
+                path: "",
                 element: <Authorize role={"admin"} />,
                 children: [
                   {
-                    path: "/userProfile/usersOverview",
+                    path: "userProfile/usersOverview",
                     element: <UsersOverview />,
                   },
                   {
-                    path: "/userProfile/usersOverview/:id",
+                    path: "userProfile/usersOverview/:id",
                     element: <SingleUserInformation />,
                   },
                   {
-                    path: "/userProfile/usersOverview/:id/update",
+                    path: "userProfile/usersOverview/:id/update",
                     element: <EditUserInformation />,
                   },
                   {
-                    path: "/userProfile/createMembership",
+                    path: "userProfile/createMembership",
                     element: <CreateMembership />,
                   },
                   {
-                    path: "/userProfile/membershipsOverview",
+                    path: "userProfile/membershipsOverview",
                     element: <MembershipsOverview />,
                   },
                   {
-                    path: "/userProfile/membershipsOverview/:id",
+                    path: "userProfile/membershipsOverview/:id",
                     element: <EditMembershipInformation />,
-                  },                  {
-                    path: "/dashboard",
+                  },
+                  {
+                    path: "dashboard",
                     element: <Dashboard />,
                   },
                   {
-                    path: "/createActivity",
+                    path: "createActivity",
                     element: <CreateActivity />,
                     loader: async () => {
                       return fetch(`http://localhost:8080/activityTypes`);
                     },
                   },
                   {
-                    path: "/createType",
+                    path: "createType",
                     element: <Types />,
                     loader: async () => {
                       return fetch(`http://localhost:8080/activityTypes`);
@@ -144,7 +144,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  { path: "/landingpage", element: <Landingpage /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

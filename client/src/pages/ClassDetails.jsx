@@ -113,7 +113,11 @@ export default function ClassDetails() {
   };
 
   const registeredUsers = activity?.registeredUsers;
-
+  console.log(
+    !user.classesRegistered.find((activity) => {
+      return activity._id === id;
+    })
+  );
   //TO DO: upload images for all types and create more types
 
   //instructor images based on name
@@ -210,16 +214,12 @@ export default function ClassDetails() {
             </div>
           </div>
           <div className="grid grid-cols-2">
-            {user?.role === "student" && (
+            {user?.role !== "admin" &&
+            !user.classesRegistered.find((activity) => {
+              return activity._id === id;
+            }) ? (
               <button
-                className={clsx(
-                  "btn btn-primary mr-3 self-center mt-2",
-                  registeredUsers
-                    .map((item) => {
-                      return item._id;
-                    })
-                    .includes(user?._id) && "hidden"
-                )}
+                className="btn btn-primary mr-3 self-center mt-2"
                 onClick={() =>
                   document.getElementById("my_modal_1").showModal()
                 }
@@ -227,17 +227,9 @@ export default function ClassDetails() {
               >
                 Book Now
               </button>
-            )}
-            {user?.role === "student" && (
+            ) : (
               <button
-                className={clsx(
-                  "btn btn-secondary mr-3 self-center mt-2",
-                  !registeredUsers
-                    .map((item) => {
-                      return item._id;
-                    })
-                    .includes(user?._id) && "hidden"
-                )}
+                className="btn btn-secondary mr-3 self-center mt-2"
                 onClick={() =>
                   document.getElementById("my_modal_1").showModal()
                 }
@@ -304,37 +296,28 @@ export default function ClassDetails() {
 
               <div className="modal-action">
                 <form method="dialog">
-                  <button
-                    className={clsx(
-                      "btn btn-primary mr-3 self-center mt-2",
-                      registeredUsers
-                        .map((item) => {
-                          return item._id;
-                        })
-                        .includes(user?._id) && "hidden"
-                    )}
-                    onClick={() => {
-                      handleBooking();
-                    }}
-                  >
-                    Confirm
-                  </button>
-                  <button
-                    className={clsx(
-                      "btn btn-secondary mr-3 self-center mt-2",
-                      !registeredUsers
-                        .map((item) => {
-                          return item._id;
-                        })
-                        .includes(user?._id) && "hidden"
-                    )}
-                    onClick={() => {
-                      handleCancelation(id, setUser, setOpenSlots);
-                      // window.location.reload();
-                    }}
-                  >
-                    Cancel Booking
-                  </button>
+                  {!user.classesRegistered.find((activity) => {
+                    return activity._id === id;
+                  }) ? (
+                    <button
+                      className="btn btn-primary mr-3 self-center mt-2"
+                      onClick={() => {
+                        handleBooking();
+                      }}
+                    >
+                      Confirm
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-secondary mr-3 self-center mt-2"
+                      onClick={() => {
+                        handleCancelation(id, setUser, setOpenSlots);
+                        // window.location.reload();
+                      }}
+                    >
+                      Cancel Booking
+                    </button>
+                  )}
 
                   <button className="btn">Close</button>
                 </form>
@@ -370,17 +353,13 @@ export default function ClassDetails() {
                   </div>
                   <div className="modal-action">
                     <form method="dialog">
-
                       <button className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
-
                         Cancel
                       </button>
 
                       <button
                         onClick={() => navigate("/membershipPlans")}
-
                         className="flex-1 px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium rounded-md"
-
                       >
                         Purchase Membership Plan
                       </button>
@@ -419,17 +398,13 @@ export default function ClassDetails() {
                   </div>
                   <div className="modal-action">
                     <form method="dialog">
-
                       <button className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
-
                         Cancel
                       </button>
 
                       <button
                         onClick={() => navigate("/membershipPlans")}
-
                         className="flex-1 px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium rounded-md"
-
                       >
                         Purchase Membership Plan
                       </button>
@@ -439,7 +414,7 @@ export default function ClassDetails() {
               </div>
             </div>
           </dialog>
-          {user?.role === "student" && (
+          {user?.role !== "admin" && (
             <button
               className="btn btn-primary w-4/5 self-center m-2"
               disabled={openSlots > 0}
@@ -450,6 +425,7 @@ export default function ClassDetails() {
           {user && user.role === "admin" && (
             <div>
               <h3 className="font-bold mt-10">Registered Users</h3>
+              {!registeredUsers ? "no users registered" : ""}
               <table className="table p-2 m-2">
                 <tbody>
                   {registeredUsers.map((student) => {
