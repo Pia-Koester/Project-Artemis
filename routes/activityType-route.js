@@ -9,12 +9,19 @@ const { authenticate, authorize } = require("../middlewares/authentication.js");
 // const upload = require("../middlewares/uploadmultipleImages.js");
 
 const uploadMultiple = require("../middlewares/uploadmultipleImages.js");
+const { cloudinaryUpload } = require("../middlewares/cloudinary.js");
 
 const typeRouter = express.Router();
 
 typeRouter
   .route("/")
-  .post(authenticate, authorize("admin"), uploadMultiple, createType)
+  .post(
+    authenticate,
+    authorize("admin"),
+    uploadMultiple,
+    cloudinaryUpload,
+    createType
+  )
   .get(getTypes);
 
 typeRouter
