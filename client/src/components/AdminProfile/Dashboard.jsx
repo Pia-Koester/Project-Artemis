@@ -57,7 +57,7 @@ export default function Dashboard() {
       <div class="flex flex-col bg-gray-100">
         <div class="flex-1 flex flex-wrap">
           <div
-            class="p-1 bg-base-100 w-full md:w-60 flex flex-col md:flex hidden"
+            class="p-1 bg-base-100 w-full md:w-60 flex flex-col md:flex"
             id="sideNav"
           >
             <nav>
