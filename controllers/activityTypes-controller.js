@@ -5,21 +5,16 @@ const cloudinary = require("cloudinary").v2;
 
 const createType = asyncWrapper(async (req, res, next) => {
   const { type } = req.body;
-  console.log(req.body);
-  console.log(req.files);
+
   const { uploadedImages } = req;
   const imagesData = uploadedImages.map((image) => ({
     url: image.url,
     publicId: image.public_id,
   }));
-  const newActivityType = new ActivityType(
-    {
-      type: type.toLowerCase(),
-      images: imagesData,
-    },
-    { new: true }
-  );
-  console.log(uploadedImages);
+  const newActivityType = await ActivityType.create({
+    type: type.toLowerCase(),
+    images: imagesData,
+  });
 
   res.status(201).json(newActivityType);
 });
