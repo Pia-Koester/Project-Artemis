@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
+import axiosClient from "../../api/axiosClient";
 
 export default function CreateActivityType() {
   const {
@@ -36,8 +37,8 @@ export default function CreateActivityType() {
     for (const key of Object.keys(multipleImages)) {
       formData.append("images", data.images[key]);
     }
-    axios
-      .post("http://localhost:8080/activityTypes", formData, {
+    axiosClient
+      .post("/activityTypes", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
