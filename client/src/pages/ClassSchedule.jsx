@@ -4,13 +4,11 @@ import ActivityCard from "../components/Activities/ActivityCard";
 import { AuthContext } from "../components/context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
-import logo from "../assets/logos/phoenix-color.png";
 
 export default function ClassSchedule() {
   const response = useLoaderData();
   const activities = response.activities;
   const { user } = useContext(AuthContext);
-  console.log(user?.role);
   const activitytypes = response.activitytypes;
   const navigate = useNavigate();
 
@@ -60,7 +58,6 @@ export default function ClassSchedule() {
       return newSkip;
     });
   };
-  console.log(user);
 
   return (
     <div className="flex gap-3 flex-col items-center p-5">
@@ -120,7 +117,6 @@ export default function ClassSchedule() {
             <div className="flex flex-col gap-2 items-center" key={day}>
               <h3>{day}</h3>
               {activities[day.toLowerCase()]?.map((activity) => {
-                console.log(activity.registeredUsers.includes(user?._id));
                 return (
                   <ActivityCard
                     activity={activity}
