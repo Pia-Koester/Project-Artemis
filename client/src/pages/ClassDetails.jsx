@@ -194,7 +194,9 @@ export default function ClassDetails() {
           <div className="avatar self-center mt-3 sm:flex gap-2">
             <div className="grid grid-rows-2 mt-5">
               <p className="font-bold">Instructor:</p>
-              <p>{activity.instructor.firstName}</p>
+              <p>
+                {activity.instructor.firstNameactivity.instructor.image.url}
+              </p>
             </div>
             <div className="w-24 mask mask-hexagon">
               <img src={activity.instructor.image.url} />
