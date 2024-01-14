@@ -96,8 +96,8 @@ export default function ClassSchedule() {
           onChange={handleTrainer}
           value={trainer}
         >
-          <option disabled>Pick trainer</option>
-          <option>All</option>
+          <option value="All">Pick trainer</option>
+
           {instructors.map((instructor) => {
             return (
               <option key={instructor.firstName} value={instructor._id}>

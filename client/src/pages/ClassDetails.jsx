@@ -448,7 +448,9 @@ export default function ClassDetails() {
             )}
           </aside>
         </div>
-        {user && user.role === "admin" && <EditActivity activity={activity} />}
+        {user && user.role === "admin" && (
+          <EditActivity activity={activity} hideBackButton />
+        )}
         <div></div>
       </div>
     </>
