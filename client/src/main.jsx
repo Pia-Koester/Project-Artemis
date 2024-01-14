@@ -34,6 +34,8 @@ import Landingpage from "./pages/Landingpage";
 import Dashboard from "./components/AdminProfile/Dashboard.jsx";
 import Authlayout from "./layout/Authlayout";
 import Rootlayout from "./layout/Rootlayout";
+import EditActivity from "./components/AdminProfile/EditActivity.jsx";
+import EditActivityType from "./components/AdminProfile/EditActivityType.jsx";
 
 const router = createBrowserRouter([
   { path: "/landingpage", element: <Landingpage /> },
@@ -135,6 +137,10 @@ const router = createBrowserRouter([
                     loader: async () => {
                       return fetch(`http://localhost:8080/activityTypes`);
                     },
+                  },
+                  {
+                    path: "dashboard/editActivitiy/:id",
+                    element: <EditActivityType />,
                   },
                 ],
               },

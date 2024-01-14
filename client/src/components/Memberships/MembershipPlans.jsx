@@ -31,6 +31,8 @@ export default function CreateUserMembership() {
     }
   };
 
+
+
   //TO DO discuss if a description is needed
   return (
     <>
