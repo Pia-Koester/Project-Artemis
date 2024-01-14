@@ -13,7 +13,7 @@ const activitySchema = new Schema({
   weekday: { type: String, lowercase: true },
   capacity: { type: Number },
   waitlist: waitlistSchema,
-  instructor: { type: String },
+  instructor: { type: Schema.Types.ObjectId, ref: "Instructor" },
   location: {
     type: {
       type: String,

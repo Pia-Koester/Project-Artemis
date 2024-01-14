@@ -37,14 +37,14 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun, type } = req.query;
-
+  console.log(instructor);
   let filter = {
     startTime: {
       $gte: new Date(mon),
       $lte: new Date(sun),
     },
   };
-  console.log(filter);
+
   const queryParams = { instructor }; //TO DO: put back type to be able to filter for it
 
   for (const key of Object.keys(queryParams)) {
@@ -57,17 +57,24 @@ const getActivities = asyncWrapper(async (req, res, next) => {
       }
     }
   }
+  console.log(filter);
 
   if (!mon && !sun) {
-    const activities = await Activity.find({}).populate("type").sort({
-      startTime: "desc",
-    });
+    const activities = await Activity.find({})
+      .populate("type")
+      .populate("instructor")
+      .sort({
+        startTime: "desc",
+      });
     res.json(activities);
   }
 
-  const activities = await Activity.find(filter).populate("type").sort({
-    startTime: "asc",
-  });
+  const activities = await Activity.find(filter)
+    .populate("type")
+    .populate("instructor")
+    .sort({
+      startTime: "asc",
+    });
 
   res.json(activities);
 });
@@ -76,7 +83,8 @@ const getActivity = asyncWrapper(async (req, res, next) => {
   const { activity_id } = req.params;
   const activity = await Activity.findById(activity_id)
     .populate("registeredUsers")
-    .populate("type"); // TODO: .populate("waitlist.waitlistUsers") is this the correct way??
+    .populate("type")
+    .populate("instructor"); // TODO: .populate("waitlist.waitlistUsers") is this the correct way??
   if (!activity) {
     throw new ErrorResponse("Activity not found", 404);
   }

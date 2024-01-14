@@ -10,8 +10,8 @@ export default function Navbar() {
   return (
     <>
       {!isLoading && (
-        <div className="navbar bg-base-100">
-          <div className="flex-1">
+        <div className="navbar bg-base-100 px-10 py-3">
+          <div className="flex-1 ">
             <NavLink to={"/"}>
               <img className="btn btn-ghost" src={navLogo} alt="home" />
             </NavLink>
@@ -19,10 +19,10 @@ export default function Navbar() {
 
           {!user ? (
             <>
-              <div className="flex-none">
+              <div className="flex-none ">
                 <div className="flex-1">
                   <NavLink to={"/signup"} className="btn btn-ghost text-xl">
-                    Register
+                    Sign Up
                   </NavLink>
                   <NavLink to={"/login"} className="btn btn-ghost text-xl">
                     Login

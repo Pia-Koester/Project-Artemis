@@ -119,7 +119,7 @@ export default function UserActivities() {
                         )}
                       >
                         <button
-                          className="btn"
+                          className=""
                           onClick={() => {
                             handleCancelation(userActivity._id, setUser);
                             // window.location.reload();
@@ -140,11 +140,11 @@ export default function UserActivities() {
                   </div>
                   <div className="avatar flex-col items-end card-body hidden sm:flex">
                     <div className="w-24 mask mask-hexagon mr-4">
-                      <img src="https://static.wixstatic.com/media/87046c_459fa56301054dbe9d58e76c7284634c~mv2.jpg/v1/fill/w_378,h_520,fp_0.45_0.35,q_80,usm_0.66_1.00_0.01,enc_auto/87046c_459fa56301054dbe9d58e76c7284634c~mv2.jpg" />
+                      <img src={userActivity.instructor?.image.url} />
                     </div>
                     <p>
                       <span className="font-medium ">Instructor: </span>
-                      {userActivity.instructor}
+                      {userActivity.instructor?.firstName}
                     </p>
                   </div>
                 </div>

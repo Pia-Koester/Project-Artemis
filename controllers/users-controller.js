@@ -48,7 +48,10 @@ const createUser = asyncWrapper(async (req, res, next) => {
 //TODO don't return the passwords
 const getUsers = asyncWrapper(async (req, res, next) => {
   const users = await User.find({})
-    .populate("classesRegistered")
+    .populate({
+      path: "classesRegistered",
+      populate: { path: "instructor", model: "Instructor" },
+    })
     .populate({
       path: "activeMembership",
       populate: { path: "plan", model: "MembershipPlan" },
@@ -153,7 +156,10 @@ const login = asyncWrapper(async (req, res, next) => {
 
   const user = await User.findOne({ email })
     .select("+password")
-    .populate("classesRegistered")
+    .populate({
+      path: "classesRegistered",
+      populate: { path: "instructor", model: "Instructor" },
+    })
     .populate({
       path: "activeMembership",
       populate: { path: "plan", model: "MembershipPlan" },
@@ -198,7 +204,10 @@ const getProfile = asyncWrapper(async (req, res, next) => {
   const { id } = req.user;
 
   const user = await User.findById(id)
-    .populate("classesRegistered")
+    .populate({
+      path: "classesRegistered",
+      populate: { path: "instructor", model: "Instructor" },
+    })
     .populate({
       path: "activeMembership",
       populate: { path: "plan", model: "MembershipPlan" },
@@ -210,7 +219,10 @@ const getUser = asyncWrapper(async (req, res, next) => {
   const { id } = req.params;
 
   const user = await User.findById(id)
-    .populate("classesRegistered")
+    .populate({
+      path: "classesRegistered",
+      populate: { path: "instructor", model: "Instructor" },
+    })
     .populate({
       path: "activeMembership",
       populate: { path: "plan", model: "MembershipPlan" },

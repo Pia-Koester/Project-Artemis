@@ -1,9 +1,10 @@
 import { useLoaderData, useSearchParams } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ActivityCard from "../components/Activities/ActivityCard";
 import { AuthContext } from "../components/context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
+import axiosClient from "../api/axiosClient.jsx";
 
 export default function ClassSchedule() {
   const response = useLoaderData();
@@ -11,6 +12,21 @@ export default function ClassSchedule() {
   const { user } = useContext(AuthContext);
   const activitytypes = response.activitytypes;
   const navigate = useNavigate();
+  const [instructors, setInstructors] = useState([]);
+
+  //Instructor getting for filter
+  useEffect(() => {
+    axiosClient
+      .get("/instructors")
+      .then((response) => {
+        console.log(response.data);
+        setInstructors(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setUser(null);
+      });
+  }, []);
 
   //array of weekdays for the grid columns
   const weekdays = [
@@ -82,8 +98,12 @@ export default function ClassSchedule() {
         >
           <option disabled>Pick trainer</option>
           <option>All</option>
-          {response.instructors.map((instructor) => {
-            return <option key={instructor}>{instructor}</option>;
+          {instructors.map((instructor) => {
+            return (
+              <option key={instructor.firstName} value={instructor._id}>
+                {instructor.firstName}
+              </option>
+            );
           })}
         </select>
         {/* <select

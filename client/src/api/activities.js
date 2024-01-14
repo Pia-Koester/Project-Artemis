@@ -67,7 +67,7 @@ const getActivities = async ({ request }) => {
     return data;
   } catch (error) {
     console.log(error);
-    return;
+    throw Error(error);
   }
 };
 

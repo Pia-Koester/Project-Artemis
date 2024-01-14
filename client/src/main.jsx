@@ -27,21 +27,21 @@ import MembershipsOverview from "./components/AdminProfile/MembershipsOverview.j
 import EditMembershipInformation from "./components/AdminProfile/EditMembershipInformation.jsx";
 import Authorize from "./pages/Authorize";
 import Types from "./pages/Types";
-
 import Parentlayout from "./layout/Rootlayout";
-
 import Landingpage from "./pages/Landingpage";
 import Dashboard from "./components/AdminProfile/Dashboard.jsx";
 import Authlayout from "./layout/Authlayout";
 import Rootlayout from "./layout/Rootlayout";
 import EditActivity from "./components/AdminProfile/EditActivity.jsx";
 import EditActivityType from "./components/AdminProfile/EditActivityType.jsx";
+import ErrorPage from "./pages/errors/ErrorPage";
 
 const router = createBrowserRouter([
   { path: "/landingpage", element: <Landingpage /> },
   {
     path: "/",
     element: <Rootlayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "",
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
           {
             path: "",
             element: <ClassSchedule />,
-            loader: getActivities, //send the date with the request, and only specific trainers?
+            loader: getActivities,
             index: true,
           },
           {
