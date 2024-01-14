@@ -34,12 +34,14 @@ import Landingpage from "./pages/Landingpage";
 import Dashboard from "./components/AdminProfile/Dashboard.jsx";
 import Authlayout from "./layout/Authlayout";
 import Rootlayout from "./layout/Rootlayout";
+import ErrorPage from "./pages/errors/ErrorPage";
 
 const router = createBrowserRouter([
   { path: "/landingpage", element: <Landingpage /> },
   {
     path: "/",
     element: <Rootlayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "",
@@ -48,7 +50,7 @@ const router = createBrowserRouter([
           {
             path: "",
             element: <ClassSchedule />,
-            loader: getActivities, //send the date with the request, and only specific trainers?
+            loader: getActivities,
             index: true,
           },
           {
