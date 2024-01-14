@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useNavigate, useParams, useRevalidator } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function EditActivity({ activity }) {
   const {id} = useParams()
+  const navigate = useNavigate();
 
   const {
     register,
@@ -29,7 +31,10 @@ export default function EditActivity({ activity }) {
     axiosClient
       .put(`http://localhost:8080/activities/admin/${activity._id}`, data)
       .then((response) => {
-        console.log(response.data);
+        notify();
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
         //TO DO: toast with success message - then navigate to the start page
       })
       .catch((error) => {
@@ -37,8 +42,34 @@ export default function EditActivity({ activity }) {
         setUser(null);
       });
   };
+
+  const notify = () =>
+  toast.success("Updated Successfully", {
+    position: "top-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
   return (
+    
     <div className="flex flex-col items-center justify-center">
+              <ToastContainer
+          position="top-center"
+          autoClose={1500}
+          limit={1}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+          theme="light"
+        />
       <div className="card w-96 bg-white shadow-2xl flex flex-col p-4 m-2">
         <h2 className="text-2xl font-semibold text-center mb-4">
           Update {activity.title}
