@@ -34,12 +34,14 @@ import Landingpage from "./pages/Landingpage";
 import Dashboard from "./components/AdminProfile/Dashboard.jsx";
 import Authlayout from "./layout/Authlayout";
 import Rootlayout from "./layout/Rootlayout";
+import ErrorPage from "./pages/errors/ErrorPage";
 
 const router = createBrowserRouter([
   { path: "/landingpage", element: <Landingpage /> },
   {
     path: "/",
     element: <Rootlayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "",
