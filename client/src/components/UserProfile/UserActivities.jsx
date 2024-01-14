@@ -14,6 +14,8 @@ export default function UserActivities() {
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-based, so we add 1
   const currentDay = currentDate.getDate();
+  const currentMinutes = currentDate.getMinutes();
+  const currentHours = currentDate.getHours() + 1;
 
   return (
     <>
@@ -46,21 +48,37 @@ export default function UserActivities() {
             const year = date.getFullYear();
             const month = date.getMonth() + 1; // JavaScript months are 0-based, so we add 1
             const day = date.getDate();
+            const hours = date.getHours();
+            const minutes = date.getMinutes();
 
             let pastDate = false;
+            console.log(date.getHours() + 1);
 
             if (currentYear > year) {
               pastDate = true;
-              return;
-            } else {
-              if (currentMonth > month) {
-                pastDate = true;
-                return;
-              } else {
-                if (currentDay >= day) {
-                  pastDate = true;
-                }
-              }
+            } else if (currentYear === year && currentMonth > month) {
+              pastDate = true;
+            } else if (
+              currentYear === year &&
+              currentMonth === month &&
+              currentDay > day
+            ) {
+              pastDate = true;
+            } else if (
+              currentYear === year &&
+              currentMonth === month &&
+              currentDay === day &&
+              currentHours > hours
+            ) {
+              pastDate = true;
+            } else if (
+              currentYear === year &&
+              currentMonth === month &&
+              currentDay === day &&
+              currentHours === hours &&
+              currentMinutes > minutes
+            ) {
+              pastDate = true;
             }
 
             return (

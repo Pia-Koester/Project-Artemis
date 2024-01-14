@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import UserCard from "./UserCard";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 export default function Dashboard() {
+  const { id } = useParams();
+
   const [users, setUsers] = useState(null);
   const [type, setType] = useState(null);
   const [activities, setActivities] = useState(null);
@@ -55,6 +56,7 @@ export default function Dashboard() {
         console.log(err);
       });
   }, []);
+
   return (
     <>
       <div class="flex flex-col bg-gray-100">
@@ -87,7 +89,7 @@ export default function Dashboard() {
                 class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white"
                 href="#"
               >
-                <span className="grid grid-cols-2 w-1/3">
+                <span className="grid grid-cols-2 w-1/3 whitespace-nowrap">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -101,7 +103,7 @@ export default function Dashboard() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Schedule
+                  Schedule Overview
                 </span>
               </Link>
 
@@ -110,7 +112,7 @@ export default function Dashboard() {
                 class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white"
                 href="#"
               >
-                <span className="grid grid-cols-2 w-1/3">
+                <span className="grid grid-cols-2 w-1/3 whitespace-nowrap">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -124,7 +126,7 @@ export default function Dashboard() {
                     />
                     <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z" />
                   </svg>
-                  Users
+                  Users Overview
                 </span>
               </Link>
 
@@ -156,7 +158,7 @@ export default function Dashboard() {
                 class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white"
                 href="#"
               >
-                <span className="grid grid-cols-2 w-1/3">
+                <span className="grid grid-cols-2 w-1/3 whitespace-nowrap">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -169,7 +171,7 @@ export default function Dashboard() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Activities
+                  Activity Types
                 </span>
               </Link>
 
@@ -178,7 +180,7 @@ export default function Dashboard() {
                 class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white"
                 href="#"
               >
-                <span className="grid grid-cols-2 w-1/3">
+                <span className="grid grid-cols-2 w-1/3 whitespace-nowrap">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -192,23 +194,10 @@ export default function Dashboard() {
                     />
                     <path d="M18.75 6.75h1.875c.621 0 1.125.504 1.125 1.125V18a1.5 1.5 0 0 1-3 0V6.75Z" />
                   </svg>
-                  <p>Classes</p>
+                  <p>Create Activity</p>
                 </span>
               </Link>
             </nav>
-
-            <a
-              class="block text-gray-500 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white mt-auto"
-              href="#"
-            >
-              <i class="fas fa-sign-out-alt mr-2"></i>
-            </a>
-
-            <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mt-2"></div>
-
-            <p class="mb-1 px-5 py-3 text-left text-xs text-cyan-500">
-              Artemis Academy
-            </p>
           </div>
 
           <div class=" shadow-inner flex-1 p-4 w-full md:w-1/2">
@@ -220,7 +209,7 @@ export default function Dashboard() {
                   </h2>
                   <Link
                     to={"/userProfile/membershipsOverview"}
-                    class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-1 px-4 rounded w-1/4 mb-2"
+                    class="btn btn-primary hover:bg-cyan-800 text-white font-semibold py-1 px-4 w-1/4 mb-2"
                   >
                     View More
                   </Link>
@@ -228,22 +217,49 @@ export default function Dashboard() {
 
                 <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
                 <div class="chart-container">
-                  <div class="flex justify-center border rounded-lg">
-                    <ul class="bg-white rounded-lg w-96 text-gray-900">
+                <div className="overflow-x-auto overflow-y-auto max-h-[300px]">
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Type Title</th>
+                          <th>Price</th>
+                          <th>Validity</th>
+                          <th>Max Credits</th>
+                        </tr>
+                      </thead>
                       {!memberships ? (
                         <p>Loading...</p>
                       ) : (
                         memberships.map((membership) => {
                           return (
-                            <div class="flex flex-col-2">
-                              <li class="py-2 border-b border-gray-200 w-full rounded-t-lg font-semibold">
-                                {membership.title}
-                              </li>
-                            </div>
+                            <tbody key={membership._id}>
+                              <tr>
+                                <td>
+                                  <div className="font-bold">
+                                    {membership.title}
+                                  </div>
+                                </td>
+                                <td>
+                                <div className="font-semibold">
+                                    {membership.price + ",00 €"}
+                                  </div>
+                                </td>
+                                <td>
+                                <div className="font-semibold">
+                                    {membership.validity + " " + "Days"}
+                                  </div>
+                                </td>
+                                <td>
+                                <div className="font-semibold">
+                                    {membership.totalCredits + " " + "Bookings"}
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
                           );
                         })
                       )}
-                    </ul>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -254,12 +270,12 @@ export default function Dashboard() {
                     Activity Types
                   </h2>
                   <button
-                    class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/4 mb-2"
+                    class="btn btn-primary hover:bg-cyan-800 text-white font-semibold py-1 px-4 w-1/4 mb-2"
                     onClick={() => {
                       navigate("/createType");
                     }}
                   >
-                    Create New
+                    View More
                   </button>
                 </div>
                 <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
@@ -267,23 +283,32 @@ export default function Dashboard() {
                   class="chart-container"
                   //   style="position: relative; height:150px; width:100%"
                 >
-                  <div class="flex justify-center border rounded-lg">
-                    <ul class="bg-white rounded-lg w-96 text-gray-900">
+                  <div className="overflow-x-auto overflow-y-auto max-h-[300px]">
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Type Title</th>
+                        </tr>
+                      </thead>
                       {!type ? (
                         <p>Loading...</p>
                       ) : (
                         type.map((type) => {
                           return (
-                            <div class="flex flex-col-2">
-                              <li class="py-2 border-b border-gray-200 w-full rounded-t-lg font-semibold">
-                                {type.type.charAt(0).toUpperCase() +
-                                  type.type.slice(1)}
-                              </li>
-                            </div>
+                            <tbody key={type._id}>
+                              <tr>
+                                <td>
+                                  <div className="font-bold">
+                                    {type.type.charAt(0).toUpperCase() +
+                                      type.type.slice(1)}
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
                           );
                         })
                       )}
-                    </ul>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -292,32 +317,71 @@ export default function Dashboard() {
                   <h2 class="text-gray-500 text-lg font-semibold pb-1">
                     Classes
                   </h2>
-                  <button class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/4 mb-2">
+                  <Link to={"/createActivity"} class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/4 mb-2">
                     Create New
-                  </button>
+                  </Link>
                 </div>
                 <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
-                <div
-                  class="chart-container"
-                  //   style="position: relative; height:150px; width:100%"
-                >
-                  <div class="flex justify-center border rounded-lg">
-                    <ul class="bg-white rounded-lg w-96 text-gray-900">
-                      {!activities ? (
-                        <p>Loading...</p>
-                      ) : (
-                        activities.map((activities) => {
-                          return (
-                            <div class="flex flex-col-2">
-                              <li class="py-2 border-b border-gray-200 w-full rounded-t-lg font-semibold">
-                                {activities.title}
-                              </li>
-                            </div>
-                          );
-                        })
-                      )}
-                    </ul>
-                  </div>
+
+                <div className="overflow-x-auto overflow-y-auto max-h-[300px]">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Class Name</th>
+                        <th>Start Date</th>
+                        <th>Start Time</th>
+                        <th>Edit</th>
+                      </tr>
+                    </thead>
+                    {!activities ? (
+                      <p>Loading...</p>
+                    ) : (
+                      activities.map((activity) => {
+                        const getStartDate = activity.startTime;
+                        const formatStartDate = getStartDate.split("T");
+                        const formatStartTime = formatStartDate[1].split(".");
+                        return (
+                          <tbody key={activity._id}>
+                            <tr>
+                              <td>
+                                <div className="font-bold">
+                                  {activity.title}
+                                </div>
+                              </td>
+                              <td className="min-w-[110px]">
+                                <div className="font-semibold">
+                                  {formatStartDate[0]}
+                                </div>
+                              </td>
+                              <td>
+                                <div className="font-semibold">
+                                  {formatStartTime[0].slice(0, 5)}
+                                </div>
+                              </td>
+                              <td>
+                                <Link to={`/details/${activity._id}`}>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="w-4 h-4 transition-transform transform hover:scale-150"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                                    />
+                                  </svg>
+                                </Link>
+                              </td>
+                            </tr>
+                          </tbody>
+                        );
+                      })
+                    )}
+                  </table>
                 </div>
               </div>
             </div>
@@ -326,7 +390,6 @@ export default function Dashboard() {
               <h2 class="text-gray-500 text-lg font-semibold pb-4">
                 Users Overview
               </h2>
-              <div class="my-1"></div>
               <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
               <div className="overflow-x-auto">
                 <table className="table">
@@ -354,7 +417,7 @@ export default function Dashboard() {
                 </table>
               </div>
               <div class="text-right mt-4">
-                <button class="btn bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4">
+                <button class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/8 mb-2">
                   View More
                 </button>
               </div>

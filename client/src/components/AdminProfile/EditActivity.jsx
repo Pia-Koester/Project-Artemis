@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 
 export default function EditActivity({ activity }) {
+  const {id} = useParams()
+
   const {
     register,
     handleSubmit,

@@ -27,13 +27,13 @@ import MembershipsOverview from "./components/AdminProfile/MembershipsOverview.j
 import EditMembershipInformation from "./components/AdminProfile/EditMembershipInformation.jsx";
 import Authorize from "./pages/Authorize";
 import Types from "./pages/Types";
-
 import Parentlayout from "./layout/Rootlayout";
-
 import Landingpage from "./pages/Landingpage";
 import Dashboard from "./components/AdminProfile/Dashboard.jsx";
 import Authlayout from "./layout/Authlayout";
 import Rootlayout from "./layout/Rootlayout";
+import EditActivity from "./components/AdminProfile/EditActivity.jsx";
+import EditActivityType from "./components/AdminProfile/EditActivityType.jsx";
 import ErrorPage from "./pages/errors/ErrorPage";
 
 const router = createBrowserRouter([
@@ -137,6 +137,10 @@ const router = createBrowserRouter([
                     loader: async () => {
                       return fetch(`http://localhost:8080/activityTypes`);
                     },
+                  },
+                  {
+                    path: "dashboard/editActivitiy/:id",
+                    element: <EditActivityType />,
                   },
                 ],
               },
