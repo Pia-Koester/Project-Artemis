@@ -4,6 +4,7 @@ import {
   FaPersonDress,
   FaLocationDot,
   FaArrowLeft,
+  FaCalendarPlus,
 } from "react-icons/fa6";
 import { useNavigate, useParams, useRevalidator } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
@@ -44,6 +45,7 @@ export default function ClassDetails() {
           response.data.activity.capacity -
             response.data.activity.registeredUsers.length
         );
+        setShowcalendarbutton(true);
         notify();
         setUser((prev) => {
           return {
@@ -118,7 +120,7 @@ export default function ClassDetails() {
   //TO DO: upload images for all types and create more types
 
   // check if user is admin
-  const isAdmin = user && user.role === "admin";
+  const [showcalendarbutton, setShowcalendarbutton] = useState(false);
 
   return (
     <>
@@ -244,6 +246,11 @@ export default function ClassDetails() {
                   disabled={openSlots > 0}
                 >
                   Waitlist
+                </button>
+              )}
+              {showcalendarbutton && (
+                <button className="btn btn-square btn-outline">
+                  <FaCalendarPlus />
                 </button>
               )}
             </div>
@@ -420,35 +427,50 @@ export default function ClassDetails() {
 
             {user && user.role === "admin" && (
               <div>
-                <h3 className="font-bold mt-10">Registered Users</h3>
-                {!registeredUsers ? "no users registered" : ""}
-                <table className="table p-2 m-2">
-                  <tbody>
-                    {registeredUsers.map((student) => {
-                      return (
-                        <tr key={student._id}>
-                          <th>
-                            <div className="w-10 rounded-full">
-                              <img
-                                alt="Tailwind CSS Navbar component"
-                                src={userIcon}
-                              />
-                            </div>
-                          </th>
-                          <td>
-                            <div>{student.lastName}</div>
-                          </td>
-                          <td>{student.firstName}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                <h3 className="font-bold mt-10">Attending Users</h3>
+                {registeredUsers.length === 0 ? (
+                  "no users registered yet"
+                ) : (
+                  <table className="table p-2 m-2">
+                    <tbody>
+                      {registeredUsers.map((student) => {
+                        return (
+                          <tr key={student._id}>
+                            <th>
+                              <div className="avatar">
+                                <div className="w-16 rounded-full">
+                                  {student.image?.url ? (
+                                    <img
+                                      alt="User Icon - click to see menu options"
+                                      src={student.image?.url}
+                                      className="w-full h-full object-cover rounded-full"
+                                    />
+                                  ) : (
+                                    <img
+                                      alt="User Icon - click to see menu options"
+                                      src={userIcon}
+                                    />
+                                  )}
+                                </div>
+                              </div>
+                            </th>
+                            <td>
+                              <div>{student.lastName}</div>
+                            </td>
+                            <td>{student.firstName}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                )}
               </div>
             )}
           </aside>
         </div>
-        {user && user.role === "admin" && <EditActivity activity={activity} />}
+        {user && user.role === "admin" && (
+          <EditActivity activity={activity} hideBackButton />
+        )}
         <div></div>
       </div>
     </>

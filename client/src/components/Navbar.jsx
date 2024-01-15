@@ -3,6 +3,7 @@ import navLogo from "../assets/logos/WortBildmarkeMAINLOGO_anthra.svg";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthProvider";
 import userIcon from "../assets/logos/avatar.jpg";
+import { motion } from "framer-motion";
 
 export default function Navbar() {
   const { isLoading, user, logout } = useContext(AuthContext);
@@ -11,9 +12,13 @@ export default function Navbar() {
     <>
       {!isLoading && (
         <div className="navbar bg-base-100 px-10 py-3">
-          <div className="flex-1 ">
+          <div className="flex-1">
             <NavLink to={"/"}>
-              <img className="btn btn-ghost" src={navLogo} alt="home" />
+              <img
+                className="btn btn-lg btn-ghost w-full"
+                src={navLogo}
+                alt="home"
+              />
             </NavLink>
           </div>
 
@@ -41,11 +46,25 @@ export default function Navbar() {
                 <div
                   tabIndex={0}
                   role="button"
-                  className="btn btn-ghost btn-circle avatar"
+                  className="btn btn-ghost btn-lg btn-circle avatar"
                 >
-                  <div className="w-10 rounded-full">
-                    <img alt="Tailwind CSS Navbar component" src={userIcon} />
-                  </div>
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    className="rounded-full"
+                  >
+                    {user.image?.url ? (
+                      <img
+                        alt="User Icon - click to see menu options"
+                        src={user.image?.url}
+                        className="w-full h-full object-cover rounded-full"
+                      />
+                    ) : (
+                      <img
+                        alt="User Icon - click to see menu options"
+                        src={userIcon}
+                      />
+                    )}
+                  </motion.div>
                 </div>
                 <ul
                   tabIndex={0}
@@ -63,12 +82,6 @@ export default function Navbar() {
                       <Link to={"/dashboard "}>Admin Dashboard</Link>
                     </li>
                   )}
-                  {/* <li>
-                    <a>Notifications</a>
-                  </li>
-                  <li>
-                    <a>My Favourite Classes</a>
-                  </li> */}
                   {user.role === "student" && (
                     <li>
                       <Link to={"/userProfile/memberships"}>

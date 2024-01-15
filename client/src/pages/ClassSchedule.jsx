@@ -41,7 +41,7 @@ export default function ClassSchedule() {
 
   //functionality to make sure to filter based on week or trainer
   const [searchParams, setSearchParams] = useSearchParams();
-  const [trainer, setTrainer] = useState("");
+  const [trainer, setTrainer] = useState();
   const [skip, setSkip] = useState(0);
   const [worktouttype, setWorkouttype] = useState("");
 
@@ -49,7 +49,11 @@ export default function ClassSchedule() {
   const handleTrainer = (e) => {
     console.log(e.target.value);
     setTrainer(e.target.value);
-    setSearchParams(`instructor=${e.target.value}`);
+    if (skip !== 0) {
+      setSearchParams(`skip=${skip}&instructor=${e.target.value}`);
+    } else {
+      setSearchParams(`instructor=${e.target.value}`);
+    }
   };
 
   // //function to take care of activitytyp /workouttype filter
@@ -63,21 +67,37 @@ export default function ClassSchedule() {
   const handleNext = () => {
     setSkip((prev) => {
       const newSkip = prev + 7;
-      setSearchParams(`skip=${prev + 7}`);
+      if (trainer) {
+        setSearchParams(`skip=${prev + 7}&instructor=${trainer}`);
+      } else {
+        setSearchParams(`skip=${prev + 7}`);
+      }
       return newSkip;
     });
   };
   const handlePrev = () => {
     setSkip((prev) => {
       const newSkip = prev - 7;
-      setSearchParams(`skip=${prev - 7}`);
+      if (trainer) {
+        setSearchParams(`skip=${prev - 7}&instructor=${trainer}`);
+      } else {
+        setSearchParams(`skip=${prev - 7}`);
+      }
       return newSkip;
     });
   };
 
   return (
     <div className="flex gap-3 flex-col items-center p-5">
-      <h1 className="text-3xl mb-6">Find your next class here</h1>
+      <h1 className="text-3xl mb-6">Find your next class here</h1>{" "}
+      {user?.role === "student" && (
+        <button
+          className=" btn-accent btn"
+          onClick={() => navigate("/membershipPlans")}
+        >
+          Get your membership
+        </button>
+      )}
       <div className="flex flex-col md:flex-row w-full gap-2 md:justify-center items-center">
         <div className="join">
           <button className="join-item btn" onClick={handlePrev}>
@@ -92,12 +112,12 @@ export default function ClassSchedule() {
         </div>
 
         <select
-          className="select select-secondary w-full max-w-xs"
+          className="select select-secondary self-start"
           onChange={handleTrainer}
           value={trainer}
         >
-          <option disabled>Pick trainer</option>
-          <option>All</option>
+          <option value="All">Pick a trainer</option>
+
           {instructors.map((instructor) => {
             return (
               <option key={instructor.firstName} value={instructor._id}>
@@ -124,7 +144,7 @@ export default function ClassSchedule() {
         </select> */}
         {user?.role === "admin" && (
           <button
-            className="text-4xl text-secondary"
+            className="text-4xl text-secondary btn btn-circle"
             onClick={() => navigate("/createActivity")}
           >
             <FaCirclePlus />

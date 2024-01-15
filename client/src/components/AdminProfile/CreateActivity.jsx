@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import axios from "axios";
 import axiosClient from "../../api/axiosClient";
+import { FaArrowLeft } from "react-icons/fa6";
+import { useState, useEffect } from "react";
 
 export default function CreateActivity() {
   const activityTypes = useLoaderData();
+  const navigate = useNavigate();
   console.log(activityTypes);
   const {
     register,
@@ -12,6 +15,22 @@ export default function CreateActivity() {
     watch,
     formState: { errors },
   } = useForm();
+
+  //getting the instructors to map over them
+  const [instructors, setInstructors] = useState([]);
+
+  useEffect(() => {
+    axiosClient
+      .get("/instructors")
+      .then((response) => {
+        console.log(response.data);
+        setInstructors(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  console.log(instructors);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -43,9 +62,16 @@ export default function CreateActivity() {
   //TO DO: show example of activity details while creating the activity? - Preview mode
 
   return (
-    <>
+    <div className="flex justify-center items-start">
+      {" "}
+      <button
+        onClick={() => navigate(-1)}
+        className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
+      >
+        <FaArrowLeft />
+      </button>
       <div className="flex flex-col items-center justify-center ">
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full ">
+        <div className="bg-white p-8 rounded-lg shadow-lg w-full ">
           <div className="flex justify-center mb-6"></div>
           <h2 className="text-2xl font-semibold text-center mb-4">
             Create a new Activity
@@ -100,13 +126,24 @@ export default function CreateActivity() {
                 >
                   Instructor
                 </label>
-                <input
-                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                <select
+                  className="select select-secondary w-full max-w-xs"
                   {...register("instructor", {
                     required: "Instructor is required",
                   })}
-                  placeholder="Instructor"
-                />
+                >
+                  <option disabled selected>
+                    Instructor
+                  </option>
+                  {instructors.map((instructor) => {
+                    return (
+                      <option key={instructor.firstName} value={instructor._id}>
+                        {instructor.firstName}
+                      </option>
+                    );
+                  })}
+                </select>
+
                 {errors.instructor?.type === "required" && (
                   <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                     {errors.instructor.message}
@@ -224,15 +261,9 @@ export default function CreateActivity() {
             >
               Create
             </button>
-            <button
-              onClick={() => navigate("/userProfile/details")}
-              className="w-full btn btn-neutral text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-            >
-              Go back
-            </button>
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }

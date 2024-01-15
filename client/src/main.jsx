@@ -35,6 +35,7 @@ import Rootlayout from "./layout/Rootlayout";
 import EditActivity from "./components/AdminProfile/EditActivity.jsx";
 import EditActivityType from "./components/AdminProfile/EditActivityType.jsx";
 import ErrorPage from "./pages/errors/ErrorPage";
+import UploadAvatar from "./components/UserProfile/UploadAvatar";
 
 const router = createBrowserRouter([
   { path: "/landingpage", element: <Landingpage /> },
@@ -91,7 +92,10 @@ const router = createBrowserRouter([
                 path: "userProfile/details/update",
                 element: <UserUpdateInformation />,
               },
-
+              {
+                path: "userProfile/details/upload/:id",
+                element: <UploadAvatar />,
+              },
               {
                 path: "",
                 element: <Authorize role={"admin"} />,
