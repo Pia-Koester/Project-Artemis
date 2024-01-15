@@ -25,7 +25,7 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
 
   //change color of card based on if the time and day have already passed
   const today = new Date();
-  console.log(startTime)
+
   const [past, setPast] = useState(startTime < today);
 
   //open Slots for capacity badge
@@ -35,7 +35,6 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
 
   //getting user info to check if class is booked or not
   const { user } = useContext(AuthContext);
-  console.log(activity.instructor);
 
   return (
     <motion.div

@@ -45,16 +45,12 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     },
   };
 
-  const queryParams = { instructor, type }; //TO DO: put back type to be able to filter for it
+  const queryParams = { instructor, type };
 
   for (const key of Object.keys(queryParams)) {
     const value = queryParams[key];
     if (value !== undefined) {
-      // if (key === "type") {
-      //   filter["type._id"] = value;
-      // } else {
       filter[key] = value;
-      // }
     }
   }
   console.log(filter);

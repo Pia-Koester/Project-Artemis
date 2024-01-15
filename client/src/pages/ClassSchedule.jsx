@@ -18,7 +18,6 @@ export default function ClassSchedule() {
     axiosClient
       .get("/instructors")
       .then((response) => {
-        console.log(response.data);
         setInstructors(response.data);
       })
       .catch((error) => {
@@ -29,7 +28,6 @@ export default function ClassSchedule() {
     axiosClient
       .get("/activityTypes")
       .then((response) => {
-        console.log(response.data);
         setActivitytypes(response.data);
       })
       .catch((error) => {
@@ -74,7 +72,8 @@ export default function ClassSchedule() {
       setSearchParams(`type=${e.target.value}`);
     }
   };
-  console.log(activitytypes);
+  console.log("workouttype", worktouttype);
+
   //pagination based on week logic
   const handleNext = () => {
     setSkip((prev) => {
@@ -92,6 +91,8 @@ export default function ClassSchedule() {
       const newSkip = prev - 7;
       if (trainer) {
         setSearchParams(`skip=${prev - 7}&instructor=${trainer}`);
+      } else if (worktouttype) {
+        `skip=${prev - 7}&type=${worktouttype}`;
       } else {
         setSearchParams(`skip=${prev - 7}`);
       }
@@ -128,7 +129,7 @@ export default function ClassSchedule() {
           onChange={handleTrainer}
           value={trainer}
         >
-          <option value="All">Pick a trainer</option>
+          <option value="All">Pick a Trainer</option>
 
           {instructors.map((instructor) => {
             return (
@@ -139,14 +140,11 @@ export default function ClassSchedule() {
           })}
         </select>
         <select
-          className="select select-secondary w-full max-w-xs"
+          className="select select-secondary self-start"
           onChange={handleType}
           value={worktouttype}
         >
-          <option selected disabled>
-            Pick Class
-          </option>
-          <option>All</option>
+          <option value="All"> Pick Activity Type</option>
           {activitytypes.map((type) => {
             return (
               <option key={type._id} value={type._id}>

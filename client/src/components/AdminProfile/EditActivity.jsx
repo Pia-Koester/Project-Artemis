@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 export default function EditActivity({ activity, hideBackButton }) {
   const { id } = useParams();
-  console.log(hideBackButton);
+
   const navigate = useNavigate();
 
   const [instructors, setInstructors] = useState([]);
@@ -16,14 +16,12 @@ export default function EditActivity({ activity, hideBackButton }) {
     axiosClient
       .get("/instructors")
       .then((response) => {
-        console.log(response.data);
         setInstructors(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-  console.log(instructors);
 
   const {
     register,

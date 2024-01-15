@@ -25,7 +25,7 @@ const getActivities = async ({ request }) => {
       queryParams.instructor = instructor;
     }
 
-    if (type !== null && type !== undefined) {
+    if (type !== null && type !== undefined && type !== "All") {
       queryParams.type = type;
     }
 
