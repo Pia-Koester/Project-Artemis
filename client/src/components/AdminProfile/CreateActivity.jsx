@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import axios from "axios";
 import axiosClient from "../../api/axiosClient";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useState, useEffect } from "react";
@@ -49,7 +48,7 @@ export default function CreateActivity() {
     console.log(data);
 
     axiosClient
-      .post("http://localhost:8080/activities", data)
+      .post("/activities", data)
       .then((response) => {
         console.log(response.data);
       })

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import MembershipInformationCard from "./MembershipInformationCard";
 import { Link } from "react-router-dom";
+import axiosClient from "../../api/axiosClient";
 
 export default function MembershipsOverview() {
   const [memberships, setMemberships] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/plan", { withCredentials: true })
+    axiosClient
+      .get("/plan")
       .then((response) => {
         setMemberships(response.data);
         console.log(response.data);

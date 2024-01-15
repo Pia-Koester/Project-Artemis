@@ -1,17 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import axiosClient from "../../api/axiosClient";
 
 export default function MembershipInformationCard({ membership }) {
   const modalRef = useRef(null);
   const navigate = useNavigate();
 
   const deleteMembership = () => {
-    axios
-      .delete(`http://localhost:8080/plan/delete/${membership._id}`, {
-        withCredentials: true,
-      })
+    axiosClient
+      .delete(`/plan/delete/${membership._id}`)
       .then((response) => {
         closeModal();
         notify();

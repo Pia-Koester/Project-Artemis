@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import UserCard from "./UserCard";
-import axios from "axios";
+import axiosClient from "../../api/axiosClient";
 
 export default function UsersOverview() {
-  const [users, setUsers] = useState(null)
+  const [users, setUsers] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/users", {
-        withCredentials: true,
-      })
+    axiosClient
+      .get("/users")
       .then((response) => {
         setUsers(response.data);
         console.log(response.data);

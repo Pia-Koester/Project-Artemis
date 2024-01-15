@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosClient from "../../api/axiosClient";
 
 export default function SingleUserInformation() {
   const { id } = useParams();
@@ -8,8 +8,8 @@ export default function SingleUserInformation() {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/users/${id}`, { withCredentials: true })
+    axiosClient
+      .get(`/users/${id}`)
       .then((response) => {
         setUser(response.data);
         console.log(response.data);
@@ -122,7 +122,7 @@ export default function SingleUserInformation() {
                 </dd>
               </div>
               <div className="collapse bg-base-200">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <div className="collapse-title grid grid-cols-2 text-xl font-medium bg-white">
                   View registered classes of the user
                 </div>
@@ -147,8 +147,7 @@ export default function SingleUserInformation() {
         </div>
       )}
 
-
-            <div className="text-center">
+      <div className="text-center">
         <Link
           to={`/userProfile/usersOverview/${id}/update`}
           className="btn btn-primary mt-5 mb-3 mr-4"

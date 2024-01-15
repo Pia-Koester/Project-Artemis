@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axiosClient from "../../api/axiosClient";
 
 export default function EditMembershipInformation() {
   const navigate = useNavigate();
@@ -9,8 +10,8 @@ export default function EditMembershipInformation() {
   const [singleMembershipPlan, setSingleMembershipPlan] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/plan/${id}`, { withCredentials: true })
+    axiosClient
+      .get(`plan/${id}`)
       .then((response) => {
         setSingleMembershipPlan(response.data);
         console.log(response.data);
@@ -28,10 +29,8 @@ export default function EditMembershipInformation() {
   } = useForm();
 
   const onSubmit = (data) => {
-    axios
-      .put(`http://localhost:8080/plan/update/${id}`, data, {
-        withCredentials: true,
-      })
+    axiosClient
+      .put(`/plan/update/${id}`, data)
       .then((response) => {
         console.log(response.data);
         navigate("/userProfile/membershipsOverview/");

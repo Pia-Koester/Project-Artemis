@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import userIcon from "../../assets/logos/avatar.jpg";
+import axiosClient from "../../api/axiosClient";
 
 export default function EditUserInformation() {
   const { id } = useParams();
@@ -11,8 +11,8 @@ export default function EditUserInformation() {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/users/${id}`, { withCredentials: true })
+    axiosClient
+      .get(`/users/${id}`)
       .then((response) => {
         setUser(response.data);
         console.log(response.data);
@@ -30,10 +30,8 @@ export default function EditUserInformation() {
   } = useForm();
 
   const onSubmit = (data) => {
-    axios
-      .put(`http://localhost:8080/users/${id}/update`, data, {
-        withCredentials: true,
-      })
+    axiosClient
+      .put(`/users/${id}/update`, data)
       .then((response) => {
         console.log(response.data);
         navigate(`/userProfile/usersOverview/${id}`);

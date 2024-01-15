@@ -70,7 +70,6 @@ export default function EditActivity({ activity, hideBackButton }) {
       })
       .catch((error) => {
         console.log(error);
-        setUser(null);
       });
   };
 
@@ -158,8 +157,8 @@ export default function EditActivity({ activity, hideBackButton }) {
                     required: "Instructor is required",
                   })}
                 >
-                  <option disabled selected>
-                    Instructor
+                  <option disabled selected value={activity.instructor._id}>
+                    {activity.instructor.firstName}
                   </option>
                   {instructors.map((instructor) => {
                     return (

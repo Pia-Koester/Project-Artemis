@@ -1,8 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import UserCard from "./UserCard";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosClient from "../../api/axiosClient";
 export default function Dashboard() {
   const { id } = useParams();
 
@@ -14,10 +14,8 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/users", {
-        withCredentials: true,
-      })
+    axiosClient
+      .get("/users")
       .then((response) => {
         setUsers(response.data);
         console.log(response.data);
@@ -26,8 +24,8 @@ export default function Dashboard() {
         console.log(err);
       });
 
-    axios
-      .get("http://localhost:8080/plan", { withCredentials: true })
+    axiosClient
+      .get("/plan")
       .then((response) => {
         setMemberships(response.data);
         console.log(response.data);
@@ -36,8 +34,8 @@ export default function Dashboard() {
         console.log(err);
       });
 
-    axios
-      .get("http://localhost:8080/activityTypes", { withCredentials: true })
+    axiosClient
+      .get("/activityTypes")
       .then((response) => {
         setType(response.data);
         console.log(response.data);
@@ -46,8 +44,8 @@ export default function Dashboard() {
         console.log(err);
       });
 
-    axios
-      .get("http://localhost:8080/activities", { withCredentials: true })
+    axiosClient
+      .get("/activities")
       .then((response) => {
         setActivities(response.data);
         console.log(response.data);

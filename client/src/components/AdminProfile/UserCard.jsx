@@ -1,16 +1,14 @@
 import userIcon from "../../assets/logos/avatar.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { motion } from "framer-motion";
+import axiosClient from "../../api/axiosClient";
 
 export default function UserCard({ user }) {
   const navigate = useNavigate();
 
   const deleteUser = async () => {
-    axios
-      .delete(`http://localhost:8080/users/${user._id}`, {
-        withCredentials: true,
-      })
+    axiosClient
+      .delete(`/users/${user._id}`)
       .then((response) => {
         //To do replace function with something better
         window.location.reload();
