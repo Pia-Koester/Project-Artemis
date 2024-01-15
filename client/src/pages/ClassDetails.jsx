@@ -6,7 +6,7 @@ import {
   FaArrowLeft,
   FaCalendarPlus,
 } from "react-icons/fa6";
-import { useNavigate, useParams, useRevalidator } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import { handleCancelation } from "../api/cancelationAcitvity";
 import { useState, useContext } from "react";
@@ -29,8 +29,6 @@ export default function ClassDetails() {
     activity.capacity - activity.registeredUsers.length
   );
 
-  const revalidator = useRevalidator();
-
   const navigate = useNavigate();
 
   const handleBooking = () => {
@@ -43,18 +41,7 @@ export default function ClassDetails() {
         );
         setShowcalendarbutton(true);
         notify();
-        setUser((prev) => {
-          return {
-            ...prev,
-            classesRegistered: [
-              ...prev.classesRegistered,
-              response.data.activity,
-            ],
-            activeMembership: response.data.user.activeMembership,
-          };
-        });
-        revalidator.revalidate();
-        // console.log("Data from api", response);
+        setUser(response.data.user);
       })
       .catch((err) => {
         console.log(err.response.status);

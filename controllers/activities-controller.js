@@ -19,8 +19,8 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
   //defining the weekdays for different filter functions
   const start = new Date(startTime);
-  const options = { weekday: "long" };
-  const weekday = new Intl.DateTimeFormat("en-En", options).format(start);
+  const options = { weekday: "long", timeZone: "UTC" };
+  const weekday = new Intl.DateTimeFormat("en-En", options).format(start); //TO DO:
 
   const activity = await Activity.create({
     title,
@@ -38,7 +38,7 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun, type } = req.query;
   console.log(instructor);
-  
+
   if (!mon && !sun) {
     const activities = await Activity.find({})
       .populate("type")
@@ -48,7 +48,7 @@ const getActivities = asyncWrapper(async (req, res, next) => {
       });
     res.json(activities);
   }
-  
+
   let filter = {
     startTime: {
       $gte: new Date(mon),
@@ -65,8 +65,6 @@ const getActivities = asyncWrapper(async (req, res, next) => {
     }
   }
   console.log(filter);
-
-
 
   const activities = await Activity.find(filter)
     .populate("type")
