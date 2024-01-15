@@ -1,3 +1,4 @@
+
 require("./db.js");
 const express = require("express");
 const cors = require("cors");
@@ -39,5 +40,5 @@ app.use("/instructors", instructorRouter);
 app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log(`Example app listening on http://localhost:${port}`);
-});
+  console.log(`Example app listening on http://localhost:${port}`)
+})
