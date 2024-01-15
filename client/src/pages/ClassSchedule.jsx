@@ -10,7 +10,6 @@ export default function ClassSchedule() {
   const response = useLoaderData();
   const activities = response.activities;
   const { user } = useContext(AuthContext);
-  const activitytypes = response.activitytypes;
   const navigate = useNavigate();
   const [instructors, setInstructors] = useState([]);
 
@@ -25,6 +24,16 @@ export default function ClassSchedule() {
       .catch((error) => {
         console.log(error);
         setUser(null);
+      });
+
+    axiosClient
+      .get("/activityTypes")
+      .then((response) => {
+        console.log(response.data);
+        setActivitytypes(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }, []);
 
@@ -47,7 +56,6 @@ export default function ClassSchedule() {
 
   //function to take care of trainer filter
   const handleTrainer = (e) => {
-    console.log(e.target.value);
     setTrainer(e.target.value);
     if (skip !== 0) {
       setSearchParams(`skip=${skip}&instructor=${e.target.value}`);
@@ -56,13 +64,17 @@ export default function ClassSchedule() {
     }
   };
 
-  // //function to take care of activitytyp /workouttype filter
-  // const handleType = (e) => {
-  //   setWorkouttype(e.target.value);
-  //   setTrainer("");
-  //   setSearchParams(`type=${e.target.value}`);
-  // };
-
+  //function to take care of activitytyp /workouttype filter
+  const [activitytypes, setActivitytypes] = useState([]);
+  const handleType = (e) => {
+    setWorkouttype(e.target.value);
+    if (skip !== 0) {
+      setSearchParams(`skip=${skip}&type=${e.target.value}`);
+    } else {
+      setSearchParams(`type=${e.target.value}`);
+    }
+  };
+  console.log(activitytypes);
   //pagination based on week logic
   const handleNext = () => {
     setSkip((prev) => {
@@ -126,7 +138,7 @@ export default function ClassSchedule() {
             );
           })}
         </select>
-        {/* <select
+        <select
           className="select select-secondary w-full max-w-xs"
           onChange={handleType}
           value={worktouttype}
@@ -136,12 +148,13 @@ export default function ClassSchedule() {
           </option>
           <option>All</option>
           {activitytypes.map((type) => {
-            if (!type) {
-              return;
-            }
-            return <option>{type}</option>;
+            return (
+              <option key={type._id} value={type._id}>
+                {type.type.charAt(0).toUpperCase() + type.type.slice(1)}
+              </option>
+            );
           })}
-        </select> */}
+        </select>
         {user?.role === "admin" && (
           <button
             className="text-4xl text-secondary btn btn-circle"
