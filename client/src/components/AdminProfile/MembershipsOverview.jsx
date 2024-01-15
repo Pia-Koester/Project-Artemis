@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import MembershipInformationCard from "./MembershipInformationCard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function MembershipsOverview() {
   const [memberships, setMemberships] = useState(null);
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     axiosClient
@@ -19,14 +22,28 @@ export default function MembershipsOverview() {
   }, []);
 
   return (
+    <div className="flex justify-center">
+          <button
+          className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
+          onClick={() => navigate("/dashboard")}
+        >
+          <FaArrowLeft />
+        </button>
     <div className="flex flex-col items-center justify-center">
+      
+      <div className="flex justify-between">
+
       <div className="flex flex-col items-center justify-center px-4 py-3 sm:px-6">
+        
+     
         <h3 className="text-lg leading-6 font-medium text-gray-900">
           Membership plan overview
         </h3>
         <p className="mt-1 max-w-2xl text-sm text-gray-500">
           Details and informations about membership plans
         </p>
+      </div>
+
       </div>
       <Link
         to={"/userProfile/createMembership"}
@@ -48,5 +65,7 @@ export default function MembershipsOverview() {
         })
       )}
     </div>
+    </div>
+
   );
 }
