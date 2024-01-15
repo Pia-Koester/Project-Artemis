@@ -10,7 +10,6 @@ export default function ClassSchedule() {
   const response = useLoaderData();
   const activities = response.activities;
   const { user } = useContext(AuthContext);
-  const activitytypes = response.activitytypes;
   const navigate = useNavigate();
   const [instructors, setInstructors] = useState([]);
 
@@ -19,12 +18,20 @@ export default function ClassSchedule() {
     axiosClient
       .get("/instructors")
       .then((response) => {
-        console.log(response.data);
         setInstructors(response.data);
       })
       .catch((error) => {
         console.log(error);
         setUser(null);
+      });
+
+    axiosClient
+      .get("/activityTypes")
+      .then((response) => {
+        setActivitytypes(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }, []);
 
@@ -47,7 +54,6 @@ export default function ClassSchedule() {
 
   //function to take care of trainer filter
   const handleTrainer = (e) => {
-    console.log(e.target.value);
     setTrainer(e.target.value);
     if (skip !== 0) {
       setSearchParams(`skip=${skip}&instructor=${e.target.value}`);
@@ -56,12 +62,17 @@ export default function ClassSchedule() {
     }
   };
 
-  // //function to take care of activitytyp /workouttype filter
-  // const handleType = (e) => {
-  //   setWorkouttype(e.target.value);
-  //   setTrainer("");
-  //   setSearchParams(`type=${e.target.value}`);
-  // };
+  //function to take care of activitytyp /workouttype filter
+  const [activitytypes, setActivitytypes] = useState([]);
+  const handleType = (e) => {
+    setWorkouttype(e.target.value);
+    if (skip !== 0) {
+      setSearchParams(`skip=${skip}&type=${e.target.value}`);
+    } else {
+      setSearchParams(`type=${e.target.value}`);
+    }
+  };
+  console.log("workouttype", worktouttype);
 
   //pagination based on week logic
   const handleNext = () => {
@@ -80,6 +91,8 @@ export default function ClassSchedule() {
       const newSkip = prev - 7;
       if (trainer) {
         setSearchParams(`skip=${prev - 7}&instructor=${trainer}`);
+      } else if (worktouttype) {
+        `skip=${prev - 7}&type=${worktouttype}`;
       } else {
         setSearchParams(`skip=${prev - 7}`);
       }
@@ -116,7 +129,7 @@ export default function ClassSchedule() {
           onChange={handleTrainer}
           value={trainer}
         >
-          <option value="All">Pick a trainer</option>
+          <option value="All">Pick a Trainer</option>
 
           {instructors.map((instructor) => {
             return (
@@ -126,22 +139,20 @@ export default function ClassSchedule() {
             );
           })}
         </select>
-        {/* <select
-          className="select select-secondary w-full max-w-xs"
+        <select
+          className="select select-secondary self-start"
           onChange={handleType}
           value={worktouttype}
         >
-          <option selected disabled>
-            Pick Class
-          </option>
-          <option>All</option>
+          <option value="All"> Pick Activity Type</option>
           {activitytypes.map((type) => {
-            if (!type) {
-              return;
-            }
-            return <option>{type}</option>;
+            return (
+              <option key={type._id} value={type._id}>
+                {type.type.charAt(0).toUpperCase() + type.type.slice(1)}
+              </option>
+            );
           })}
-        </select> */}
+        </select>
         {user?.role === "admin" && (
           <button
             className="text-4xl text-secondary btn btn-circle"

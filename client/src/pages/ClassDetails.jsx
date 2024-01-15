@@ -228,15 +228,20 @@ export default function ClassDetails() {
                       Book Now
                     </button>
                   ) : (
-                    <button
-                      className="btn btn-secondary mr-3 self-center mt-2"
-                      onClick={() =>
-                        document.getElementById("my_modal_1").showModal()
-                      }
-                      disabled={openSlots <= 0}
-                    >
-                      Cancel Booking
-                    </button>
+                    <>
+                      <button
+                        className="btn btn-secondary mr-3 self-center mt-2"
+                        onClick={() =>
+                          document.getElementById("my_modal_1").showModal()
+                        }
+                        disabled={openSlots <= 0}
+                      >
+                        Cancel Booking
+                      </button>{" "}
+                      <button className="btn btn-square btn-outline">
+                        <FaCalendarPlus />
+                      </button>
+                    </>
                   )}
                 </>
               )}{" "}
@@ -246,11 +251,6 @@ export default function ClassDetails() {
                   disabled={openSlots > 0}
                 >
                   Waitlist
-                </button>
-              )}
-              {showcalendarbutton && (
-                <button className="btn btn-square btn-outline">
-                  <FaCalendarPlus />
                 </button>
               )}
             </div>
