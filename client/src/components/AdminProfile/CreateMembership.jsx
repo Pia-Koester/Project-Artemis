@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axiosClient from "../../api/axiosClient";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function CreateMembership() {
   const navigate = useNavigate();
@@ -28,7 +29,16 @@ export default function CreateMembership() {
   };
   return (
     <>
+     <div className="flex justify-center items-start">
+      {" "}
+      <button
+        onClick={() => navigate(-1)}
+        className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
+      >
+        <FaArrowLeft />
+      </button>
       <div className="flex flex-col items-center justify-center">
+        
         <div className="bg-gray-100 w-96 flex items-center justify-center">
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
             <h2 className="text-2xl font-semibold text-center mb-4">
@@ -129,15 +139,10 @@ export default function CreateMembership() {
               >
                 Create
               </button>
-              <button
-                onClick={() => navigate("/userProfile/membershipsOverview")}
-                className="w-full btn  btn-neutral text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              >
-                Go back
-              </button>
             </form>
           </div>
         </div>
+      </div>
       </div>
     </>
   );
