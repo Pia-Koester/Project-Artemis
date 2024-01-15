@@ -49,7 +49,7 @@ export default function SingleUserInformation() {
   return (
     <>
       {!user ? (
-        <p>Loading....</p>
+        <span className="loading loading-dots loading-lg"></span>
       ) : (
         <div className="bg-white max-w-3xl shadow overflow-hidden sm:rounded-lg mt-7 mx-auto">
           <div className="px-4 py-5 sm:px-6">

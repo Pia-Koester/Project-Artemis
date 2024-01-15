@@ -22,12 +22,12 @@ export default function UserUpdateInformation() {
   };
 
   const formatedDate = user?.dateOfBirth.split("T")[0];
-  console.log(formatedDate)
+  console.log(formatedDate);
 
   return (
     <>
       {!user ? (
-        <p>Loading...</p>
+        <span className="loading loading-dots loading-lg"></span>
       ) : (
         <div className="flex flex-col items-center justify-center">
           <div className="bg-gray-100 w-96 flex items-center justify-center">
@@ -170,14 +170,13 @@ export default function UserUpdateInformation() {
                 >
                   Update
                 </button>
-
               </form>
               <button
-                  onClick={() => navigate(-1)} //we do not go back with -1 because it leads to flickering
-                  className="w-full btn btn-neutral text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                >
-                  Go back
-                </button>
+                onClick={() => navigate(-1)} //we do not go back with -1 because it leads to flickering
+                className="w-full btn btn-neutral text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                Go back
+              </button>
             </div>
           </div>
         </div>

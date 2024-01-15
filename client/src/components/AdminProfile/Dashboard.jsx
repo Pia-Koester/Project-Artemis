@@ -226,7 +226,7 @@ export default function Dashboard() {
                         </tr>
                       </thead>
                       {!memberships ? (
-                        <p>Loading...</p>
+                        <span className="loading loading-dots loading-lg"></span>
                       ) : (
                         memberships.map((membership) => {
                           return (
@@ -289,7 +289,7 @@ export default function Dashboard() {
                         </tr>
                       </thead>
                       {!type ? (
-                        <p>Loading...</p>
+                        <span className="loading loading-dots loading-lg"></span>
                       ) : (
                         type.map((type) => {
                           return (
@@ -335,7 +335,7 @@ export default function Dashboard() {
                       </tr>
                     </thead>
                     {!activities ? (
-                      <p>Loading...</p>
+                      <span className="loading loading-dots loading-lg"></span>
                     ) : (
                       activities.map((activity) => {
                         const getStartDate = activity.startTime;
@@ -407,7 +407,7 @@ export default function Dashboard() {
                   </thead>
 
                   {!users ? (
-                    <p>Loading...</p>
+                    <span className="loading loading-dots loading-lg text-center"></span>
                   ) : (
                     users.map((user) => {
                       return (
@@ -418,7 +418,10 @@ export default function Dashboard() {
                 </table>
               </div>
               <div class="text-right mt-4">
-                <Link to={"/userProfile/usersOverview"} class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/8 mb-2">
+                <Link
+                  to={"/userProfile/usersOverview"}
+                  class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/8 mb-2"
+                >
                   View More
                 </Link>
               </div>

@@ -34,7 +34,7 @@ export default function UsersOverview() {
           </thead>
 
           {!users ? (
-            <p>Loading...</p>
+            <span className="loading loading-dots loading-lg"></span>
           ) : (
             users.map((user) => {
               return <UserCard key={user._id} user={user} id={user._id} />;

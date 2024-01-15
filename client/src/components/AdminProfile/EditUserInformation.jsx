@@ -46,7 +46,7 @@ export default function EditUserInformation() {
   return (
     <>
       {!user ? (
-        <p>Loading...</p>
+        <span className="loading loading-dots loading-lg"></span>
       ) : (
         <div className="flex flex-col items-center justify-center">
           <div className="bg-gray-100 w-96 flex items-center justify-center">
