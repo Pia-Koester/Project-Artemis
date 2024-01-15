@@ -2,8 +2,12 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axiosClient from "../../api/axiosClient";
 import { FaArrowLeft } from "react-icons/fa6";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateActivityType() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -46,15 +50,46 @@ export default function CreateActivityType() {
       .then((response) => {
         console.log(response.data);
         setMultipleImages([]);
+        notify();
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 3000);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  return (
+  const notify = () =>
+    toast.success(
+      "--Creation Successful-- Redirecting to the admin dashboard",
+      {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
 
+  return (
     <div className="flex flex-col items-center justify-center">
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       <div className="bg-gray-100 w-96 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
           <div className="flex justify-center mb-6"></div>
@@ -112,6 +147,5 @@ export default function CreateActivityType() {
         </div>
       </div>
     </div>
-
   );
 }
