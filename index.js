@@ -1,7 +1,7 @@
-
 require("./db.js");
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
@@ -29,16 +29,21 @@ app.use(cookieParser());
 app.use(express.json({ limit: "200kb" }));
 //app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false })); // this is an idea coming from stackoverflow
+app.use(express.static(path.resolve(__dirname, "client", "dist")));
 
-app.use("/", userRouter);
-app.use("/activities", activityRouter);
-app.use("/plan", membershipPlanRouter);
-app.use("/memberships", userMembershipRouter);
-app.use("/activityTypes", typeRouter);
-app.use("/instructors", instructorRouter);
+app.use("/api", userRouter);
+app.use("/api/activities", activityRouter);
+app.use("/api/plan", membershipPlanRouter);
+app.use("/api/memberships", userMembershipRouter);
+app.use("/api/activityTypes", typeRouter);
+app.use("/api/instructors", instructorRouter);
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log(`Example app listening on http://localhost:${port}`)
-})
+  console.log(`Example app listening on http://localhost:${port}`);
+});

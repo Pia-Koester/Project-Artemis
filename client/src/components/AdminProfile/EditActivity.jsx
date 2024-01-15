@@ -60,7 +60,7 @@ export default function EditActivity({ activity, hideBackButton }) {
     // data.type = activityTypes[index]._id;
 
     axiosClient
-      .put(`http://localhost:8080/activities/admin/${activity._id}`, data)
+      .put(`/activities/admin/${activity._id}`, data)
       .then((response) => {
         notify();
         setTimeout(() => {
