@@ -14,7 +14,11 @@ export default function Navbar() {
         <div className="navbar bg-base-100 px-10 py-3">
           <div className="flex-1">
             <NavLink to={"/"}>
-              <img className="btn btn-ghost w-full" src={navLogo} alt="home" />
+              <img
+                className="btn btn-lg btn-ghost w-full"
+                src={navLogo}
+                alt="home"
+              />
             </NavLink>
           </div>
 

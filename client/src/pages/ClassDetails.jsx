@@ -4,6 +4,7 @@ import {
   FaPersonDress,
   FaLocationDot,
   FaArrowLeft,
+  FaCalendarPlus,
 } from "react-icons/fa6";
 import { useNavigate, useParams, useRevalidator } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
@@ -44,6 +45,7 @@ export default function ClassDetails() {
           response.data.activity.capacity -
             response.data.activity.registeredUsers.length
         );
+        setShowcalendarbutton(true);
         notify();
         setUser((prev) => {
           return {
@@ -118,7 +120,7 @@ export default function ClassDetails() {
   //TO DO: upload images for all types and create more types
 
   // check if user is admin
-  const isAdmin = user && user.role === "admin";
+  const [showcalendarbutton, setShowcalendarbutton] = useState(false);
 
   return (
     <>
@@ -244,6 +246,11 @@ export default function ClassDetails() {
                   disabled={openSlots > 0}
                 >
                   Waitlist
+                </button>
+              )}
+              {showcalendarbutton && (
+                <button className="btn btn-square btn-outline">
+                  <FaCalendarPlus />
                 </button>
               )}
             </div>
@@ -432,10 +439,10 @@ export default function ClassDetails() {
                             <th>
                               <div className="avatar">
                                 <div className="w-16 rounded-full">
-                                  {user.image?.url ? (
+                                  {student.image?.url ? (
                                     <img
                                       alt="User Icon - click to see menu options"
-                                      src={user.image?.url}
+                                      src={student.image?.url}
                                       className="w-full h-full object-cover rounded-full"
                                     />
                                   ) : (
