@@ -1,14 +1,17 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../api/axiosClient";
 import { useState } from "react";
 import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Registration() {
   const [step, setStep] = useState(1);
   const [loginInfo, setLoginInfo] = useState();
   const [personalInfo, setPersonalInfo] = useState();
+
+  const navigate = useNavigate()
 
   const {
     register,
@@ -41,12 +44,28 @@ export default function Registration() {
     axiosClient
       .post("signup", data)
       .then((response) => {
-        console.log("Data from api", response.data);
+        // console.log("Data from api", response.data);
+        notify();
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const notify = () =>
+  toast.success("--Registration Successful-- Redirecting to the login screen", {
+    position: "top-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
 
   //TO DO: split registration into first only asking for mail and password and then onboarding on different screen
   // const handleFormSteps = () => {
@@ -74,6 +93,20 @@ export default function Registration() {
 
   return (
     <AnimatePresence>
+                <ToastContainer
+            position="top-center"
+            autoClose={1500}
+            limit={1}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover={false}
+            theme="light"
+          />
+
       <div>
         <div className="flex justify-center items-center">
           <div className="flex flex-col items-center justify-center w-4/12 p-4 h-100 ">
