@@ -5,6 +5,7 @@ import { AuthContext } from "../components/context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
 import axiosClient from "../api/axiosClient.jsx";
+import clsx from "clsx";
 
 export default function ClassSchedule() {
   const response = useLoaderData();
@@ -12,6 +13,7 @@ export default function ClassSchedule() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [instructors, setInstructors] = useState([]);
+  console.log(response);
 
   //Instructor getting for filter
   useEffect(() => {
@@ -72,7 +74,6 @@ export default function ClassSchedule() {
       setSearchParams(`type=${e.target.value}`);
     }
   };
-  console.log("workouttype", worktouttype);
 
   //pagination based on week logic
   const handleNext = () => {
@@ -103,16 +104,8 @@ export default function ClassSchedule() {
   return (
     <div className="flex gap-3 flex-col items-center p-5">
       <h1 className="text-3xl mb-6">Find your next class here</h1>{" "}
-      {user?.role === "student" && (
-        <button
-          className=" btn-accent btn"
-          onClick={() => navigate("/membershipPlans")}
-        >
-          Get your membership
-        </button>
-      )}
       <div className="flex flex-col md:flex-row w-full gap-2 md:justify-center items-center">
-        <div className="join">
+        <div className="join ml-auto">
           <button className="join-item btn" onClick={handlePrev}>
             «
           </button>
@@ -153,39 +146,54 @@ export default function ClassSchedule() {
             );
           })}
         </select>
-        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                Available
-            </span>
+
         {user?.role === "admin" && (
           <button
-            className="text-4xl text-secondary btn btn-circle"
+            className="text-4xl text-secondary btn btn-circle mr-auto"
             onClick={() => navigate("/createActivity")}
           >
             <FaCirclePlus />
           </button>
         )}
+        {user?.role === "student" && (
+          <button
+            className=" btn-primary btn btn-outline ml-auto"
+            onClick={() => navigate("/membershipPlans")}
+          >
+            Get your membership <span className="underline">now</span>!
+          </button>
+        )}
       </div>
-      <div className="grid lg:grid-cols-7 grid-cols-1 gap-4 md:w-full">
-        {weekdays.map((day) => {
-          return (
-            <div className="flex flex-col gap-2 items-center" key={day}>
-              <h3>{day}</h3>
-              {activities[day.toLowerCase()]?.map((activity) => {
-                return (
-                  <ActivityCard
-                    activity={activity}
-                    key={activity._id}
-                    role={user?.role}
-                    isBooked={activity.registeredUsers.includes(user?._id)}
-                    // TO DO: check the classesRegistered Array for the activity._id
-                  />
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
+      {Object.keys(activities).length === 0 ? (
+        <div className="flex justify-center items-center w-full h-96 flex-col">
+          <h2 className="text-2xl">New Classes Coming Soon</h2>
+          <img
+            src="https://res.cloudinary.com/ddj2xpjki/image/upload/v1704646941/Zeus/07081919_1_uakasm.jpg"
+            className="w-96 rounded-md"
+          />
+        </div>
+      ) : (
+        <div className="grid lg:grid-cols-7 grid-cols-1 gap-4 md:w-full">
+          {weekdays.map((day) => {
+            return (
+              <div className="flex flex-col gap-2 items-center" key={day}>
+                <h3>{day}</h3>
+
+                {activities[day.toLowerCase()]?.map((activity) => {
+                  return (
+                    <ActivityCard
+                      activity={activity}
+                      key={activity._id}
+                      role={user?.role}
+                      isBooked={activity.registeredUsers.includes(user?._id)}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

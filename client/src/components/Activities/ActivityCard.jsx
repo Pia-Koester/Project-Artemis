@@ -40,10 +40,10 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
     <motion.div
       whileHover={past ? {} : { scale: 1.1 }}
       className={clsx(
-        "card  w-full  text-primary-content flex flex-col shadow-lg",
-        past && "opacity-40 bg-primary ",
-        isBooked && "bg-gradient-to-r from-success to-[#3fea8c]",
-        !past && !isBooked && "bg-gradient-to-r from-primary to-[#7ddaf2] "
+        "card  w-full  text-primary-content flex flex-col shadow-lg bg-gradient-to-r from-primary to-[#7ddaf2]"
+        // past && "opacity-40 bg-primary ",
+        // isBooked && "bg-gradient-to-r from-success to-[#3fea8c]",
+        // !past && !isBooked && "bg-gradient-to-r from-primary to-[#7ddaf2] "
       )}
     >
       {/* QUESTION: Why is the text running outside the box on medium sizes?  */}
@@ -64,17 +64,18 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
               </button>
             )}
           </div>
-          <h2 className="card-title text-wrap ">{activity.title}</h2>
-          <p>{activity.description}</p>
-          <div className="flex justify-between items-end">
-            <CapacityBadge openSlots={openSlots} />
+          <div className="flex flex-col">
+            <h2 className="card-title text-wrap ">{activity.title}</h2>
+            <p>{activity.description}</p>
 
-            <div className="avatar">
-              <div className="w-24 mask mask-hexagon">
+            <div className="avatar self-center mt-4 ">
+              <div className="w-20 mask mask-hexagon ">
                 <img src={activity.instructor?.image?.url} />
               </div>
             </div>
           </div>
+          <CapacityBadge openSlots={openSlots} isBooked={isBooked} />
+          <img src={activity.type?.icon} className="w-10" />
         </div>
       </Link>
     </motion.div>
