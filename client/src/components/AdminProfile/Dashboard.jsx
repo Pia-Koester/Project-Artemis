@@ -418,9 +418,9 @@ export default function Dashboard() {
                 </table>
               </div>
               <div class="text-right mt-4">
-                <button class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/8 mb-2">
+                <Link to={"/userProfile/usersOverview"} class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/8 mb-2">
                   View More
-                </button>
+                </Link>
               </div>
             </div>
           </div>
