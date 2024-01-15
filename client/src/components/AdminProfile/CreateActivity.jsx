@@ -55,7 +55,6 @@ export default function CreateActivity() {
       })
       .catch((error) => {
         console.log(error);
-        setUser(null);
       });
   };
 
