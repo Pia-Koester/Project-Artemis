@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/logos/avatar.jpg";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
+import { FaCamera } from "react-icons/fa6";
 
 export default function UserUpdateInformation() {
   const navigate = useNavigate();
@@ -34,11 +35,12 @@ export default function UserUpdateInformation() {
                 <div
                   tabIndex={0}
                   role="button"
-                  className="btn btn-ghost btn-circle avatar"
+                  className="btn btn-ghost btn-circle "
+                  onClick={() => {
+                    navigate(`/userProfile/details/upload/${user._id}`);
+                  }}
                 >
-                  <div className="w-10 rounded-full">
-                    <img alt="Tailwind CSS Navbar component" src={userIcon} />
-                  </div>
+                  <FaCamera className="text-3xl" />
                 </div>
               </div>
               <h2 className="text-2xl font-semibold text-center mb-4">

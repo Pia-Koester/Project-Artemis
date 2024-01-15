@@ -2,16 +2,48 @@ import { useForm } from "react-hook-form";
 import { useLoaderData, useParams } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 import { FaArrowLeft } from "react-icons/fa6";
+import { useState, useEffect } from "react";
 
 export default function EditActivity({ activity, hideBackButton }) {
   const { id } = useParams();
   console.log(hideBackButton);
+
+  const [instructors, setInstructors] = useState([]);
+
+  useEffect(() => {
+    axiosClient
+      .get("/instructors")
+      .then((response) => {
+        console.log(response.data);
+        setInstructors(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  console.log(instructors);
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
+
+  const formatedDate = activity.startTime.split("T")[0];
+  const startTime = new Date(activity.startTime);
+  const formattedStartTime = startTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "UTC", //TO DO: backend must save dates with UTC+1
+  });
+
+  const endTime = new Date(activity.endTime);
+  const formattedEndTime = endTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "UTC", //TO DO: backend must save dates with UTC+1
+  });
 
   const onSubmit = (data) => {
     console.log(data);
@@ -105,14 +137,24 @@ export default function EditActivity({ activity, hideBackButton }) {
                 >
                   Instructor
                 </label>
-                <input
-                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                <select
+                  className="select select-secondary w-full max-w-xs"
                   {...register("instructor", {
                     required: "Instructor is required",
                   })}
-                  placeholder="Instructor"
-                  defaultValue={activity.instructor}
-                />
+                >
+                  <option disabled selected>
+                    Instructor
+                  </option>
+                  {instructors.map((instructor) => {
+                    return (
+                      <option key={instructor.firstName} value={instructor._id}>
+                        {instructor.firstName}
+                      </option>
+                    );
+                  })}
+                </select>
+
                 {errors.instructor?.type === "required" && (
                   <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                     {errors.instructor.message}
@@ -154,6 +196,7 @@ export default function EditActivity({ activity, hideBackButton }) {
                     required: "Date is required",
                   })}
                   type="date"
+                  defaultValue={formatedDate}
                 />
                 {errors.date?.type === "required" && (
                   <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
@@ -174,6 +217,7 @@ export default function EditActivity({ activity, hideBackButton }) {
                     required: "Time is required",
                   })}
                   type="time"
+                  defaultValue={formattedStartTime}
                 />
                 {errors.startTime?.type === "required" && (
                   <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
@@ -194,6 +238,7 @@ export default function EditActivity({ activity, hideBackButton }) {
                     required: "Time is required",
                   })}
                   type="time"
+                  defaultValue={formattedEndTime}
                 />
                 {errors.startTime?.type === "required" && (
                   <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">

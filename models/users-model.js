@@ -7,6 +7,11 @@ const { Schema, model } = require("mongoose");
 //   phoneNumberEmergency: { type: String },
 // });
 
+const imageSchema = new Schema({
+  url: { type: String, required: true },
+  publicId: { type: String },
+});
+
 const userSchema = new Schema({
   email: { type: String, required: true, unique: true, lowercase: true },
   firstName: { type: String, required: true },
@@ -33,6 +38,7 @@ const userSchema = new Schema({
   dateOfBirth: { type: Date, required: true },
   termsOfUse: { type: Boolean, required: true },
   dataProtectionInfo: { type: Boolean, required: true },
+  image: imageSchema,
   // emergencyContact: emergencyContactSchema,
 });
 

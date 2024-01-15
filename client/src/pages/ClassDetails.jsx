@@ -420,30 +420,43 @@ export default function ClassDetails() {
 
             {user && user.role === "admin" && (
               <div>
-                <h3 className="font-bold mt-10">Registered Users</h3>
-                {!registeredUsers ? "no users registered" : ""}
-                <table className="table p-2 m-2">
-                  <tbody>
-                    {registeredUsers.map((student) => {
-                      return (
-                        <tr key={student._id}>
-                          <th>
-                            <div className="w-10 rounded-full">
-                              <img
-                                alt="Tailwind CSS Navbar component"
-                                src={userIcon}
-                              />
-                            </div>
-                          </th>
-                          <td>
-                            <div>{student.lastName}</div>
-                          </td>
-                          <td>{student.firstName}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                <h3 className="font-bold mt-10">Attending Users</h3>
+                {registeredUsers.length === 0 ? (
+                  "no users registered yet"
+                ) : (
+                  <table className="table p-2 m-2">
+                    <tbody>
+                      {registeredUsers.map((student) => {
+                        return (
+                          <tr key={student._id}>
+                            <th>
+                              <div className="avatar">
+                                <div className="w-16 rounded-full">
+                                  {user.image?.url ? (
+                                    <img
+                                      alt="User Icon - click to see menu options"
+                                      src={user.image?.url}
+                                      className="w-full h-full object-cover rounded-full"
+                                    />
+                                  ) : (
+                                    <img
+                                      alt="User Icon - click to see menu options"
+                                      src={userIcon}
+                                    />
+                                  )}
+                                </div>
+                              </div>
+                            </th>
+                            <td>
+                              <div>{student.lastName}</div>
+                            </td>
+                            <td>{student.firstName}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                )}
               </div>
             )}
           </aside>

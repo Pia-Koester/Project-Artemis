@@ -256,6 +256,24 @@ const deleteUser = asyncWrapper(async (req, res, next) => {
   }
 });
 
+const uploadUserImage = asyncWrapper(async (req, res, next) => {
+  const { firstName, lastName } = req.body;
+  const { id } = req.params;
+  const url = req.file.path;
+  const publicId = req.file.filename;
+  const image = { url, publicId };
+
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      image,
+    },
+    { new: true }
+  );
+
+  res.status(201).json(user);
+});
+
 module.exports = {
   createUser,
   getUsers,
@@ -269,4 +287,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  uploadUserImage,
 };

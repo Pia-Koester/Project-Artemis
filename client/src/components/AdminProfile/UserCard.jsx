@@ -1,6 +1,7 @@
 import userIcon from "../../assets/logos/avatar.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 export default function UserCard({ user }) {
   const navigate = useNavigate();
@@ -29,12 +30,35 @@ export default function UserCard({ user }) {
               <div
                 tabIndex={0}
                 role="button"
+                className="btn btn-ghost btn-lg btn-circle avatar"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  className="rounded-full"
+                >
+                  {user.image?.url ? (
+                    <img
+                      alt="User Icon - click to see menu options"
+                      src={user.image?.url}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  ) : (
+                    <img
+                      alt="User Icon - click to see menu options"
+                      src={userIcon}
+                    />
+                  )}
+                </motion.div>
+              </div>
+              {/* <div
+                tabIndex={0}
+                role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
                 <div className="w-10 rounded-full">
                   <img alt="Tailwind CSS Navbar component" src={userIcon} />
                 </div>
-              </div>
+              </div> */}
               <ul
                 tabIndex={0}
                 className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"

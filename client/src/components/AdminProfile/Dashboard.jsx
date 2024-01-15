@@ -200,7 +200,7 @@ export default function Dashboard() {
             </nav>
           </div>
 
-          <div class=" shadow-inner flex-1 p-4 w-full md:w-1/2">
+          <div class=" shadow-inner flex-1 p-4 w-full md:w-1/2 bg-base-200">
             <div class="mt-8 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
               <div class="flex-1 bg-white p-4 shadow rounded-lg md:w-1/2">
                 <div className="flex flex-col-2 justify-between">
@@ -217,7 +217,7 @@ export default function Dashboard() {
 
                 <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
                 <div class="chart-container">
-                <div className="overflow-x-auto overflow-y-auto max-h-[300px]">
+                  <div className="overflow-x-auto overflow-y-auto max-h-[300px]">
                     <table className="table">
                       <thead>
                         <tr>
@@ -240,17 +240,17 @@ export default function Dashboard() {
                                   </div>
                                 </td>
                                 <td>
-                                <div className="font-semibold">
+                                  <div className="font-semibold">
                                     {membership.price + ",00 €"}
                                   </div>
                                 </td>
                                 <td>
-                                <div className="font-semibold">
+                                  <div className="font-semibold">
                                     {membership.validity + " " + "Days"}
                                   </div>
                                 </td>
                                 <td>
-                                <div className="font-semibold">
+                                  <div className="font-semibold">
                                     {membership.totalCredits + " " + "Bookings"}
                                   </div>
                                 </td>
@@ -317,7 +317,10 @@ export default function Dashboard() {
                   <h2 class="text-gray-500 text-lg font-semibold pb-1">
                     Classes
                   </h2>
-                  <Link to={"/createActivity"} class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/4 mb-2">
+                  <Link
+                    to={"/createActivity"}
+                    class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/4 mb-2"
+                  >
                     Create New
                   </Link>
                 </div>

@@ -10,9 +10,11 @@ const {
   getUser,
   updateUser,
   deleteUser,
+  uploadUserImage,
 } = require("../controllers/users-controller.js");
 
 const { authenticate, authorize } = require("../middlewares/authentication.js");
+const upload = require("../middlewares/uploadImage.js");
 
 const userRouter = express.Router();
 
@@ -27,7 +29,8 @@ userRouter.route("/users").get(authenticate, authorize("admin"), getUsers);
 userRouter
   .route("/users/:id")
   .get(authenticate, getUser)
-  .delete(authenticate, authorize("admin"), deleteUser);
+  .delete(authenticate, authorize("admin"), deleteUser)
+  .put(authenticate, upload.single("avatar"), uploadUserImage);
 userRouter
   .route("/users/:id/update")
   .put(authenticate, authorize("admin"), updateUser);
