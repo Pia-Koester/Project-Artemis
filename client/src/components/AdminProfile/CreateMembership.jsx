@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axiosClient from "../../api/axiosClient";
 
 export default function CreateMembership() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function CreateMembership() {
   } = useForm();
 
   const onSubmit = (data) => {
-    axios
+    axiosClient
       .post("http://localhost:8080/plan/create", data, {
         withCredentials: true,
       })

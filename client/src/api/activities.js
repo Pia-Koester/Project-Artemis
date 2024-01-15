@@ -1,5 +1,3 @@
-const url = "http://localhost:8080/activities";
-import axios from "axios";
 import { defineWeek } from "../helper/defineweek.js";
 import axiosClient from "./axiosClient.jsx";
 
@@ -74,7 +72,7 @@ const getActivities = async ({ request }) => {
 const getActivity = async ({ params }) => {
   try {
     const { id } = params;
-    const response = await axios.get(`${url}/${id}`);
+    const response = await axiosClient.get(`activities/${id}`);
     return response.data;
   } catch (error) {
     console.log(error);

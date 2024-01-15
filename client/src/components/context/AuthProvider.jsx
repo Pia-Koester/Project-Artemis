@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import axiosClient from "../../api/axiosClient";
 
 import { badCredentials } from "../../utils/badCredentials";
@@ -14,8 +13,8 @@ export default function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/users/profile", { withCredentials: true })
+    axiosClient
+      .get("/users/profile")
       .then((response) => {
         setUser(response.data);
         console.log(response.data);
@@ -31,8 +30,8 @@ export default function AuthProvider({ children }) {
   }, []);
 
   const login = async (data) => {
-    axios
-      .post("http://localhost:8080/login", data, { withCredentials: true })
+    axiosClient
+      .post("/login", data)
       .then((response) => {
         setUser(response.data);
         console.log(response.data);
@@ -50,8 +49,8 @@ export default function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    axios
-      .get("http://localhost:8080/logout", { withCredentials: true })
+    axiosClient
+      .get("/logout")
       .then((response) => {
         setUser(null);
         navigate("/login");
@@ -62,10 +61,8 @@ export default function AuthProvider({ children }) {
   };
 
   const updateUserProfile = async (data) => {
-    axios
-      .put("http://localhost:8080/users/profile", data, {
-        withCredentials: true,
-      })
+    axiosClient
+      .put("/users/profile", data)
       .then((response) => {
         console.log("Data from api", response.data);
         navigate("/userProfile/details");

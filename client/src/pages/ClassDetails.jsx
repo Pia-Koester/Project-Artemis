@@ -8,7 +8,6 @@ import {
 } from "react-icons/fa6";
 import { useNavigate, useParams, useRevalidator } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
-import axios from "axios";
 import { handleCancelation } from "../api/cancelationAcitvity";
 import { useState, useContext } from "react";
 import CapacityBadge from "../components/Activities/CapacityBadge";
@@ -18,6 +17,7 @@ import { AuthContext } from "../components/context/AuthProvider";
 import clsx from "clsx";
 import EditActivity from "../components/AdminProfile/EditActivity";
 import userIcon from "../assets/logos/avatar.jpg";
+import axiosClient from "../api/axiosClient";
 
 export default function ClassDetails() {
   const { id } = useParams();
@@ -34,12 +34,8 @@ export default function ClassDetails() {
   const navigate = useNavigate();
 
   const handleBooking = () => {
-    axios
-      .put(
-        `http://localhost:8080/activities/${id}`,
-        {},
-        { withCredentials: true }
-      )
+    axiosClient
+      .put(`/activities/${id}`, {})
       .then((response) => {
         setOpenSlots(
           response.data.activity.capacity -
