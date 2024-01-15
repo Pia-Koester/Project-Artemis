@@ -36,6 +36,7 @@ import EditActivity from "./components/AdminProfile/EditActivity.jsx";
 import EditActivityType from "./components/AdminProfile/EditActivityType.jsx";
 import ErrorPage from "./pages/errors/ErrorPage";
 import UploadAvatar from "./components/UserProfile/UploadAvatar";
+import axiosClient from "./api/axiosClient";
 
 const router = createBrowserRouter([
   { path: "/landingpage", element: <Landingpage /> },
@@ -132,14 +133,14 @@ const router = createBrowserRouter([
                     path: "createActivity",
                     element: <CreateActivity />,
                     loader: async () => {
-                      return fetch(`http://localhost:8080/activityTypes`);
+                      return await axiosClient.get(`/activityTypes`);
                     },
                   },
                   {
                     path: "createType",
                     element: <Types />,
                     loader: async () => {
-                      return fetch(`http://localhost:8080/activityTypes`);
+                      return await axiosClient.get(`/activityTypes`);
                     },
                   },
                   {

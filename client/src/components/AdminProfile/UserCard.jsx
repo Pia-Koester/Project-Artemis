@@ -2,22 +2,29 @@ import userIcon from "../../assets/logos/avatar.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axiosClient from "../../api/axiosClient";
+import { useRef } from "react";
 
 export default function UserCard({ user }) {
   const navigate = useNavigate();
+  const modalRef = useRef(null);
+
+  console.log(user)
 
   const deleteUser = async () => {
     axiosClient
       .delete(`/users/${user._id}`)
       .then((response) => {
         //To do replace function with something better
+        closeModal()
         window.location.reload();
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
+  const closeModal = () => {
+    modalRef.current.close(); // Close the modal
+  };
   return (
     <>
       <tbody>
@@ -94,7 +101,7 @@ export default function UserCard({ user }) {
           <td className="flex items-center justify-center h-full w-1/2">
             <button
               className="btn"
-              onClick={() => document.getElementById("my_modal_1").showModal()}
+              onClick={() => modalRef.current.showModal()}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +122,7 @@ export default function UserCard({ user }) {
         </tr>
       </tbody>
 
-      <dialog id="my_modal_1" className="modal">
+      <dialog ref={modalRef} id="my_modal_1" className="modal">
         <div className="modal-box">
           <div
             id="alert-additional-content-2"

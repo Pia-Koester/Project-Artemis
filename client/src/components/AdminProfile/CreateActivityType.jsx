@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axiosClient from "../../api/axiosClient";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function CreateActivityType() {
   const {
@@ -52,6 +53,7 @@ export default function CreateActivityType() {
   };
 
   return (
+
     <div className="flex flex-col items-center justify-center">
       <div className="bg-gray-100 w-96 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
@@ -110,5 +112,6 @@ export default function CreateActivityType() {
         </div>
       </div>
     </div>
+
   );
 }

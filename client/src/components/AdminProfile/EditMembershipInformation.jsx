@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axiosClient from "../../api/axiosClient";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function EditMembershipInformation() {
   const navigate = useNavigate();
@@ -44,6 +45,13 @@ export default function EditMembershipInformation() {
       {!singleMembershipPlan ? (
         <p>Loading...</p>
       ) : (
+        <div className="flex justify-center">
+        <button
+        className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
+        onClick={() => navigate(-1)}
+      >
+        <FaArrowLeft />
+      </button>
         <div className="flex flex-col items-center justify-center">
           <div className="bg-gray-100 w-96 flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
@@ -159,6 +167,7 @@ export default function EditMembershipInformation() {
               </form>
             </div>
           </div>
+        </div>
         </div>
       )}
     </>
