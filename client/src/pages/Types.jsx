@@ -8,7 +8,7 @@ import TypeRows from "../components/AdminProfile/TypeRows";
 import { FaArrowLeft } from "react-icons/fa6";
 
 export default function Types() {
-  const activityTypes = useLoaderData();
+  const { data: activityTypes } = useLoaderData();
   console.log(activityTypes);
   const [editMode, setEditMode] = useState(false);
   const [selectedType, setSelectedType] = useState({});
@@ -37,7 +37,11 @@ export default function Types() {
                   <tbody>
                     {activityTypes?.map((item) => {
                       return (
-                        <TypeRows item={item} setEditMode={setEditMode} setSelectedType={setSelectedType} />
+                        <TypeRows
+                          item={item}
+                          setEditMode={setEditMode}
+                          setSelectedType={setSelectedType}
+                        />
                       );
                     })}
                   </tbody>
@@ -54,7 +58,7 @@ export default function Types() {
       </div>
       {editMode && (
         <div className="carousel carousel-center rounded-box w-96 self-center m-4">
-          {selectedType?.images.map((image) => {
+          {selectedType?.images?.map((image) => {
             return (
               <div className="carousel-item">
                 <img

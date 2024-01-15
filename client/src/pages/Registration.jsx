@@ -11,7 +11,7 @@ export default function Registration() {
   const [loginInfo, setLoginInfo] = useState();
   const [personalInfo, setPersonalInfo] = useState();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {
     register,
@@ -56,23 +56,19 @@ export default function Registration() {
   };
 
   const notify = () =>
-  toast.success("--Registration Successful-- Redirecting to the login screen", {
-    position: "top-center",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: false,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-  });
-
-  //TO DO: split registration into first only asking for mail and password and then onboarding on different screen
-  // const handleFormSteps = () => {
-  //   setStep((prev) => {
-  //     return Math.min(prev + 1, 3);
-  //   });
-  // };
+    toast.success(
+      "--Registration Successful-- Redirecting to the login screen",
+      {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
 
   const handleBacksteps = () => {
     setStep((prev) => {
@@ -93,19 +89,19 @@ export default function Registration() {
 
   return (
     <AnimatePresence>
-                <ToastContainer
-            position="top-center"
-            autoClose={1500}
-            limit={1}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover={false}
-            theme="light"
-          />
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
 
       <div>
         <div className="flex justify-center items-center">

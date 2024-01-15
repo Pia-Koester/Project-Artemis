@@ -184,7 +184,7 @@ export default function UserActivities() {
                   </div>
                   <div className="avatar flex-col items-end card-body hidden sm:flex">
                     <div className="w-24 mask mask-hexagon mr-4">
-                      <img src={userActivity.instructor?.image.url} />
+                      <img src={userActivity.instructor?.image?.url} />
                     </div>
                     <p>
                       <span className="font-medium ">Instructor: </span>

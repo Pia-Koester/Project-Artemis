@@ -12,7 +12,7 @@ export default function EditActivityType({ activitytype }) {
 
   //for capitalization
   const typetitle =
-    activitytype.type.charAt(0).toUpperCase() + activitytype.type.slice(1);
+    activitytype?.type?.charAt(0).toUpperCase() + activitytype?.type?.slice(1);
 
   console.log("from the edit page", activitytype);
   const onSubmit = (data) => {

@@ -5,7 +5,8 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useState, useEffect } from "react";
 
 export default function CreateActivity() {
-  const activityTypes = useLoaderData();
+  const { data: activityTypes } = useLoaderData();
+  console.log(activityTypes);
   const navigate = useNavigate();
   console.log(activityTypes);
   const {
