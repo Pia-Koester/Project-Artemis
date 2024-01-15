@@ -4,6 +4,7 @@ const {
   createType,
   getTypes,
   updateTypes,
+  deleteType,
 } = require("../controllers/activityTypes-controller.js");
 const { authenticate, authorize } = require("../middlewares/authentication.js");
 // const upload = require("../middlewares/uploadmultipleImages.js");
@@ -27,5 +28,7 @@ typeRouter
 typeRouter
   .route("/:id/update")
   .patch(authenticate, authorize("admin"), updateTypes);
-
+  typeRouter
+  .route("/:id")
+  .delete(authenticate, authorize("admin"), deleteType);
 module.exports = typeRouter;

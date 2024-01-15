@@ -35,4 +35,12 @@ const updateTypes = asyncWrapper(async (req, res, next) => {
   res.json(updatedType);
 });
 
-module.exports = { createType, getTypes, updateTypes };
+const deleteType = asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
+  const type = await ActivityType.findByIdAndDelete(
+    id,
+  );
+  res.json(type);
+});
+
+module.exports = { createType, getTypes, updateTypes, deleteType };

@@ -3,21 +3,14 @@ import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 
 //importing icons
-import { FaPencil, FaRegTrashCan } from "react-icons/fa6";
 import EditActivityType from "../components/AdminProfile/EditActivityType";
+import TypeRows from "../components/AdminProfile/TypeRows";
 
 export default function Types() {
   const activityTypes = useLoaderData();
   console.log(activityTypes);
   const [editMode, setEditMode] = useState(false);
   const [selectedType, setSelectedType] = useState({});
-
-  const handleEdit = (id) => {
-    console.log(id);
-    setEditMode(true);
-    const selected = activityTypes.find((type) => type._id === id);
-    setSelectedType(selected);
-  };
 
   return (
     <div className="grid-für-bento flex flex-col">
@@ -34,22 +27,8 @@ export default function Types() {
 
                   <tbody>
                     {activityTypes?.map((item) => {
-                      const isSelected = item._id === selectedType._id;
                       return (
-                        <tr
-                          key={item._id}
-                          className={isSelected ? "bg-yellow-200" : ""}
-                        >
-                          <th>{item.type.toUpperCase()}</th>
-                          <td>
-                            <div onClick={() => handleEdit(item._id)}>
-                              <FaPencil />
-                            </div>
-                          </td>
-                          <td>
-                            <FaRegTrashCan />
-                          </td>
-                        </tr>
+                        <TypeRows item={item} setEditMode={setEditMode} setSelectedType={setSelectedType} />
                       );
                     })}
                   </tbody>

@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useNavigate, useParams, useRevalidator } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function EditActivity({ activity, hideBackButton }) {
   const { id } = useParams();
   console.log(hideBackButton);
+  const navigate = useNavigate();
 
   const [instructors, setInstructors] = useState([]);
 
@@ -62,7 +64,10 @@ export default function EditActivity({ activity, hideBackButton }) {
     axiosClient
       .put(`http://localhost:8080/activities/admin/${activity._id}`, data)
       .then((response) => {
-        console.log(response.data);
+        notify();
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
         //TO DO: toast with success message - then navigate to the start page
       })
       .catch((error) => {
@@ -70,6 +75,18 @@ export default function EditActivity({ activity, hideBackButton }) {
         setUser(null);
       });
   };
+
+  const notify = () =>
+    toast.success("Updated Successfully", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   return (
     <>
       {!hideBackButton && (

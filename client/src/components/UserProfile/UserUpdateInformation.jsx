@@ -22,6 +22,7 @@ export default function UserUpdateInformation() {
   };
 
   const formatedDate = user?.dateOfBirth.split("T")[0];
+  console.log(formatedDate)
 
   return (
     <>
@@ -165,17 +166,18 @@ export default function UserUpdateInformation() {
 
                 <button
                   type="submit"
-                  className="w-full btn btn-primary text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2"
+                  className="w-full btn btn-primary font-semi-bold px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2"
                 >
                   Update
                 </button>
-                <button
-                  onClick={() => navigate("/userProfile/details")} //we do not go back with -1 because it leads to flickering
+
+              </form>
+              <button
+                  onClick={() => navigate(-1)} //we do not go back with -1 because it leads to flickering
                   className="w-full btn btn-neutral text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
                 >
                   Go back
                 </button>
-              </form>
             </div>
           </div>
         </div>
