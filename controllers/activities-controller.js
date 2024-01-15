@@ -38,6 +38,17 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun, type } = req.query;
   console.log(instructor);
+  
+  if (!mon && !sun) {
+    const activities = await Activity.find({})
+      .populate("type")
+      .populate("instructor")
+      .sort({
+        startTime: "desc",
+      });
+    res.json(activities);
+  }
+  
   let filter = {
     startTime: {
       $gte: new Date(mon),
@@ -55,15 +66,7 @@ const getActivities = asyncWrapper(async (req, res, next) => {
   }
   console.log(filter);
 
-  if (!mon && !sun) {
-    const activities = await Activity.find({})
-      .populate("type")
-      .populate("instructor")
-      .sort({
-        startTime: "desc",
-      });
-    res.json(activities);
-  }
+
 
   const activities = await Activity.find(filter)
     .populate("type")
