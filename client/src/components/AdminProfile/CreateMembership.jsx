@@ -15,7 +15,7 @@ export default function CreateMembership() {
 
   const onSubmit = (data) => {
     axiosClient
-      .post("http://localhost:8080/plan/create", data, {
+      .post("/plan/create", data, {
         withCredentials: true,
       })
       .then((response) => {
