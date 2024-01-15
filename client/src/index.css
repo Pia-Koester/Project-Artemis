@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* TO DO: Gradient for buttons and stuff */
+/* background: linear-gradient(38deg, rgba(100,175,194,1) 0%, rgba(98,69,149,1) 54%, rgba(245,167,134,1) 100%); */
