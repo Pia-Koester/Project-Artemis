@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -156,15 +155,6 @@ export default function EditMembershipInformation() {
                     className="w-full btn btn-primary text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2"
                   >
                     Update Membership
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      navigate("/userProfile/membershipsOverview/")
-                    }
-                    className="w-full btn btn-neutral text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                  >
-                    Go back
                   </button>
                 </form>
               </div>
