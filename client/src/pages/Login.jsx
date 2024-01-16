@@ -1,12 +1,13 @@
-import { FaWandMagicSparkles, FaRegEye } from "react-icons/fa6";
+import { FaWandMagicSparkles, FaRegEye, FaEye } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../components/context/AuthProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Login() {
   const { login } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -19,6 +20,12 @@ export default function Login() {
     login(data);
   };
 
+  const handleShowPassword = () => {
+    setShowPassword(true);
+  };
+  const handleHidePassword = () => {
+    setShowPassword(false);
+  };
   return (
     <AnimatePresence>
       <div>
@@ -50,7 +57,7 @@ export default function Login() {
                   <input
                     type="text"
                     placeholder="Type E-Mail here"
-                    className="input input-bordered w-full max-w-xs input-primary "
+                    className="input mr-7 input-bordered max-w-xs input-primary "
                     {...register("email", { required: "E-mail is required" })}
                   />
                   {errors.email?.type === "required" && (
@@ -63,19 +70,25 @@ export default function Login() {
                 <div className="label self-start">
                   <span className="label-text">What is your password?</span>
                 </div>
-                <input
-                  type="password"
+                <div className="flex items-center ">
+
+<input
+  type={showPassword ? 'text' : 'password'}
                   placeholder="Type Password here"
                   className="input input-bordered w-full max-w-xs input-primary "
                   {...register("password", {
                     required: "Password is required",
                   })}
                 />
+                                  <div onMouseDown={handleShowPassword} onMouseUp={handleHidePassword}>
+                    <FaEye className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150"/>
+                  </div>
                 {errors.password?.type === "required" && (
                   <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                     {errors.password.message}
                   </span>
                 )}
+                </div>
                 <button className="btn btn-primary mt-5">Submit</button>
               </label>
               {/* TO DO: in case we create the option to login via mail

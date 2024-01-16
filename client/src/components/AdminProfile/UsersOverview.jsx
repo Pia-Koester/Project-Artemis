@@ -24,14 +24,14 @@ export default function UsersOverview() {
     <>
       <button
         onClick={() => navigate(-1)}
-        className="btn btn-circle btn-neutral ml-5 mt-2 self-start"
+        className="btn btn-circle btn-neutral ml-5 mt-2 self-start fixed"
       >
         <FaArrowLeft />
       </button>
 
 
 
-<div className="overflow-x-auto">
+<div className="w-11/12 mx-auto">
   {!users ? (
     <div class="flex justify-center h-screen">
       <div class="relative">
@@ -61,12 +61,7 @@ export default function UsersOverview() {
   )}
 </div>
 
-      <button
-        onClick={() => navigate(-1)}
-        className="btn btn-circle btn-neutral ml-5 mt-2 self-start"
-      >
-        <FaArrowLeft />
-      </button>
+
     </>
   );
 }
