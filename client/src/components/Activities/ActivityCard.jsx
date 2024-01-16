@@ -87,11 +87,11 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
               <div className="flex flex-col gap-1 ml-3 mt-4">
                 <div>
                   <p className="font-medium">Instructor:</p>
-                  <p>{activity.instructor.firstName}</p>
+                  <p>{activity?.instructor?.firstName}</p>
                 </div>
                 <div>
                   <p className="font-medium">Attendants:</p>
-                  <p>{activity.registeredUsers.length}</p>
+                  <p>{activity?.registeredUsers?.length}</p>
                 </div>
               </div>
             </div>

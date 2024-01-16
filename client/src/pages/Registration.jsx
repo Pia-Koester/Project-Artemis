@@ -171,7 +171,7 @@ export default function Registration() {
                   <div className="label self-start">
                     <span className="label-text">Set a password</span>
                   </div>
-                  <div className="flex items-center ">
+                  <div className="flex relative mr-7 items-center ">
 
                   <input
                     type={showPassword ? 'text' : 'password'}
@@ -185,8 +185,12 @@ export default function Registration() {
                       },
                     })}
                   />
-                  <div onMouseDown={handleShowPassword} onMouseUp={handleHidePassword}>
-                    <FaEye className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150"/>
+                  <div
+                    onMouseDown={handleShowPassword}
+                    onMouseUp={handleHidePassword}
+                    className="absolute right-3"
+                  >
+                    <FaEye className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150" />
                   </div>
                   </div>
                  

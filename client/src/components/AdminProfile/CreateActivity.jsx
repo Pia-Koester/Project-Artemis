@@ -59,12 +59,28 @@ export default function CreateActivity() {
       })
       .catch((error) => {
         console.log(error);
+        notifyFailed()
       });
   };
 
   const notify = () =>
     toast.success(
-      "--Creation Successful-- Redirecting to the admin dashboard",
+      "--Creation Successful--",
+      {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+
+    const notifyFailed = () =>
+    toast.error(
+      "--Creation Failed--",
       {
         position: "top-center",
         autoClose: 2000,

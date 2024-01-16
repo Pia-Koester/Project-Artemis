@@ -33,7 +33,7 @@ export default function EditMembershipInformation() {
       .put(`/plan/update/${id}`, data)
       .then((response) => {
         console.log(response.data);
-        navigate("/userProfile/membershipsOverview/");
+        navigate(-1);
       })
       .catch((err) => {
         console.log(err);
@@ -44,7 +44,7 @@ export default function EditMembershipInformation() {
       {!singleMembershipPlan ? (
         <span className="loading loading-dots loading-lg text-center"></span>
       ) : (
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-24">
           <button
             className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
             onClick={() => navigate(-1)}

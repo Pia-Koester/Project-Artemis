@@ -56,7 +56,7 @@ export default function SingleUserInformation() {
         <div className="flex justify-center ">
           <button
             className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
-            onClick={() => navigate("/userProfile/usersOverview")}
+            onClick={() => navigate(-1)}
           >
             <FaArrowLeft />
           </button>

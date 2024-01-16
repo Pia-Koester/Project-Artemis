@@ -1,9 +1,12 @@
 import { useRef, useState } from "react";
 import axiosClient from "../../api/axiosClient";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function TypeRows({ item, setEditMode, setSelectedType }) {
   const modalRef = useRef(null);
   const [highlighted, setHighlighted] = useState(false);
+  const navigate = useNavigate()
 
   const handleEdit = (id) => {
     console.log(id);
@@ -20,7 +23,10 @@ export default function TypeRows({ item, setEditMode, setSelectedType }) {
       .delete(`/activityTypes/${id}`)
       .then((response) => {
         closeModal();
-        window.location.reload();
+        notify()
+        setTimeout(() => {
+          navigate(-1)
+        }, 2500);
       })
       .catch((err) => {
         console.log(err);
@@ -31,8 +37,37 @@ export default function TypeRows({ item, setEditMode, setSelectedType }) {
     modalRef.current.close(); // Close the modal
   };
 
+  
+  const notify = () =>
+  toast.success(
+    "--Deleted Successfully--",
+    {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    }
+  );
+
   return (
     <>
+          <ToastContainer
+          position="top-center"
+          autoClose={1500}
+          limit={1}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+          theme="light"
+        />
       <tr key={item._id}>
         <th>{item.type.toUpperCase()}</th>
         <td>

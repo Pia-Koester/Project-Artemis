@@ -15,7 +15,7 @@ export default function MembershipInformationCard({ membership }) {
         closeModal();
         notify();
         setTimeout(() => {
-          navigate("/userProfile/membershipsOverview");
+          navigate(-1);
         }, 3000);
       })
       .catch((err) => {

@@ -63,6 +63,18 @@ export default function ClassDetails() {
       theme: "light",
     });
 
+    const notifyCancelation = () =>
+    toast.success("Canceled Successfully", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
   //transforming dates and times
   const startTime = new Date(activity.startTime);
   const formattedStartTime = startTime.toLocaleTimeString([], {
@@ -230,9 +242,6 @@ export default function ClassDetails() {
                       >
                         Cancel Booking
                       </button>{" "}
-                      <button className="btn btn-square btn-outline">
-                        <FaCalendarPlus />
-                      </button>
                     </>
                   )}
                 </>
@@ -314,7 +323,7 @@ export default function ClassDetails() {
                         className="btn btn-secondary mr-3 self-center mt-2"
                         onClick={() => {
                           handleCancelation(id, setUser, setOpenSlots);
-                          // window.location.reload();
+                          notifyCancelation();
                         }}
                       >
                         Cancel Booking

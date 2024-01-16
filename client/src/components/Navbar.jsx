@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import navLogo from "../assets/logos/WortBildmarkeMAINLOGO_anthra.svg";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthProvider";
@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 export default function Navbar() {
   const { isLoading, user, logout } = useContext(AuthContext);
-
+  const navigate = useNavigate()
   return (
     <>
       {!isLoading && (
