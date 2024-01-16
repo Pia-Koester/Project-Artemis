@@ -44,7 +44,7 @@ export default function Login() {
           </div>
           <div className="flex flex-col items-center justify-center w-4/12 p-4 h-100 ">
             {" "}
-            <h1 className="text-4xl font-bold mb-4 text-center">Login</h1>
+            <h1 className="text-4xl mb-6 font-titleFont font-bold">Login</h1>
             <form
               className="flex flex-col items-center justify-center"
               onSubmit={handleSubmit(onSubmit)}

@@ -92,8 +92,7 @@ export default function CreateActivityType() {
       />
       <div className="bg-gray-100 w-96 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-          <div className="flex justify-center mb-6"></div>
-          <h2 className="text-2xl font-semibold text-center mb-4">
+          <h2 className=" flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-3">
             Create a new Activity Type
           </h2>
 

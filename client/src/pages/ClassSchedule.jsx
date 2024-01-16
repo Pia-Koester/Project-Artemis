@@ -103,7 +103,7 @@ export default function ClassSchedule() {
 
   return (
     <div className="flex gap-3 flex-col items-center p-5">
-      <h1 className="text-3xl mb-6">Find your next class here</h1>{" "}
+      <h1 className="text-4xl mb-6 font-titleFont font-bold">Find your next class here</h1>{" "}
       <div className="flex flex-col md:flex-row w-full gap-2 md:justify-center items-center">
         <div className="join">
           <button className="join-item btn" onClick={handlePrev}>
@@ -169,7 +169,7 @@ export default function ClassSchedule() {
           {weekdays.map((day) => {
             return (
               <div className="flex flex-col gap-2 items-center" key={day}>
-                <h3>{day}</h3>
+                <h3 className="text-xl leading-6 font-medium text-gray-900 font-titleH3">{day}</h3>
 
                 {activities[day.toLowerCase()]?.map((activity) => {
                   return (

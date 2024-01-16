@@ -7,7 +7,7 @@ export default function Skeleton() {
         <img src={logo} className="w-12" />
       </div>
       <div className="flex flex-col justify-center">
-        <h1 className="text-3xl mb-4/5 text-center">
+        <h1 className="text-4xl mb-6 font-titleFont font-bold">
           Find your next class here
         </h1>{" "}
         <div className="grid grid-cols-7 grid-rows-5 gap-2 w-full justify-center">

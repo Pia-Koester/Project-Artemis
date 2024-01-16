@@ -108,7 +108,7 @@ export default function ClassDetails() {
   return (
     <>
       {" "}
-      <h1 className="text-2xl font-bold mb-4 text-center">{activity.title}</h1>
+      <h1 className="text-4xl mb-6 font-titleFont font-bold">{activity.title}</h1>
       <div className="flex md:flex-row flex-col-reverse justify-center items-start">
         {" "}
         <button
@@ -165,6 +165,7 @@ export default function ClassDetails() {
           >
             <div className="flex flex-col lg:flex-row lg:items-center">
               <div className="lg:w-2/3 lg:pr-8">
+
                 <div className="flex gap-2 m-2">
                   <FaRegCalendar className="text-2xl" />
                   <p className="font-bold">Date</p>
@@ -468,11 +469,13 @@ export default function ClassDetails() {
                 className="w-4/5 self-center"
                 location={activity.location}
               />
+
             </div>
           )}{" "}
           {user && user.role === "admin" && (
-            <EditActivity activity={activity} hideBackButton c />
+            <EditActivity activity={activity} hideBackButton  />
           )}
+
         </div>
       </div>
     </>
