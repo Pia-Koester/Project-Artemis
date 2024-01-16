@@ -36,7 +36,7 @@ export default function UserActivities() {
   return (
     <>
       <div className="card-body items-center text-center">
-        <h2 className="card-title">Your booked classes</h2>
+        <h2 className="text-2xl leading-6 font-medium text-gray-900 font-titleH3">My Booked Classes</h2>
       </div>
       <ToastContainer
         position="top-center"
@@ -164,7 +164,7 @@ export default function UserActivities() {
                   )}
                 >
                   <div className="card-body">
-                    <h2 className="card-title">{userActivity.title}</h2>
+                    <h2 className="card-title text-wrap font-titleFont">{userActivity.title}</h2>
 
                     <p>{userActivity.description}</p>
                     <p>

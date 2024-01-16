@@ -108,7 +108,7 @@ export default function ClassDetails() {
   return (
     <>
       {" "}
-      <h1 className="text-4xl mb-6 font-titleFont font-bold">{activity.title}</h1>
+      <h1 className="text-4xl flex justify-center mb-6 font-titleFont font-bold">{activity.title}</h1>
       <div className="flex md:flex-row flex-col-reverse justify-center items-start">
         {" "}
         <button
@@ -168,13 +168,13 @@ export default function ClassDetails() {
 
                 <div className="flex gap-2 m-2">
                   <FaRegCalendar className="text-2xl" />
-                  <p className="font-bold">Date</p>
+                  <p className="font-titleH3 font-semibold text-xl">Date</p>
                 </div>
                 <p>{formattedStartDate}</p>
 
                 <div className="flex gap-2 m-2">
                   <FaClock className="text-2xl" />
-                  <p className="font-bold">Time</p>
+                  <p className="font-titleH3 font-semibold text-xl">Time</p>
                 </div>
                 <p>
                   {formattedStartTime} - {formattedEndTime} ({duration} Min.)
@@ -182,7 +182,7 @@ export default function ClassDetails() {
 
                 <div className="flex gap-2 m-2">
                   <FaPersonDress className="text-2xl" />
-                  <p className="font-bold">Capacity</p>
+                  <p className="font-titleH3 font-semibold text-xl">Capacity</p>
                 </div>
                 <CapacityBadge openSlots={openSlots} />
               </div>
@@ -196,8 +196,8 @@ export default function ClassDetails() {
                     />
                   </div>
                 </div>
-                <div className="grid grid-rows-2 mt-5">
-                  <p className="font-bold">Instructor:</p>
+                <div className="grid grid-rows-2 mt-5 mr-4">
+                  <p className="font-titleH3 font-semibold text-xl">Instructor:</p>
                   <p>{activity.instructor.firstName}</p>
                 </div>
               </div>
@@ -420,9 +420,9 @@ export default function ClassDetails() {
           {user && user.role === "admin" ? (
             <div className="Angemeldete-Nutzer card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2 row-start-2 row-span-2  overflow-x-auto overflow-y-auto">
               <div>
-                <h3 className="font-bold mt-10">Attending Users</h3>
+                <h3 className="flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-1">Attending Users</h3>
                 {registeredUsers.length === 0 ? (
-                  "no users registered yet"
+                  <p className="text-center mt-2">no users registered yet</p>
                 ) : (
                   <table className="table p-2 m-2  max-h-[400px]">
                     <tbody>
