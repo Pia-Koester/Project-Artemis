@@ -21,7 +21,15 @@ export default function Navbar() {
               />
             </NavLink>
           </div>
-
+          {/* TO DO: animate button to pulse */}
+          {user?.role === "student" && (
+            <button
+              className=" btn-primary btn btn-outline ml-auto mr-10"
+              onClick={() => navigate("/membershipPlans")}
+            >
+              Get your membership
+            </button>
+          )}
           {!user ? (
             <>
               <div className="flex-none ">
@@ -39,7 +47,7 @@ export default function Navbar() {
             <div className="flex-none">
               <div className="flex-1">
                 <a href="#" className="btn btn-ghost text-xl">
-                  <p>{`Hello ${user.firstName}`}</p>
+                  <p>{`Hello, ${user.firstName}`}</p>
                 </a>
               </div>
               <div className="dropdown dropdown-end">
