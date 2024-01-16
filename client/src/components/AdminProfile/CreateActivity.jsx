@@ -3,6 +3,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function CreateActivity() {
   const { data: activityTypes } = useLoaderData();
@@ -51,18 +52,48 @@ export default function CreateActivity() {
     axiosClient
       .post("/activities", data)
       .then((response) => {
-        console.log(response.data);
+        notify();
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  const notify = () =>
+    toast.success(
+      "--Creation Successful-- Redirecting to the admin dashboard",
+      {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+
   //TO DO: show example of activity details while creating the activity? - Preview mode
 
   return (
     <div className="flex justify-center items-start">
-      {" "}
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       <button
         onClick={() => navigate(-1)}
         className="btn btn-circle btn-neutral mr-3 mt-2 self-start"

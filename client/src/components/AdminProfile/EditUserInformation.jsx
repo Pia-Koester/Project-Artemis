@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import userIcon from "../../assets/logos/avatar.jpg";
 import axiosClient from "../../api/axiosClient";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function EditUserInformation() {
   const { id } = useParams();
@@ -44,9 +45,15 @@ export default function EditUserInformation() {
   const formatedDate = user?.dateOfBirth.split("T")[0];
 
   return (
-    <>
+    <div className="flex justify-center">
+      <button
+        className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
+        onClick={() => navigate(`/userProfile/usersOverview/${id}`)}
+      >
+        <FaArrowLeft />
+      </button>
       {!user ? (
-        <p>Loading...</p>
+        <span className="loading loading-dots loading-lg"></span>
       ) : (
         <div className="flex flex-col items-center justify-center">
           <div className="bg-gray-100 w-96 flex items-center justify-center">
@@ -217,17 +224,11 @@ export default function EditUserInformation() {
                 >
                   Update
                 </button>
-                <button
-                  onClick={() => navigate(`/userProfile/usersOverview/${id}`)}
-                  className="w-full btn btn-neutral text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                >
-                  Go back
-                </button>
               </form>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

@@ -118,7 +118,13 @@ const setUserActivity = asyncWrapper(async (req, res, next) => {
     id,
     { $push: { classesRegistered: activity_id } },
 
-    { new: true, populate: "classesRegistered" }
+    {
+      new: true,
+      populate: {
+        path: "classesRegistered",
+        populate: { path: "instructor", model: "Instructor" },
+      },
+    }
   );
 
   req.user = updatedUser;
@@ -144,7 +150,13 @@ const cancelUserActivity = asyncWrapper(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(
     id,
     { classesRegistered: activityArray },
-    { new: true, populate: "classesRegistered" }
+    {
+      new: true,
+      populate: {
+        path: "classesRegistered",
+        populate: { path: "instructor", model: "Instructor" },
+      },
+    }
   );
   req.user = updatedUser;
   next();

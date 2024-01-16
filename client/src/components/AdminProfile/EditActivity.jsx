@@ -86,6 +86,19 @@ export default function EditActivity({ activity, hideBackButton }) {
     });
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       {!hideBackButton && (
         <button
           onClick={() => navigate("/userProfile/details")}

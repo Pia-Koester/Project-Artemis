@@ -3,6 +3,7 @@ import { handleCancelation } from "../../api/cancelationAcitvity";
 import { AuthContext } from "../context/AuthProvider";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function UserActivities() {
   const {
@@ -18,13 +19,40 @@ export default function UserActivities() {
   const currentMinutes = currentDate.getMinutes();
   const currentHours = currentDate.getHours() + 1;
 
+  const notify = () =>
+    toast.success("--Cancelation Successful--", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  console.log(userActivity);
+
   return (
     <>
       <div className="card-body items-center text-center">
         <h2 className="card-title">Your booked classes</h2>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       {!userActivity ? (
-        <p>Loading...</p>
+        <span className="loading loading-dots loading-lg"></span>
       ) : userActivity.length === 0 ? (
         <div className="flex flex-col items-center justify-center mb-5">
           <div class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 w-1/3">
@@ -96,7 +124,6 @@ export default function UserActivities() {
             const minutes = date.getMinutes();
 
             let pastDate = false;
-            console.log(date.getHours() + 1);
 
             if (currentYear > year) {
               pastDate = true;
@@ -166,7 +193,7 @@ export default function UserActivities() {
                           className=""
                           onClick={() => {
                             handleCancelation(userActivity._id, setUser);
-                            // window.location.reload();
+                            notify();
                           }}
                         >
                           Cancel Booking

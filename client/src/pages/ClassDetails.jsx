@@ -6,7 +6,7 @@ import {
   FaArrowLeft,
   FaCalendarPlus,
 } from "react-icons/fa6";
-import { useNavigate, useParams, useRevalidator } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import { handleCancelation } from "../api/cancelationAcitvity";
 import { useState, useContext } from "react";
@@ -29,8 +29,6 @@ export default function ClassDetails() {
     activity.capacity - activity.registeredUsers.length
   );
 
-  const revalidator = useRevalidator();
-
   const navigate = useNavigate();
 
   const handleBooking = () => {
@@ -43,18 +41,7 @@ export default function ClassDetails() {
         );
         setShowcalendarbutton(true);
         notify();
-        setUser((prev) => {
-          return {
-            ...prev,
-            classesRegistered: [
-              ...prev.classesRegistered,
-              response.data.activity,
-            ],
-            activeMembership: response.data.user.activeMembership,
-          };
-        });
-        revalidator.revalidate();
-        // console.log("Data from api", response);
+        setUser(response.data.user);
       })
       .catch((err) => {
         console.log(err.response.status);
@@ -145,7 +132,7 @@ export default function ClassDetails() {
           <div className="Kurs-Informationen card bg-white shadow-xl flex flex-col p-4 m-2 min-w-96">
             {/* To Do: block für Kursinformationen erstellen */}
             <h1 className="text-2xl font-bold mb-4">{activity.title}</h1>
-            <div className="carousel carousel-center rounded-box w-96 self-center">
+            <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-base-100 rounded-box">
               {activity.type?.images.map((image) => {
                 return (
                   <div className="carousel-item">
