@@ -115,7 +115,7 @@ export default function Registration() {
       <div>
         <div className="flex justify-center items-center">
           <div className="flex flex-col items-center justify-center w-4/12 p-4 h-100 ">
-            <h1 className="text-4xl font-bold mb-4 text-center">Sign Up</h1>
+            <h1 className="text-4xl mb-6 font-titleFont font-bold">Sign Up</h1>
             <ul className="steps steps-vertical lg:steps-horizontal my-5">
               <li
                 className={clsx(

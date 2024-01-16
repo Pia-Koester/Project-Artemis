@@ -109,8 +109,8 @@ export default function EditActivity({ activity, hideBackButton }) {
       )}
       <div className="flex flex-col items-center justify-center">
         <div className="card w-96 bg-white shadow-2xl flex flex-col p-4 m-2">
-          <h2 className="text-2xl font-semibold text-center mb-4">
-            Update {activity.title}
+          <h2 className="flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-1">
+            Update Activity
           </h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-2 gap-x-5">
