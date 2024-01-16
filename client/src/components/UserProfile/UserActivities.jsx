@@ -185,12 +185,11 @@ export default function UserActivities() {
                     <div className="flex justify-between items-end">
                       <div
                         className={clsx(
-                          "badge badge-secondary",
+                          "btn bg-secondary hover:bg-violet-600 text-white text-xs text-center self-center px-3 py-2",
                           pastDate && "hidden"
                         )}
                       >
-                        <button
-                          className=""
+                        <button className=""
                           onClick={() => {
                             handleCancelation(userActivity._id, setUser);
                             notify();
