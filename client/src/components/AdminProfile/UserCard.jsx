@@ -27,6 +27,7 @@ export default function UserCard({ user }) {
   };
   return (
     <>
+    
       <tbody>
         <tr>
           <th>

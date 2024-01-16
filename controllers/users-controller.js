@@ -62,11 +62,11 @@ const getUsers = asyncWrapper(async (req, res, next) => {
 //Update user profile
 const updateProfile = asyncWrapper(async (req, res, next) => {
   const { id } = req.user;
-  const { firstName, lastName, phone, address, dateOfBirth } = req.body;
+  const { firstName, lastName, phoneNumber, address, dateOfBirth } = req.body;
 
   const user = await User.findByIdAndUpdate(
     id,
-    { firstName, lastName, phone, address, dateOfBirth },
+    { firstName, lastName, phoneNumber, address, dateOfBirth },
     { new: true }
   );
   res.json(user);
