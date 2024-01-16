@@ -46,9 +46,7 @@ export default function Navbar() {
           ) : (
             <div className="flex-none">
               <div className="flex-1">
-                <a href="#" className="btn btn-ghost text-xl">
-                  <p>{`Hello, ${user.firstName}`}</p>
-                </a>
+
               </div>
               <div className="dropdown dropdown-end">
                 <div
@@ -78,13 +76,27 @@ export default function Navbar() {
                   tabIndex={0}
                   className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
                 >
+                                 {user.role === "student" && (
+                    <>
+                      <li className="font-titleFont font-bold ml-3">{`Hello, ${user.firstName}`}</li>
+                      <div className="border-t border-cyan-300 mt-1 mb-1"></div>
+                      </>
+                   
+
+
+                  )}{" "}
                   {user.role === "student" && (
                     <li>
                       <Link to={"/userProfile/activities"}>
                         My Booked Classes
                       </Link>
                     </li>
+
+
                   )}{" "}
+   
+
+
                   {user.role === "admin" && (
                     <li>
                       <Link to={"/dashboard "}>Admin Dashboard</Link>
