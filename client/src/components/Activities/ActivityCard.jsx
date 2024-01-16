@@ -4,7 +4,7 @@ import CapacityBadge from "./CapacityBadge";
 import { useState, useContext } from "react";
 import clsx from "clsx";
 import { AuthContext } from "../context/AuthProvider";
-import { FaPencil, FaRegTrashCan } from "react-icons/fa6";
+import { FaPencil, FaRegTrashCan, FaPeopleGroup } from "react-icons/fa6";
 
 export default function ActivityCard({ activity, role = "student", isBooked }) {
   //TODO: make transition to card Details
@@ -88,11 +88,12 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
             <div className="row-span-2 col-start-1 row-start-3">
               <div className="flex flex-col gap-1 ml-3 mt-4">
                 <div>
-                  <p className="font-medium">Instructor:</p>
+                  {/* <p className="font-medium">Instructor:</p> */}
                   <p>{activity?.instructor?.firstName}</p>
                 </div>
-                <div>
-                  <p className="font-medium">Attendants:</p>
+                <div className="flex gap-1 items-center">
+                  {/* <p className="font-medium">Attendees:</p> */}
+                  <FaPeopleGroup className="text-2xl" />
                   <p>{activity?.registeredUsers?.length}</p>
                 </div>
               </div>
