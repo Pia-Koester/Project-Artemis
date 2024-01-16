@@ -72,7 +72,9 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
             <div className="col-span-2 row-start-2">
               {" "}
               <div className="flex justify-center">
-                <h2 className="card-title text-wrap font-titleFont">{activity.title}</h2>
+                <h2 className="card-title text-wrap font-titleFont">
+                  {activity.title}
+                </h2>
               </div>
             </div>
             <div className="row-span-2 col-start-2 row-start-3">
@@ -96,7 +98,7 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
               </div>
             </div>
             <div className="row-start-5 ml-3 mb-2 mt-1">
-             <img src={activity.type?.icon} className="w-10 " />
+              <img src={activity.type?.icon} className="w-10 " />
             </div>
             <div className="row-start-5 mt-1">
               <div className="flex justify-end ">

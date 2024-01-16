@@ -87,7 +87,6 @@ const setUserMembership = asyncWrapper(async (req, res, next) => {
       },
     }
   );
-  console.log(membershipHolder);
 
   res.json(membershipHolder.activeMembership);
 });

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateInstructor() {
   const navigate = useNavigate();
+  const [formloading, setFormlaoding] = useState(false);
 
   const {
     register,
@@ -33,6 +34,7 @@ export default function CreateInstructor() {
 
   const onSubmit = (data) => {
     console.log(data);
+    setFormlaoding(true);
     const formData = new FormData();
     formData.append("firstName", data.firstName);
     formData.append("lastName", data.lastName);
@@ -46,6 +48,7 @@ export default function CreateInstructor() {
       })
       .then((response) => {
         console.log(response.data);
+        setFormlaoding(false);
         setMultipleImages([]);
         notify();
         setTimeout(() => {
@@ -54,6 +57,7 @@ export default function CreateInstructor() {
       })
       .catch((err) => {
         console.log(err);
+        notifyFail();
       });
   };
 
@@ -71,6 +75,18 @@ export default function CreateInstructor() {
         theme: "light",
       }
     );
+
+  const notifyFail = () =>
+    toast.error("Error during Submission", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   return (
     <div className="flex justify-center">
@@ -158,12 +174,19 @@ export default function CreateInstructor() {
                   onChange={changeMultipleFiles}
                 />
               </div>
-              <button
-                type="submit"
-                className="w-full btn btn-primary text-white px-4 py-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2"
-              >
-                Submit
-              </button>
+              {formloading ? (
+                <button className=" w-full btn btn-primary text-white px-4 py-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2">
+                  <span className="loading loading-spinner"></span>
+                  loading
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full btn btn-primary text-white px-4 py-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2"
+                >
+                  Submit
+                </button>
+              )}
             </form>
             {render(multipleImages)}
           </div>

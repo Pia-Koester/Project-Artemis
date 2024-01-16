@@ -6,26 +6,24 @@ import { useNavigate } from "react-router-dom";
 export default function TypeRows({ item, setEditMode, setSelectedType }) {
   const modalRef = useRef(null);
   const [highlighted, setHighlighted] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleEdit = (id) => {
-    console.log(id);
     setEditMode(true);
     setSelectedType(item);
     setHighlighted(true);
   };
 
   const handleDelete = async (id) => {
-    console.log(id);
     setEditMode(true);
 
     axiosClient
       .delete(`/activityTypes/${id}`)
       .then((response) => {
         closeModal();
-        notify()
+        notify();
         setTimeout(() => {
-          navigate(-1)
+          navigate(-1);
         }, 2500);
       })
       .catch((err) => {
@@ -37,11 +35,8 @@ export default function TypeRows({ item, setEditMode, setSelectedType }) {
     modalRef.current.close(); // Close the modal
   };
 
-  
   const notify = () =>
-  toast.success(
-    "--Deleted Successfully--",
-    {
+    toast.success("--Deleted Successfully--", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -50,24 +45,23 @@ export default function TypeRows({ item, setEditMode, setSelectedType }) {
       draggable: true,
       progress: undefined,
       theme: "light",
-    }
-  );
+    });
 
   return (
     <>
-          <ToastContainer
-          position="top-center"
-          autoClose={1500}
-          limit={1}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover={false}
-          theme="light"
-        />
+      <ToastContainer
+        position="top-center"
+        autoClose={1500}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
       <tr key={item._id}>
         <th>{item.type.toUpperCase()}</th>
         <td>
