@@ -40,8 +40,8 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
     <motion.div
       whileHover={past ? {} : { scale: 1.1 }}
       className={clsx(
-        "card  w-full  text-primary-content flex flex-col shadow-lg bg-gradient-to-r from-primary to-[#7ddaf2]"
-        // past && "opacity-40 bg-primary ",
+        "card  w-full  text-primary-content flex flex-col shadow-lg bg-gradient-to-r from-primary to-[#7ddaf2]",
+        past && "opacity-40"
         // isBooked && "bg-gradient-to-r from-success to-[#3fea8c]",
         // !past && !isBooked && "bg-gradient-to-r from-primary to-[#7ddaf2] "
       )}
@@ -66,7 +66,6 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
           </div>
           <div className="flex flex-col">
             <h2 className="card-title text-wrap ">{activity.title}</h2>
-            <p>{activity.description}</p>
 
             <div className="avatar self-center mt-4 ">
               <div className="w-20 mask mask-hexagon ">

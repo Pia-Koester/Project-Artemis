@@ -18,7 +18,6 @@ export default function Dashboard() {
       .get("/users")
       .then((response) => {
         setUsers(response.data);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -416,6 +415,7 @@ export default function Dashboard() {
   </h2>
   <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
 
+
   {!users ? (
     <div class="flex justify-center">
       <div class="relative">
@@ -456,7 +456,6 @@ export default function Dashboard() {
     </>
   )}
 </div>
-
           </div>
         </div>
       </div>
