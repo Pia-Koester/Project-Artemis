@@ -157,7 +157,7 @@ export default function ClassSchedule() {
         )}
         {user?.role === "student" && (
           <button
-            className=" btn-primary btn btn-outline ml-auto"
+            className=" btn-primary btn btn-outline ml-auto mr-10"
             onClick={() => navigate("/membershipPlans")}
           >
             Get your membership <span className="underline">now</span>!
@@ -173,7 +173,7 @@ export default function ClassSchedule() {
           />
         </div>
       ) : (
-        <div className="grid lg:grid-cols-7 grid-cols-1 gap-4 md:w-full">
+        <div className="grid lg:grid-cols-7 grid-cols-1 gap-4 md:w-full px-10 py-3">
           {weekdays.map((day) => {
             return (
               <div className="flex flex-col gap-2 items-center" key={day}>
