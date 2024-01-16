@@ -108,7 +108,7 @@ export default function EditActivity({ activity, hideBackButton }) {
         </button>
       )}
       {/* <div className="flex flex-col items-center justify-center col-start-3 row-start-1 row-span-2 self-start h-full"> */}
-      <div className="card bg-white shadow-xl flex flex-col p-4   self-start row-start-1 row-span-2  col-start-3 h-full">
+      <div className="card bg-white shadow-xl flex flex-col p-4   self-start row-start-1 row-span-3  col-start-3 h-full">
         <h2 className="text-2xl font-semibold text-center mb-4">
           Update {activity.title}
         </h2>

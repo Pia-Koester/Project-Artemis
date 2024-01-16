@@ -133,9 +133,15 @@ export default function ClassDetails() {
         <div
           className={`grid grid-cols-${
             user && user.role === "admin" ? 3 : 2
-          } grid-rows-2 gap-2 self-start min-h-0 `}
+          } grid-rows-${
+            user && user.role === "admin" ? 3 : 2
+          } gap-2 self-start min-h-0 `}
         >
-          <div className="Kurs-Informationen card bg-white shadow-xl flex flex-col p-4 min-w-72 row-span-2">
+          <div
+            className={`Kurs-Informationen card bg-white shadow-xl flex flex-col p-4 min-w-72 row-span-${
+              user && user.role === "admin" ? 3 : 2
+            }`}
+          >
             {/* To Do: Maximum height  */}
 
             <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-base-100 rounded-box">
@@ -154,7 +160,9 @@ export default function ClassDetails() {
             </div>
             <p className="mt-4">{activity.description}</p>
           </div>
-          <aside className="card bg-white shadow-xl flex flex-col p-4  min-w-96  row-span-1 ">
+          <aside
+            className={`card bg-white shadow-xl flex flex-col p-4  min-w-96  row-span-1 `}
+          >
             <div className="flex flex-col lg:flex-row lg:items-center">
               <div className="lg:w-2/3 lg:pr-8">
                 <div className="flex gap-2 m-2">
@@ -409,13 +417,13 @@ export default function ClassDetails() {
             </dialog>
           </aside>
           {user && user.role === "admin" ? (
-            <div className="Angemeldete-Nutzer card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2 row-start-2 max-h-[400px]  overflow-x-auto overflow-y-auto">
+            <div className="Angemeldete-Nutzer card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2 row-start-2 row-span-2  overflow-x-auto overflow-y-auto">
               <div>
                 <h3 className="font-bold mt-10">Attending Users</h3>
                 {registeredUsers.length === 0 ? (
                   "no users registered yet"
                 ) : (
-                  <table className="table p-2 m-2 ">
+                  <table className="table p-2 m-2  max-h-[400px]">
                     <tbody>
                       {registeredUsers.map((student) => {
                         return (

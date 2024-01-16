@@ -149,7 +149,7 @@ export default function ClassSchedule() {
 
         {user?.role === "admin" && (
           <button
-            className="text-4xl text-secondary btn btn-circle mr-auto"
+            className="text-4xl text-secondary btn btn-circle "
             onClick={() => navigate("/createActivity")}
           >
             <FaCirclePlus />
