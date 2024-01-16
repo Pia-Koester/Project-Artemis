@@ -65,29 +65,31 @@ export default function Login() {
                       {errors.email.message}
                     </p>
                   )}
-                  {/* <FaRegEye /> */}
                 </div>
                 <div className="label self-start">
                   <span className="label-text">What is your password?</span>
                 </div>
-                <div className="flex items-center ">
-
-<input
-  type={showPassword ? 'text' : 'password'}
-                  placeholder="Type Password here"
-                  className="input input-bordered w-full max-w-xs input-primary "
-                  {...register("password", {
-                    required: "Password is required",
-                  })}
-                />
-                                  <div onMouseDown={handleShowPassword} onMouseUp={handleHidePassword}>
-                    <FaEye className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150"/>
+                <div className="flex items-center relative mr-7">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Type Password here"
+                    className="input input-bordered w-full max-w-xs input-primary "
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
+                  />
+                  <div
+                    onMouseDown={handleShowPassword}
+                    onMouseUp={handleHidePassword}
+                    className="absolute right-3"
+                  >
+                    <FaEye className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150" />
                   </div>
-                {errors.password?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.password.message}
-                  </span>
-                )}
+                  {errors.password?.type === "required" && (
+                    <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                      {errors.password.message}
+                    </span>
+                  )}
                 </div>
                 <button className="btn btn-primary mt-5">Submit</button>
               </label>

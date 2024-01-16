@@ -105,7 +105,7 @@ export default function ClassSchedule() {
     <div className="flex gap-3 flex-col items-center p-5">
       <h1 className="text-4xl mb-6 font-titleFont font-bold">Find your next class here</h1>{" "}
       <div className="flex flex-col md:flex-row w-full gap-2 md:justify-center items-center">
-        <div className="join ml-auto">
+        <div className="join">
           <button className="join-item btn" onClick={handlePrev}>
             «
           </button>
@@ -149,18 +149,10 @@ export default function ClassSchedule() {
 
         {user?.role === "admin" && (
           <button
-            className="text-4xl text-secondary btn btn-circle mr-auto"
+            className="text-4xl text-secondary btn btn-circle "
             onClick={() => navigate("/createActivity")}
           >
             <FaCirclePlus />
-          </button>
-        )}
-        {user?.role === "student" && (
-          <button
-            className=" btn-primary btn btn-outline ml-auto mr-10"
-            onClick={() => navigate("/membershipPlans")}
-          >
-            Get your membership <span className="underline">now</span>!
           </button>
         )}
       </div>
