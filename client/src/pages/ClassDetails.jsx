@@ -132,7 +132,7 @@ export default function ClassDetails() {
           <div className="grid grid-cols-2 grid-rows-2 gap-4 h-1/2">
             <div className="Kurs-Informationen card bg-white shadow-xl flex flex-col p-4 m-2 min-w-96 row-span-2">
               {/* To Do: block für Kursinformationen erstellen */}
-              <h1 className="text-2xl font-bold mb-4">{activity.title}</h1>
+              <h1 className="text-4xl mb-6 font-titleFont font-bold">{activity.title}</h1>
               <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-base-100 rounded-box">
                 {activity.type?.images.map((image) => {
                   return (
@@ -150,7 +150,7 @@ export default function ClassDetails() {
               <p className="mt-4">{activity.description}</p>
             </div>
             <aside className="card bg-white shadow-xl flex flex-col p-4 m-2 min-w-96 self-start row-span-1 h-full">
-              <h1 className="text-2xl font-bold mb-4 lg:hidden">
+              <h1 className="text-4xl mb-6 font-titleFont font-bold">
                 {activity.title}
               </h1>
               <div>
@@ -416,7 +416,7 @@ export default function ClassDetails() {
             {user && user.role === "admin" && (
               <div className="Angemeldete-Nutzer card bg-white shadow-xl flex flex-col p-4 m-2 min-w-96 row-span-1 ">
                 <div>
-                  <h3 className="font-bold mt-10">Attending Users</h3>
+                  <h3 className="text-2xl leading-6 font-medium text-gray-900 font-titleH3">Attending Users</h3>
                   {registeredUsers.length === 0 ? (
                     "no users registered yet"
                   ) : (

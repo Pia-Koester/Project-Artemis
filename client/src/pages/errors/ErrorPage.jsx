@@ -6,7 +6,7 @@ export default function ErrorPage() {
   return (
     <div className="grid h-screen place-content-center bg-white px-4">
       <div className="text-center">
-        <h1 className="text-9xl font-black text-gray-200">
+        <h1 className="text-4xl mb-6 font-titleFont font-bold">
           {error.status || error.code}
         </h1>
         <p>{error.message}</p>
