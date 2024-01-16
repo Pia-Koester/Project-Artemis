@@ -5,11 +5,13 @@ import { useState } from "react";
 import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
+import { FaEye } from "react-icons/fa6";
 
 export default function Registration() {
   const [step, setStep] = useState(1);
   const [loginInfo, setLoginInfo] = useState();
   const [personalInfo, setPersonalInfo] = useState();
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -87,6 +89,13 @@ export default function Registration() {
 
   const submitClasses = { 1: "hidden", 2: "hidden" };
 
+  const handleShowPassword = () => {
+    setShowPassword(true);
+  };
+  const handleHidePassword = () => {
+    setShowPassword(false);
+  };
+
   return (
     <AnimatePresence>
       <ToastContainer
@@ -106,7 +115,7 @@ export default function Registration() {
       <div>
         <div className="flex justify-center items-center">
           <div className="flex flex-col items-center justify-center w-4/12 p-4 h-100 ">
-            <h1 className="text-4xl font-bold mb-4 text-center">Sign Up</h1>
+            <h1 className="text-4xl mb-6 font-titleFont font-bold">Sign Up</h1>
             <ul className="steps steps-vertical lg:steps-horizontal my-5">
               <li
                 className={clsx(
@@ -139,7 +148,7 @@ export default function Registration() {
                   </div>
                   <input
                     placeholder="E-Mail"
-                    className="input input-bordered w-full max-w-xs input-primary "
+                    className="input input-bordered w-58 max-w-xs input-primary "
                     {...register("email", {
                       required: "E-mail is required",
                       pattern: {
@@ -162,8 +171,10 @@ export default function Registration() {
                   <div className="label self-start">
                     <span className="label-text">Set a password</span>
                   </div>
+                  <div className="flex relative mr-7 items-center ">
+
                   <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="Password"
                     className="input input-bordered w-full max-w-xs input-primary "
                     {...register("password", {
@@ -174,6 +185,15 @@ export default function Registration() {
                       },
                     })}
                   />
+                  <div
+                    onMouseDown={handleShowPassword}
+                    onMouseUp={handleHidePassword}
+                    className="absolute right-3"
+                  >
+                    <FaEye className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150" />
+                  </div>
+                  </div>
+                 
                   {errors.password?.type === "required" && (
                     <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                       {errors.password.message}

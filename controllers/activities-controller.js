@@ -19,8 +19,8 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
   //defining the weekdays for different filter functions
   const start = new Date(startTime);
-  const options = { weekday: "long" };
-  const weekday = new Intl.DateTimeFormat("en-En", options).format(start);
+  const options = { weekday: "long", timeZone: "UTC" };
+  const weekday = new Intl.DateTimeFormat("en-En", options).format(start); //TO DO:
 
   const activity = await Activity.create({
     title,
@@ -37,8 +37,7 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun, type } = req.query;
-  console.log(instructor);
-  
+
   if (!mon && !sun) {
     const activities = await Activity.find({})
       .populate("type")
@@ -47,35 +46,36 @@ const getActivities = asyncWrapper(async (req, res, next) => {
         startTime: "desc",
       });
     res.json(activities);
-  }
+
+  } else {
+    let filter = {
+      startTime: {
+        $gte: new Date(mon),
+        $lte: new Date(sun),
+      },
+    };
   
-  let filter = {
-    startTime: {
-      $gte: new Date(mon),
-      $lte: new Date(sun),
-    },
-  };
+    const queryParams = { instructor, type };
+  
+    for (const key of Object.keys(queryParams)) {
+      const value = queryParams[key];
+      if (value !== undefined) {
+        filter[key] = value;
+      }
 
-  const queryParams = { instructor, type };
-
-  for (const key of Object.keys(queryParams)) {
-    const value = queryParams[key];
-    if (value !== undefined) {
-      filter[key] = value;
     }
+  
+    const activities = await Activity.find(filter)
+      .populate("type")
+      .populate("instructor")
+      .sort({
+        startTime: "asc",
+      });
+  
+    res.json(activities);
   }
-  console.log(filter);
 
 
-
-  const activities = await Activity.find(filter)
-    .populate("type")
-    .populate("instructor")
-    .sort({
-      startTime: "asc",
-    });
-
-  res.json(activities);
 });
 
 const getActivity = asyncWrapper(async (req, res, next) => {

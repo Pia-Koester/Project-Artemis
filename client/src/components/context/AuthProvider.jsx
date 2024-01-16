@@ -65,8 +65,9 @@ export default function AuthProvider({ children }) {
       .put("/users/profile", data)
       .then((response) => {
         console.log("Data from api", response.data);
+        setUser((prev) => ({ ...prev, ...response.data }));
         navigate("/userProfile/details");
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);

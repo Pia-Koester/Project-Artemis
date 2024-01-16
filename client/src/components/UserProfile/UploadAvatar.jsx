@@ -4,6 +4,7 @@ import axiosClient from "../../api/axiosClient";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { AuthContext } from "../context/AuthProvider";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function UploadAvatar() {
   const { id } = useParams();
@@ -88,6 +89,13 @@ export default function UploadAvatar() {
         pauseOnHover={false}
         theme="light"
       />
+          <div className="flex justify-center">
+      <button
+        className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
+        onClick={() => navigate(-1)}
+      >
+        <FaArrowLeft />
+      </button>
       <div className="bg-gray-100 w-96 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
           <div className="flex justify-center mb-6"></div>
@@ -122,6 +130,7 @@ export default function UploadAvatar() {
           {render(multipleImages)}
         </div>
       </div>
+    </div>
     </div>
   );
 }

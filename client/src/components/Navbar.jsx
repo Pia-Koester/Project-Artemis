@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import navLogo from "../assets/logos/WortBildmarkeMAINLOGO_anthra.svg";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthProvider";
@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 export default function Navbar() {
   const { isLoading, user, logout } = useContext(AuthContext);
-
+  const navigate = useNavigate()
   return (
     <>
       {!isLoading && (
@@ -21,7 +21,15 @@ export default function Navbar() {
               />
             </NavLink>
           </div>
-
+          {/* TO DO: animate button to pulse */}
+          {user?.role === "student" && (
+            <button
+              className=" btn-primary btn btn-outline ml-auto mr-10"
+              onClick={() => navigate("/membershipPlans")}
+            >
+              Get your membership
+            </button>
+          )}
           {!user ? (
             <>
               <div className="flex-none ">
@@ -39,7 +47,7 @@ export default function Navbar() {
             <div className="flex-none">
               <div className="flex-1">
                 <a href="#" className="btn btn-ghost text-xl">
-                  <p>{`Hello ${user.firstName}`}</p>
+                  <p>{`Hello, ${user.firstName}`}</p>
                 </a>
               </div>
               <div className="dropdown dropdown-end">
@@ -90,7 +98,7 @@ export default function Navbar() {
                     </li>
                   )}
                   <li>
-                    <Link to={"/userProfile/details"}>Settings</Link>
+                    <Link to={"/userProfile/details"}>Account</Link>
                   </li>
                   <li>
                     <Link onClick={logout}>Logout</Link>

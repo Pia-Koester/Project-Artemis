@@ -39,7 +39,7 @@ export default function CreateUserMembership() {
       </div>
       <div className="grid lg:grid-cols-4 sm:grid-cols-1">
         {!membershipPlan && !user ? (
-          <p>Loading...</p>
+          <span className="loading loading-dots loading-lg"></span>
         ) : (
           membershipPlan.map((plan) => {
             return <MembershipCard key={plan._id} plan={plan} user={user} />;

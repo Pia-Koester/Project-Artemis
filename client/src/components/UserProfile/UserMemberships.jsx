@@ -46,7 +46,7 @@ export default function UserMemberships() {
           <div className="card-body items-center text-center">
             <h2 className="card-title">Your active membership</h2>
           </div>
-          <div class="bg-base-100 flex justify-center items-center mb-5">
+          <div class="bg-base-100 flex justify-center items-center mb-48">
             <div class="space-y-16">
               <div class="w-96 h-56 m-auto bg-red-100 rounded-xl relative text-white shadow-2xl transition-transform transform hover:scale-110">
                 <img

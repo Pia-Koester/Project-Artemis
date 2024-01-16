@@ -27,7 +27,7 @@ export default function UserCard({ user }) {
   };
   return (
     <>
-      <tbody>
+    
         <tr>
           <th>
             <div className="avatar"></div>
@@ -120,7 +120,6 @@ export default function UserCard({ user }) {
             </button>
           </td>
         </tr>
-      </tbody>
 
       <dialog ref={modalRef} id="my_modal_1" className="modal">
         <div className="modal-box">

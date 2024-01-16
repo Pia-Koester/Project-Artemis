@@ -18,7 +18,6 @@ export default function Dashboard() {
       .get("/users")
       .then((response) => {
         setUsers(response.data);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -195,6 +194,29 @@ export default function Dashboard() {
                   <p>Create Activity</p>
                 </span>
               </Link>
+              <Link
+                to={"/createinstructor"}
+                class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white"
+              >
+                <span className="grid grid-cols-2 w-1/3 whitespace-nowrap">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+                    />
+                  </svg>
+
+                  <p>Create Instructor</p>
+                </span>
+              </Link>
             </nav>
           </div>
 
@@ -226,7 +248,7 @@ export default function Dashboard() {
                         </tr>
                       </thead>
                       {!memberships ? (
-                        <p>Loading...</p>
+                        <span className="loading loading-dots loading-lg"></span>
                       ) : (
                         memberships.map((membership) => {
                           return (
@@ -289,7 +311,7 @@ export default function Dashboard() {
                         </tr>
                       </thead>
                       {!type ? (
-                        <p>Loading...</p>
+                        <span className="loading loading-dots loading-lg"></span>
                       ) : (
                         type.map((type) => {
                           return (
@@ -335,7 +357,7 @@ export default function Dashboard() {
                       </tr>
                     </thead>
                     {!activities ? (
-                      <p>Loading...</p>
+                      <span className="loading loading-dots loading-lg"></span>
                     ) : (
                       activities.map((activity) => {
                         const getStartDate = activity.startTime;
@@ -388,41 +410,52 @@ export default function Dashboard() {
             </div>
 
             <div class="mt-8 bg-white p-4 shadow rounded-lg">
-              <h2 class="text-gray-500 text-lg font-semibold pb-4">
-                Users Overview
-              </h2>
-              <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
-              <div className="overflow-x-auto">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Profile Pic</th>
-                      <th>Name</th>
-                      <th>E-mail and role</th>
-                      <th>Status</th>
-                      <th>Classes booked</th>
-                      <th>Information</th>
-                      <th>Delete user</th>
-                    </tr>
-                  </thead>
+  <h2 class="text-gray-500 text-lg font-semibold pb-4">
+    Users Overview
+  </h2>
+  <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
 
-                  {!users ? (
-                    <p>Loading...</p>
-                  ) : (
-                    users.map((user) => {
-                      return (
-                        <UserCard key={user._id} user={user} id={user._id} />
-                      );
-                    })
-                  )}
-                </table>
-              </div>
-              <div class="text-right mt-4">
-                <Link to={"/userProfile/usersOverview"} class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/8 mb-2">
-                  View More
-                </Link>
-              </div>
-            </div>
+
+  {!users ? (
+    <div class="flex justify-center">
+      <div class="relative">
+        <div class="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+        <div class="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin"></div>
+      </div>
+    </div>
+  ) : (
+    <>
+      <div className="overflow-x-auto">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Profile Pic</th>
+              <th>Name</th>
+              <th>E-mail and role</th>
+              <th>Status</th>
+              <th>Classes booked</th>
+              <th>Information</th>
+              <th>Delete user</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <UserCard key={user._id} user={user} id={user._id} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="text-right mt-4">
+        <Link
+          to={"/userProfile/usersOverview"}
+          class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/8 mb-2"
+        >
+          View More
+        </Link>
+      </div>
+    </>
+  )}
+</div>
           </div>
         </div>
       </div>

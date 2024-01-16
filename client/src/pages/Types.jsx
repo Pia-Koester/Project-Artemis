@@ -27,9 +27,10 @@ export default function Types() {
         <div className="flex flex-col items-center justify-center">
           <div className="bg-gray-100  flex items-center justify-center">
             <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-              <h2 className="text-2xl font-semibold text-center mb-4">
+              <h2 className=" flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-1">
                 Activity Types
               </h2>
+
               <div className="overflow-x-auto">
                 <table className="table">
                   {/* head */}

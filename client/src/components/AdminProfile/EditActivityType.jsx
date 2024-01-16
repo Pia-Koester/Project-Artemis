@@ -1,8 +1,11 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import axiosClient from "../../api/axiosClient";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function EditActivityType({ activitytype }) {
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -20,16 +23,47 @@ export default function EditActivityType({ activitytype }) {
     axiosClient
       .patch(`activityTypes/${activitytype._id}/update`, data)
       .then((response) => {
-        console.log(response.data);
+        notify()
+        setTimeout(() => {
+          navigate(-1)
+        }, 2500);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const notify = () =>
+  toast.success(
+    "--Edit Successful--",
+    {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    }
+  );
+
   return (
     <>
       <div className="flex flex-col items-center justify-center">
+      <ToastContainer
+          position="top-center"
+          autoClose={1500}
+          limit={1}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+          theme="light"
+        />
         <div className="bg-gray-100 w-96 flex items-center justify-center">
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
             <div className="flex justify-center mb-6"></div>

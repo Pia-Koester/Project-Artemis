@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import { useContext, useState } from "react";
 import { AuthContext } from "../components/context/AuthProvider";
 import Landingpage from "../pages/Landingpage";
+import Skeleton from "../pages/Skeleton";
 
 export default function Authlayout() {
   const { isLoading } = useContext(AuthContext);
@@ -11,9 +12,7 @@ export default function Authlayout() {
   return (
     <>
       {isLoading ? (
-        <div className="flex flex-col gap-4 w-52">
-          <div className="skeleton h-32 w-full">TEst TEst</div>
-        </div>
+        <Skeleton />
       ) : (
         <>
           <Navbar />

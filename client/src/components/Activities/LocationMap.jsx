@@ -6,7 +6,7 @@ export default function LocationMap({ location }) {
 
   return (
     <MapContainer
-      className="w-full h-96"
+      className="w-full h-full"
       center={position}
       zoom={16}
       scrollWheelZoom={false}

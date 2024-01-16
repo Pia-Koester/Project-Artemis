@@ -8,6 +8,7 @@ const imageSchema = new Schema({
 const activityTypeSchema = new Schema({
   type: { type: String, required: true, unique: true, lowercase: true },
   images: [imageSchema],
+  icon: { type: String },
 });
 
 const ActivityType = model("Activitytype", activityTypeSchema);

@@ -6,7 +6,7 @@ import {
   FaArrowLeft,
   FaCalendarPlus,
 } from "react-icons/fa6";
-import { useNavigate, useParams, useRevalidator } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import { handleCancelation } from "../api/cancelationAcitvity";
 import { useState, useContext } from "react";
@@ -29,8 +29,6 @@ export default function ClassDetails() {
     activity.capacity - activity.registeredUsers.length
   );
 
-  const revalidator = useRevalidator();
-
   const navigate = useNavigate();
 
   const handleBooking = () => {
@@ -43,18 +41,7 @@ export default function ClassDetails() {
         );
         setShowcalendarbutton(true);
         notify();
-        setUser((prev) => {
-          return {
-            ...prev,
-            classesRegistered: [
-              ...prev.classesRegistered,
-              response.data.activity,
-            ],
-            activeMembership: response.data.user.activeMembership,
-          };
-        });
-        revalidator.revalidate();
-        // console.log("Data from api", response);
+        setUser(response.data.user);
       })
       .catch((err) => {
         console.log(err.response.status);
@@ -66,6 +53,18 @@ export default function ClassDetails() {
 
   const notify = () =>
     toast.success("Booked Successfully", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+    const notifyCancelation = () =>
+    toast.success("Canceled Successfully", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -120,6 +119,8 @@ export default function ClassDetails() {
 
   return (
     <>
+      {" "}
+      <h1 className="text-4xl flex justify-center mb-6 font-titleFont font-bold">{activity.title}</h1>
       <div className="flex md:flex-row flex-col-reverse justify-center items-start">
         {" "}
         <button
@@ -141,11 +142,21 @@ export default function ClassDetails() {
           pauseOnHover={false}
           theme="light"
         />
-        <div className="flex md:flex-row flex-col-reverse justify-center   ">
-          <div className="Kurs-Informationen card bg-white shadow-xl flex flex-col p-4 m-2 min-w-96">
-            {/* To Do: block für Kursinformationen erstellen */}
-            <h1 className="text-2xl font-bold mb-4">{activity.title}</h1>
-            <div className="carousel carousel-center rounded-box w-96 self-center">
+        <div
+          className={`grid grid-cols-${
+            user && user.role === "admin" ? 3 : 2
+          } grid-rows-${
+            user && user.role === "admin" ? 3 : 2
+          } gap-2 self-start min-h-0 `}
+        >
+          <div
+            className={`Kurs-Informationen card bg-white shadow-xl flex flex-col p-4 min-w-72 row-span-${
+              user && user.role === "admin" ? 3 : 2
+            }`}
+          >
+            {/* To Do: Maximum height  */}
+
+            <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-base-100 rounded-box">
               {activity.type?.images.map((image) => {
                 return (
                   <div className="carousel-item">
@@ -160,53 +171,50 @@ export default function ClassDetails() {
               })}
             </div>
             <p className="mt-4">{activity.description}</p>
-            <div className="flex gap-2 m-2">
-              <FaLocationDot className="text-2xl" />
-              <p className="font-bold">Location</p>
-            </div>
-            <LocationMap
-              className="w-4/5 self-center"
-              location={activity.location}
-            />
           </div>
-          <aside className="card w-96 bg-white shadow-2xl flex flex-col p-4 m-2 self-start">
-            <h1 className="text-2xl font-bold mb-4 lg:hidden">
-              {activity.title}
-            </h1>
-            <div>
-              <div className="flex gap-2 m-2">
-                <FaRegCalendar className="text-2xl" />
-                <p className="font-bold">Date</p>
+          <aside
+            className={`card bg-white shadow-xl flex flex-col p-4  min-w-96  row-span-1 `}
+          >
+            <div className="flex flex-col lg:flex-row lg:items-center">
+              <div className="lg:w-2/3 lg:pr-8">
+
+                <div className="flex gap-2 m-2">
+                  <FaRegCalendar className="text-2xl" />
+                  <p className="font-titleH3 font-semibold text-xl">Date</p>
+                </div>
+                <p>{formattedStartDate}</p>
+
+                <div className="flex gap-2 m-2">
+                  <FaClock className="text-2xl" />
+                  <p className="font-titleH3 font-semibold text-xl">Time</p>
+                </div>
+                <p>
+                  {formattedStartTime} - {formattedEndTime} ({duration} Min.)
+                </p>
+
+                <div className="flex gap-2 m-2">
+                  <FaPersonDress className="text-2xl" />
+                  <p className="font-titleH3 font-semibold text-xl">Capacity</p>
+                </div>
+                <CapacityBadge openSlots={openSlots} />
               </div>
-              <p>{formattedStartDate}</p>
-            </div>
-            <div>
-              <div className="flex gap-2 m-2">
-                <FaClock className="text-2xl" />
-                <p className="font-bold">Time</p>
+
+              <div className="lg:w-1/3 lg:pl-8">
+                <div className="avatar self-center mt-3 sm:flex gap-2">
+                  <div className="w-24 mask mask-hexagon">
+                    <img
+                      src={activity.instructor.image.url}
+                      alt={activity.instructor.firstName}
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-rows-2 mt-5 mr-4">
+                  <p className="font-titleH3 font-semibold text-xl">Instructor:</p>
+                  <p>{activity.instructor.firstName}</p>
+                </div>
               </div>
-              <p>
-                {formattedStartTime} - {formattedEndTime} ({duration} Min.)
-              </p>
             </div>
 
-            <div>
-              <div className="flex gap-2 m-2">
-                <FaPersonDress className="text-2xl" />
-                <p className="font-bold">Capacity</p>
-              </div>
-              <CapacityBadge openSlots={openSlots} />
-            </div>
-
-            <div className="avatar self-center mt-3 sm:flex gap-2">
-              <div className="grid grid-rows-2 mt-5">
-                <p className="font-bold">Instructor:</p>
-                <p>{activity.instructor.firstName}</p>
-              </div>
-              <div className="w-24 mask mask-hexagon">
-                <img src={activity.instructor.image.url} />
-              </div>
-            </div>
             <div className="flex justify-center flex-wrap">
               {user?.role !== "admin" && (
                 <>
@@ -234,9 +242,6 @@ export default function ClassDetails() {
                       >
                         Cancel Booking
                       </button>{" "}
-                      <button className="btn btn-square btn-outline">
-                        <FaCalendarPlus />
-                      </button>
                     </>
                   )}
                 </>
@@ -318,7 +323,7 @@ export default function ClassDetails() {
                         className="btn btn-secondary mr-3 self-center mt-2"
                         onClick={() => {
                           handleCancelation(id, setUser, setOpenSlots);
-                          // window.location.reload();
+                          notifyCancelation();
                         }}
                       >
                         Cancel Booking
@@ -420,14 +425,15 @@ export default function ClassDetails() {
                 </div>
               </div>
             </dialog>
-
-            {user && user.role === "admin" && (
+          </aside>
+          {user && user.role === "admin" ? (
+            <div className="Angemeldete-Nutzer card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2 row-start-2 row-span-2  overflow-x-auto overflow-y-auto">
               <div>
-                <h3 className="font-bold mt-10">Attending Users</h3>
+                <h3 className="flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-1">Attending Users</h3>
                 {registeredUsers.length === 0 ? (
-                  "no users registered yet"
+                  <p className="text-center mt-2">no users registered yet</p>
                 ) : (
-                  <table className="table p-2 m-2">
+                  <table className="table p-2 m-2  max-h-[400px]">
                     <tbody>
                       {registeredUsers.map((student) => {
                         return (
@@ -461,13 +467,25 @@ export default function ClassDetails() {
                   </table>
                 )}
               </div>
-            )}
-          </aside>
+            </div>
+          ) : (
+            <div className="Kursort card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2">
+              <div className="flex gap-2 m-2">
+                <FaLocationDot className="text-2xl" />
+                <p className="font-bold">Location</p>
+              </div>
+              <LocationMap
+                className="w-4/5 self-center"
+                location={activity.location}
+              />
+
+            </div>
+          )}{" "}
+          {user && user.role === "admin" && (
+            <EditActivity activity={activity} hideBackButton  />
+          )}
+
         </div>
-        {user && user.role === "admin" && (
-          <EditActivity activity={activity} hideBackButton />
-        )}
-        <div></div>
       </div>
     </>
   );

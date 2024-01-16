@@ -37,46 +37,75 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
   const { user } = useContext(AuthContext);
 
   return (
-    <motion.div
-      whileHover={past ? {} : { scale: 1.1 }}
-      className={clsx(
-        "card  w-full  text-primary-content flex flex-col shadow-lg",
-        past && "opacity-40 bg-primary ",
-        isBooked && "bg-gradient-to-r from-success to-[#3fea8c]",
-        !past && !isBooked && "bg-gradient-to-r from-primary to-[#7ddaf2] "
-      )}
-    >
-      {/* QUESTION: Why is the text running outside the box on medium sizes?  */}
-      <Link
-        onClick={(e) => {
-          e.preventDefault();
-          if (!past) navigate(`/details/${activity._id}`);
-        }}
+    <>
+      <motion.div
+        whileHover={past ? {} : { scale: 1.1 }}
+        className={clsx(
+          "card mb-2  w-full  text-primary-content flex flex-col shadow-lg bg-gradient-to-l from-primary to-[#77cfe5] ",
+          past && "opacity-40"
+          // isBooked && "bg-gradient-to-r from-success to-[#3fea8c]",
+          // !past && !isBooked && "bg-gradient-to-r from-primary to-[#7ddaf2] "
+        )}
       >
-        <div className="card-body overflow-hidden">
-          <div className="flex">
-            <p>
-              {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
-            </p>
-            {role === "admin" && !past && (
-              <button>
-                <FaPencil className="text-neutral text-xl" />
-              </button>
-            )}
-          </div>
-          <h2 className="card-title text-wrap ">{activity.title}</h2>
-          <p>{activity.description}</p>
-          <div className="flex justify-between items-end">
-            <CapacityBadge openSlots={openSlots} />
-
-            <div className="avatar">
-              <div className="w-24 mask mask-hexagon">
-                <img src={activity.instructor?.image?.url} />
+        {/* QUESTION: Why is the text running outside the box on medium sizes?  */}
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            if (!past) navigate(`/details/${activity._id}`);
+          }}
+        >
+          <div className="grid grid-cols-2 gap-2">
+            <div className="col-span-2">
+              {" "}
+              <div className="flex mt-3 justify-center gap-5">
+                <p>
+                  {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
+                </p>
+                {role === "admin" && !past && (
+                  <button>
+                    <FaPencil className="text-neutral text-xl" />
+                  </button>
+                )}
+              </div>
+              <div className="border-t border-cyan-300 mt-2"></div>
+            </div>
+            <div className="col-span-2 row-start-2">
+              {" "}
+              <div className="flex justify-center">
+                <h2 className="card-title text-wrap font-titleFont">{activity.title}</h2>
+              </div>
+            </div>
+            <div className="row-span-2 col-start-2 row-start-3">
+              {" "}
+              <div className="avatar self-center mt-4 ml-5">
+                <div className="w-20 mask mask-hexagon ">
+                  <img src={activity.instructor?.image?.url} />
+                </div>
+              </div>
+            </div>
+            <div className="row-span-2 col-start-1 row-start-3">
+              <div className="flex flex-col gap-1 ml-3 mt-4">
+                <div>
+                  <p className="font-medium">Instructor:</p>
+                  <p>{activity?.instructor?.firstName}</p>
+                </div>
+                <div>
+                  <p className="font-medium">Attendants:</p>
+                  <p>{activity?.registeredUsers?.length}</p>
+                </div>
+              </div>
+            </div>
+            <div className="row-start-5 ml-3 mb-2 mt-1">
+             <img src={activity.type?.icon} className="w-10 " />
+            </div>
+            <div className="row-start-5 mt-1">
+              <div className="flex justify-end ">
+                <CapacityBadge openSlots={openSlots} isBooked={isBooked} />
               </div>
             </div>
           </div>
-        </div>
-      </Link>
-    </motion.div>
+        </Link>
+      </motion.div>
+    </>
   );
 }
