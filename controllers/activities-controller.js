@@ -37,7 +37,6 @@ const createActivity = asyncWrapper(async (req, res, next) => {
 
 const getActivities = asyncWrapper(async (req, res, next) => {
   const { instructor, mon, sun, type } = req.query;
-  console.log(instructor);
 
   if (!mon && !sun) {
     const activities = await Activity.find({})
@@ -47,33 +46,36 @@ const getActivities = asyncWrapper(async (req, res, next) => {
         startTime: "desc",
       });
     res.json(activities);
-  }
 
-  let filter = {
-    startTime: {
-      $gte: new Date(mon),
-      $lte: new Date(sun),
-    },
-  };
+  } else {
+    let filter = {
+      startTime: {
+        $gte: new Date(mon),
+        $lte: new Date(sun),
+      },
+    };
+  
+    const queryParams = { instructor, type };
+  
+    for (const key of Object.keys(queryParams)) {
+      const value = queryParams[key];
+      if (value !== undefined) {
+        filter[key] = value;
+      }
 
-  const queryParams = { instructor, type };
-
-  for (const key of Object.keys(queryParams)) {
-    const value = queryParams[key];
-    if (value !== undefined) {
-      filter[key] = value;
     }
+  
+    const activities = await Activity.find(filter)
+      .populate("type")
+      .populate("instructor")
+      .sort({
+        startTime: "asc",
+      });
+  
+    res.json(activities);
   }
-  console.log(filter);
 
-  const activities = await Activity.find(filter)
-    .populate("type")
-    .populate("instructor")
-    .sort({
-      startTime: "asc",
-    });
 
-  res.json(activities);
 });
 
 const getActivity = asyncWrapper(async (req, res, next) => {
