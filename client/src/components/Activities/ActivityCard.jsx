@@ -92,7 +92,7 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
                 </div>
               </div>
             </div>
-            <div className="flex justify-evenly items-center my-3">
+            <div className="flex justify-center items-center my-3">
               <div className="flex gap-1 items-center">
                 <FaPeopleGroup className="text-2xl" />
                 <p>{activity?.registeredUsers?.length}</p>
