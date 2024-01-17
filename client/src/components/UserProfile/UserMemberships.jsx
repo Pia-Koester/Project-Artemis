@@ -44,7 +44,7 @@ export default function UserMemberships() {
       ) : (
         <div>
           <div className="card-body items-center text-center">
-            <h2 className="card-title">Your active membership</h2>
+            <h2 className="text-2xl leading-6 font-medium text-gray-900 font-titleH3">Your active membership</h2>
           </div>
           <div class="bg-base-100 flex justify-center items-center mb-48">
             <div class="space-y-16">
