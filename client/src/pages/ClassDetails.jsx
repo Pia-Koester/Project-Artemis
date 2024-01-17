@@ -172,7 +172,7 @@ export default function ClassDetails() {
                 );
               })}
             </div>
-            <p className="mt-4">{activity.description}</p>
+            <p className="mt-4 max-w-md">{activity.description}</p>
           </div>
           <aside
             className={`card bg-white shadow-xl flex flex-col p-4  min-w-96  row-span-1 `}
@@ -263,7 +263,8 @@ export default function ClassDetails() {
               <div
                 className={clsx(
                   "modal-box",
-                  user?.activeMembership === null || user?.activeMembership.status === "inactive" && "hidden"
+                  user?.activeMembership === null ||
+                    (user?.activeMembership.status === "inactive" && "hidden")
                 )}
               >
                 <div className="card-body items-center text-center">
@@ -338,49 +339,48 @@ export default function ClassDetails() {
                 </div>
               </div>
 
-              {user?.activeMembership?.status === "inactive" && 
-              <div>
-               
-                <div className="w-full mx-auto">
-                  <div className="flex flex-col p-5 rounded-lg shadow bg-white">
-                    <div className="flex flex-col items-center text-center">
-                      <div className="inline-block p-4 bg-yellow-50 rounded-full">
-                        <svg
-                          className="w-12 h-12 fill-current text-yellow-500"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M0 0h24v24H0V0z" fill="none" />
-                          <path d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z" />
-                        </svg>
+              {user?.activeMembership?.status === "inactive" && (
+                <div>
+                  <div className="w-full mx-auto">
+                    <div className="flex flex-col p-5 rounded-lg shadow bg-white">
+                      <div className="flex flex-col items-center text-center">
+                        <div className="inline-block p-4 bg-yellow-50 rounded-full">
+                          <svg
+                            className="w-12 h-12 fill-current text-yellow-500"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z" />
+                          </svg>
+                        </div>
+                        <h2 className="mt-2 font-semibold text-gray-800">
+                          Warning! No credits available
+                        </h2>
+                        <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                          You dont have an any more credits available with your
+                          current membership plan. In order to book a class,
+                          please purchase another membership plan.
+                        </p>
                       </div>
-                      <h2 className="mt-2 font-semibold text-gray-800">
-                        Warning! No credits available
-                      </h2>
-                      <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                        You dont have an any more credits available with your
-                        current membership plan. In order to book a class,
-                        please purchase another membership plan.
-                      </p>
-                    </div>
-                    <div className="modal-action">
-                      <form method="dialog">
-                        <button className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
-                          Cancel
-                        </button>
+                      <div className="modal-action">
+                        <form method="dialog">
+                          <button className="flex-1 px-4 py-2 bg-gray-200 hover:bg-gray-400 text-gray-800 text-sm font-medium rounded-md">
+                            Cancel
+                          </button>
 
-                        <button
-                          onClick={() => navigate("/membershipPlans")}
-                          className="flex-1 px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium rounded-md"
-                        >
-                          Purchase Membership Plan
-                        </button>
-                      </form>
+                          <button
+                            onClick={() => navigate("/membershipPlans")}
+                            className="flex-1 px-4 py-2 ml-2 bg-primary hover:bg-success text-white text-sm font-medium rounded-md"
+                          >
+                            Purchase Membership Plan
+                          </button>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-               }
+              )}
               <div
                 className={clsx(
                   "modal-box",
@@ -429,7 +429,7 @@ export default function ClassDetails() {
             </dialog>
           </aside>
           {user && user.role === "admin" ? (
-            <div className="Angemeldete-Nutzer card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2 row-start-2 row-span-2  overflow-x-auto overflow-y-auto">
+            <div className="Angemeldete-Nutzer card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2 row-start-2 row-span-2  max-h-[550px] overflow-x-auto overflow-y-auto">
               <div>
                 <h3 className="flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-1">
                   Attending Users
@@ -437,7 +437,7 @@ export default function ClassDetails() {
                 {registeredUsers.length === 0 ? (
                   <p className="text-center mt-2">no users registered yet</p>
                 ) : (
-                  <table className="table p-2 m-2  max-h-[400px]">
+                  <table className="table p-2 m-2  max-h-[300px] overflow-x-auto overflow-y-auto">
                     <tbody>
                       {registeredUsers.map((student) => {
                         return (
