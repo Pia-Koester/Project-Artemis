@@ -63,7 +63,7 @@ export default function EditActivityType({ activitytype }) {
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
             <div className="flex justify-center mb-6"></div>
             <h2 className="text-2xl font-semibold text-center mb-4">
-              Edit {typetitle}
+              Edit Activity Type
             </h2>
 
             <form className="uploadform" onSubmit={handleSubmit(onSubmit)}>

@@ -4,7 +4,7 @@ import logoSmall from "../assets/logos/Bildmarke_anthra.svg";
 export default function Footer() {
   return (
     <>
-      <footer className="footer p-10 bg-base-200 text-base-content mt-2">
+      <footer className="footer p-10 bg-base-200 text-base-content mt-auto">
         <nav>
           <header className="footer-title">Erfahre mehr</header>
           <a className="link link-hover">Therapeutisches Boxen</a>

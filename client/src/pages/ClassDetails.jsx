@@ -118,7 +118,7 @@ export default function ClassDetails() {
   const [showcalendarbutton, setShowcalendarbutton] = useState(false);
 
   return (
-    <>
+    <div className="mb-4">
       {" "}
       <h1 className="text-4xl flex justify-center mb-6 font-titleFont font-bold">
         {activity.title}
@@ -490,6 +490,6 @@ export default function ClassDetails() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

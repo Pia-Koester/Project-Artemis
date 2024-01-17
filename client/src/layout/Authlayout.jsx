@@ -10,7 +10,7 @@ export default function Authlayout() {
   const { isLoading } = useContext(AuthContext);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       {isLoading ? (
         <Skeleton />
       ) : (
@@ -20,6 +20,6 @@ export default function Authlayout() {
           <Footer />
         </>
       )}
-    </>
+    </div>
   );
 }
