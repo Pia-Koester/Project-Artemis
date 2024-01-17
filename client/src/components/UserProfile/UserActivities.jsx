@@ -35,10 +35,7 @@ export default function UserActivities() {
 
   return (
     <>
-      <div className="card-body items-center text-center">
-        <h2 className="text-2xl leading-6 font-medium text-gray-900 font-titleH3">My Booked Classes</h2>
-      </div>
-      <ToastContainer
+          <ToastContainer
         position="top-center"
         autoClose={1500}
         limit={1}
@@ -51,6 +48,10 @@ export default function UserActivities() {
         pauseOnHover={false}
         theme="light"
       />
+      <div className="text-center mb-5">
+        <h2 className="text-2xl leading-6 font-medium text-gray-900 font-titleH3">My Booked Classes</h2>
+      </div>
+
       {!userActivity ? (
         <span className="loading loading-dots loading-lg"></span>
       ) : userActivity.length === 0 ? (

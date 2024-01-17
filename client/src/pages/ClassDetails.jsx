@@ -263,7 +263,7 @@ export default function ClassDetails() {
               <div
                 className={clsx(
                   "modal-box",
-                  user?.activeMembership === null && "hidden"
+                  user?.activeMembership === null || user?.activeMembership.status === "inactive" && "hidden"
                 )}
               >
                 <div className="card-body items-center text-center">
@@ -337,12 +337,10 @@ export default function ClassDetails() {
                   </form>
                 </div>
               </div>
-              <div
-                className={clsx(
-                  "modal-box",
-                  user?.activeMembership?.status === "active" && "hidden"
-                )}
-              >
+
+              {user?.activeMembership?.status === "inactive" && 
+              <div>
+               
                 <div className="w-full mx-auto">
                   <div className="flex flex-col p-5 rounded-lg shadow bg-white">
                     <div className="flex flex-col items-center text-center">
@@ -382,6 +380,7 @@ export default function ClassDetails() {
                   </div>
                 </div>
               </div>
+               }
               <div
                 className={clsx(
                   "modal-box",

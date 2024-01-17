@@ -45,10 +45,10 @@ export default function EditUserInformation() {
   const formatedDate = user?.dateOfBirth.split("T")[0];
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mb-4">
       <button
         className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
-        onClick={() => navigate(`/userProfile/usersOverview/${id}`)}
+        onClick={() => navigate(`/userProfile/usersOverview`)}
       >
         <FaArrowLeft />
       </button>

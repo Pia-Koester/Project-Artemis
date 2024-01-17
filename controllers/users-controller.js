@@ -68,7 +68,14 @@ const updateProfile = asyncWrapper(async (req, res, next) => {
     id,
     { firstName, lastName, phoneNumber, address, dateOfBirth },
     { new: true }
-  );
+  ).populate({
+    path: "classesRegistered",
+    populate: { path: "instructor", model: "Instructor" },
+  })
+  .populate({
+    path: "activeMembership",
+    populate: { path: "plan", model: "MembershipPlan" },
+  });
   res.json(user);
 });
 

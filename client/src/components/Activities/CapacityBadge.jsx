@@ -13,7 +13,7 @@ export default function CapacityBadge({ openSlots, isBooked }) {
 
   const badgeClass = clsx({
     "inline-flex items-center justify-center mr-3 min-w-[110px] text-xs font-semibold px-2.5 py-0.5 rounded-full dark:text-gray-300": true,
-    "bg-lime-100 text-blue-800 dark:bg-lime-900": isBooked,
+    "bg-neutral text-white": isBooked,
     "bg-emerald-100 text-emerald-800 dark:bg-emerald-900": openSlots > 4 && !isBooked,
     "bg-yellow-100 text-yellow-800 dark:bg-yellow-900": openSlots <= 4 && openSlots > 2 && !isBooked,
     "bg-red-100 text-red-800 dark:bg-red-900": openSlots <= 2 && !isBooked,
