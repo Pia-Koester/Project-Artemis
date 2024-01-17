@@ -24,7 +24,7 @@ export default function UsersOverview() {
     <>
       <button
         onClick={() => navigate(-1)}
-        className="btn btn-circle btn-neutral ml-5 mt-2 self-start fixed"
+        className="btn btn-circle btn-neutral ml-2 mr-8 mt-20 self-start fixed"
       >
         <FaArrowLeft />
       </button>

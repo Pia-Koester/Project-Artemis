@@ -144,7 +144,7 @@ export default function EditMembershipInformation() {
                       />
                       {errors.validity?.type === "required" && (
                         <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                          {errors.totalCredits.message}
+                          {errors.validity.message}
                         </span>
                       )}
                     </div>

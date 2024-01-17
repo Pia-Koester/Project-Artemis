@@ -42,7 +42,7 @@ export default function MembershipsOverview() {
         <Link
           to={"/userProfile/createMembership"}
           type="submit"
-          className=" bg-success text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-4"
+          className=" btn btn-success text-white px-4 py-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-4"
         >
           Create New Membership +
         </Link>
