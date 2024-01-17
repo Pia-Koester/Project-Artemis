@@ -355,6 +355,7 @@ export default function Dashboard() {
                         <th>Start Time</th>
                         <th>Edit</th>
                       </tr>
+
                     </thead>
                     {!activities ? (
                       <span className="loading loading-dots loading-lg"></span>
@@ -410,52 +411,51 @@ export default function Dashboard() {
             </div>
 
             <div class="mt-8 bg-white p-4 shadow rounded-lg">
-  <h2 class="text-gray-500 text-lg font-semibold pb-4">
-    Users Overview
-  </h2>
-  <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
+              <h2 class="text-gray-500 text-lg font-semibold pb-4">
+                Users Overview
+              </h2>
+              <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-6"></div>
 
-
-  {!users ? (
-    <div class="flex justify-center">
-      <div class="relative">
-        <div class="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
-        <div class="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin"></div>
-      </div>
-    </div>
-  ) : (
-    <>
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Profile Pic</th>
-              <th>Name</th>
-              <th>E-mail and role</th>
-              <th>Status</th>
-              <th>Classes booked</th>
-              <th>Information</th>
-              <th>Delete user</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <UserCard key={user._id} user={user} id={user._id} />
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div class="text-right mt-4">
-        <Link
-          to={"/userProfile/usersOverview"}
-          class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/8 mb-2"
-        >
-          View More
-        </Link>
-      </div>
-    </>
-  )}
-</div>
+              {!users ? (
+                <div class="flex justify-center">
+                  <div class="relative">
+                    <div class="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+                    <div class="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin"></div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="overflow-x-auto">
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Profile Pic</th>
+                          <th>Name</th>
+                          <th>E-mail and role</th>
+                          <th>Status</th>
+                          <th>Classes booked</th>
+                          <th>Information</th>
+                          <th>Delete user</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {users.map((user) => (
+                          <UserCard key={user._id} user={user} id={user._id} />
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-right mt-4">
+                    <Link
+                      to={"/userProfile/usersOverview"}
+                      class="btn btn-success hover:bg-cyan-600 text-white font-semibold py-1 px-4 w-1/8 mb-2"
+                    >
+                      View More
+                    </Link>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
