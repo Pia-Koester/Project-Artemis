@@ -6,27 +6,27 @@ export default function Footer() {
     <>
       <footer className="footer p-10 bg-base-200 text-base-content mt-auto">
         <nav>
-          <header className="footer-title">Erfahre mehr</header>
-          <a className="link link-hover">Therapeutisches Boxen</a>
-          <a className="link link-hover">Selbstverteidigung</a>
-          <a className="link link-hover">Für Frauen</a>
+          <header className="footer-title">Learn More</header>
+          <a className="link link-hover">Therapeutic Boxing</a>
+          <a className="link link-hover">Self-Defense</a>
+          <a className="link link-hover">For Women</a>
           <a className="link link-hover">Meditation</a>
           <a className="link link-hover">Team</a>
-          <a className="link link-hover">Kontakt</a>
+          <a className="link link-hover">Contact</a>
         </nav>
         <nav>
-          <header className="footer-title">Rechtliches</header>
+          <header className="footer-title">Legal</header>
           <a
             className="link link-hover"
             href="https://www.artemisacademy.de/impressum"
           >
-            Impressum
+            Imprint
           </a>
           <a
             className="link link-hover"
             href="https://www.artemisacademy.de/datenschutz"
           >
-            Datenschutz
+            Privacy Policy
           </a>
         </nav>
         <form>
