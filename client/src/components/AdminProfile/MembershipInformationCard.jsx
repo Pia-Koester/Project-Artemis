@@ -15,7 +15,7 @@ export default function MembershipInformationCard({ membership }) {
         closeModal();
         notify();
         setTimeout(() => {
-          navigate(-1);
+          navigate("/dashboard");
         }, 3000);
       })
       .catch((err) => {
@@ -66,96 +66,97 @@ export default function MembershipInformationCard({ membership }) {
         <div className="collapse-content">
           <div className="mx-auto mb-5 card w-96 bg-base-100 shadow-xl ">
             <div className="card-body items-center text-center">
-            <div class="bg-white rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105 w-full mx-auto">
-              <div
-                class={clsx(
-                  "p-1",
-                  membership.title === "Basic Membership" && "bg-blue-200",
-                  membership.title === "Premium Membership" && "bg-green-200",
-                  membership.title === "Gold Membership" && "bg-amber-200",
-                  membership.title === "Platinum Membership" && "bg-purple-200"
-                )}
-              ></div>
+              <div class="bg-white rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105 w-full mx-auto">
+                <div
+                  class={clsx(
+                    "p-1",
+                    membership.title === "Basic Membership" && "bg-blue-200",
+                    membership.title === "Premium Membership" && "bg-green-200",
+                    membership.title === "Gold Membership" && "bg-amber-200",
+                    membership.title === "Platinum Membership" &&
+                      "bg-purple-200"
+                  )}
+                ></div>
 
-              <div class="p-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">
-                  {membership.title}
-                </h2>
-                <p class="text-4xl font-bold text-gray-800 mb-6">
-                  €{membership.price}.00
-                </p>
-                <ul class="text-sm text-gray-600 mb-6">
-                  <li class="mb-2 flex items-center">
-                    <svg
-                      class="w-4 h-4 mr-2 text-green-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 13l4 4L19 7"
-                      ></path>
-                    </svg>
-                    Usage: {membership.totalCredits + " " + "Bookings"}
-                  </li>
-                  <li class="mb-2 flex items-center">
-                    <svg
-                      class="w-4 h-4 mr-2 text-green-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 13l4 4L19 7"
-                      ></path>
-                    </svg>
-                    Validity: {membership.validity + " " + "Days"}
-                  </li>
-                  <li class="mb-2 flex items-center">
-                    <svg
-                      class="w-4 h-4 mr-2 text-green-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 13l4 4L19 7"
-                      ></path>
-                    </svg>
-                    Cancel Scheduled Activity Anytime
-                  </li>
-                  <li class="mb-2 flex items-center text-left">
-                    <svg
-                      class="w-4 h-4 mr-2 text-green-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 13l4 4L19 7"
-                      ></path>
-                    </svg>
-                    Credits refunded if Class was not attended
-                  </li>
-                </ul>
+                <div class="p-8">
+                  <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                    {membership.title}
+                  </h2>
+                  <p class="text-4xl font-bold text-gray-800 mb-6">
+                    €{membership.price}.00
+                  </p>
+                  <ul class="text-sm text-gray-600 mb-6">
+                    <li class="mb-2 flex items-center">
+                      <svg
+                        class="w-4 h-4 mr-2 text-green-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5 13l4 4L19 7"
+                        ></path>
+                      </svg>
+                      Usage: {membership.totalCredits + " " + "Bookings"}
+                    </li>
+                    <li class="mb-2 flex items-center">
+                      <svg
+                        class="w-4 h-4 mr-2 text-green-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5 13l4 4L19 7"
+                        ></path>
+                      </svg>
+                      Validity: {membership.validity + " " + "Days"}
+                    </li>
+                    <li class="mb-2 flex items-center">
+                      <svg
+                        class="w-4 h-4 mr-2 text-green-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5 13l4 4L19 7"
+                        ></path>
+                      </svg>
+                      Cancel Scheduled Activity Anytime
+                    </li>
+                    <li class="mb-2 flex items-center text-left">
+                      <svg
+                        class="w-4 h-4 mr-2 text-green-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5 13l4 4L19 7"
+                        ></path>
+                      </svg>
+                      Credits refunded if Class was not attended
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
               <Link
                 to={`/userProfile/membershipsOverview/${membership._id}`}
                 className="w-full  btn btn-primary text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"

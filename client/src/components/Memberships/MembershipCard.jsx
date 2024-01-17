@@ -34,7 +34,6 @@ export default function MembershipCard({ plan, user }) {
         expiryDate: expiryDate.toISOString(),
       })
       .then((response) => {
-        console.log("Data from api", response.data);
         closeModal();
         notify();
         setUser((prev) => {

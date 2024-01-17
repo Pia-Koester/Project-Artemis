@@ -7,9 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 
 export default function CreateActivity() {
   const { data: activityTypes } = useLoaderData();
-  console.log(activityTypes);
+  const [formloading, setFormlaoding] = useState(false);
+
   const navigate = useNavigate();
-  console.log(activityTypes);
+
   const {
     register,
     handleSubmit,
@@ -31,10 +32,10 @@ export default function CreateActivity() {
         console.log(error);
       });
   }, []);
-  console.log(instructors);
 
   const onSubmit = (data) => {
-    console.log(data);
+    setFormlaoding(true);
+
     const { date, start, end, type } = data;
     const startTime = `${date}T${start}:00.000Z`;
     const endTime = `${date}T${end}:00.000Z`;
@@ -46,12 +47,11 @@ export default function CreateActivity() {
       (activityType) => activityType.type === type
     );
     data.type = activityTypes[index]._id;
-    console.log(index);
-    console.log(data);
 
     axiosClient
       .post("/activities", data)
       .then((response) => {
+        setFormlaoding(false);
         notify();
         setTimeout(() => {
           navigate("/");
@@ -59,44 +59,38 @@ export default function CreateActivity() {
       })
       .catch((error) => {
         console.log(error);
-        notifyFailed()
+        notifyFailed();
       });
   };
 
   const notify = () =>
-    toast.success(
-      "--Creation Successful--",
-      {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      }
-    );
+    toast.success("--Creation Successful--", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
-    const notifyFailed = () =>
-    toast.error(
-      "--Creation Failed--",
-      {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      }
-    );
+  const notifyFailed = () =>
+    toast.error("--Creation Failed--", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   //TO DO: show example of activity details while creating the activity? - Preview mode
 
   return (
-    <div className="flex justify-center items-start">
+    <div className="flex justify-center items-start mb-4">
       <ToastContainer
         position="top-center"
         autoClose={1500}
@@ -300,12 +294,19 @@ export default function CreateActivity() {
               </div>
             </div>
 
-            <button
-              type="submit"
-              className="w-full btn btn-primary text-white px-4 py-2  hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2"
-            >
-              Create
-            </button>
+            {formloading ? (
+              <button className=" w-full btn btn-primary text-white px-4 py-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2">
+                <span className="loading loading-spinner"></span>
+                loading
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="w-full btn btn-primary text-white px-4 py-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2"
+              >
+                Create
+              </button>
+            )}
           </form>
         </div>
       </div>

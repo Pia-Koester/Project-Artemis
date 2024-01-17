@@ -46,7 +46,6 @@ const getActivities = asyncWrapper(async (req, res, next) => {
         startTime: "desc",
       });
     res.json(activities);
-
   } else {
     let filter = {
       startTime: {
@@ -54,28 +53,25 @@ const getActivities = asyncWrapper(async (req, res, next) => {
         $lte: new Date(sun),
       },
     };
-  
+
     const queryParams = { instructor, type };
-  
+
     for (const key of Object.keys(queryParams)) {
       const value = queryParams[key];
       if (value !== undefined) {
         filter[key] = value;
       }
-
     }
-  
+
     const activities = await Activity.find(filter)
       .populate("type")
       .populate("instructor")
       .sort({
         startTime: "asc",
       });
-  
+
     res.json(activities);
   }
-
-
 });
 
 const getActivity = asyncWrapper(async (req, res, next) => {
@@ -87,7 +83,7 @@ const getActivity = asyncWrapper(async (req, res, next) => {
   if (!activity) {
     throw new ErrorResponse("Activity not found", 404);
   }
-  console.log(activity);
+
   res.json(activity);
 });
 

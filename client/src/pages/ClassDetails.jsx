@@ -63,7 +63,7 @@ export default function ClassDetails() {
       theme: "light",
     });
 
-    const notifyCancelation = () =>
+  const notifyCancelation = () =>
     toast.success("Canceled Successfully", {
       position: "top-center",
       autoClose: 2000,
@@ -118,9 +118,11 @@ export default function ClassDetails() {
   const [showcalendarbutton, setShowcalendarbutton] = useState(false);
 
   return (
-    <>
+    <div className="mb-4">
       {" "}
-      <h1 className="text-4xl flex justify-center mb-6 font-titleFont font-bold">{activity.title}</h1>
+      <h1 className="text-4xl flex justify-center mb-6 font-titleFont font-bold">
+        {activity.title}
+      </h1>
       <div className="flex md:flex-row flex-col-reverse justify-center items-start">
         {" "}
         <button
@@ -177,7 +179,6 @@ export default function ClassDetails() {
           >
             <div className="flex flex-col lg:flex-row lg:items-center">
               <div className="lg:w-2/3 lg:pr-8">
-
                 <div className="flex gap-2 m-2">
                   <FaRegCalendar className="text-2xl" />
                   <p className="font-titleH3 font-semibold text-xl">Date</p>
@@ -199,7 +200,7 @@ export default function ClassDetails() {
                 <CapacityBadge openSlots={openSlots} />
               </div>
 
-              <div className="lg:w-1/3 lg:pl-8">
+              <div className="lg:w-1/3">
                 <div className="avatar self-center mt-3 sm:flex gap-2">
                   <div className="w-24 mask mask-hexagon">
                     <img
@@ -209,7 +210,9 @@ export default function ClassDetails() {
                   </div>
                 </div>
                 <div className="grid grid-rows-2 mt-5 mr-4">
-                  <p className="font-titleH3 font-semibold text-xl">Instructor:</p>
+                  <p className="font-titleH3 font-semibold text-xl">
+                    Instructor:
+                  </p>
                   <p>{activity.instructor.firstName}</p>
                 </div>
               </div>
@@ -429,7 +432,9 @@ export default function ClassDetails() {
           {user && user.role === "admin" ? (
             <div className="Angemeldete-Nutzer card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2 row-start-2 row-span-2  overflow-x-auto overflow-y-auto">
               <div>
-                <h3 className="flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-1">Attending Users</h3>
+                <h3 className="flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-1">
+                  Attending Users
+                </h3>
                 {registeredUsers.length === 0 ? (
                   <p className="text-center mt-2">no users registered yet</p>
                 ) : (
@@ -478,15 +483,13 @@ export default function ClassDetails() {
                 className="w-4/5 self-center"
                 location={activity.location}
               />
-
             </div>
           )}{" "}
           {user && user.role === "admin" && (
-            <EditActivity activity={activity} hideBackButton  />
+            <EditActivity activity={activity} hideBackButton />
           )}
-
         </div>
       </div>
-    </>
+    </div>
   );
 }
