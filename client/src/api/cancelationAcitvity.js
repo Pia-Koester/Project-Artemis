@@ -6,7 +6,6 @@ import axiosClient from "./axiosClient";
 const handleCancelation = (id, setUser, setOpenSlots) => {
   // const {setUser} = useContext(AuthContext);
 
-  console.log("id of the activity:", id);
   axiosClient
     .put(`/activities/${id}/cancel`, {}, { withCredentials: true })
     .then((response) => {

@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function EditActivityType({ activitytype }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {
     register,
@@ -17,15 +17,13 @@ export default function EditActivityType({ activitytype }) {
   const typetitle =
     activitytype?.type?.charAt(0).toUpperCase() + activitytype?.type?.slice(1);
 
-  console.log("from the edit page", activitytype);
   const onSubmit = (data) => {
-    console.log(activitytype._id);
     axiosClient
       .patch(`activityTypes/${activitytype._id}/update`, data)
       .then((response) => {
-        notify()
+        notify();
         setTimeout(() => {
-          navigate(-1)
+          navigate(-1);
         }, 2500);
       })
       .catch((err) => {
@@ -34,9 +32,7 @@ export default function EditActivityType({ activitytype }) {
   };
 
   const notify = () =>
-  toast.success(
-    "--Edit Successful--",
-    {
+    toast.success("--Edit Successful--", {
       position: "top-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -45,13 +41,12 @@ export default function EditActivityType({ activitytype }) {
       draggable: true,
       progress: undefined,
       theme: "light",
-    }
-  );
+    });
 
   return (
     <>
       <div className="flex flex-col items-center justify-center">
-      <ToastContainer
+        <ToastContainer
           position="top-center"
           autoClose={1500}
           limit={1}

@@ -4,7 +4,7 @@ import CapacityBadge from "./CapacityBadge";
 import { useState, useContext } from "react";
 import clsx from "clsx";
 import { AuthContext } from "../context/AuthProvider";
-import { FaPencil, FaRegTrashCan } from "react-icons/fa6";
+import { FaPencil, FaRegTrashCan, FaPeopleGroup } from "react-icons/fa6";
 
 export default function ActivityCard({ activity, role = "student", isBooked }) {
   //TODO: make transition to card Details
@@ -41,7 +41,7 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
       <motion.div
         whileHover={past ? {} : { scale: 1.1 }}
         className={clsx(
-          "card mb-2  w-full  text-primary-content flex flex-col shadow-lg bg-gradient-to-l from-primary to-[#77cfe5] ",
+          "card mb-2  w-full  text-primary-content flex flex-col shadow-lg bg-gradient-to-l from-primary to-[#77cfe5] p-2 relative",
           past && "opacity-40"
           // isBooked && "bg-gradient-to-r from-success to-[#3fea8c]",
           // !past && !isBooked && "bg-gradient-to-r from-primary to-[#7ddaf2] "
@@ -54,54 +54,51 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
             if (!past) navigate(`/details/${activity._id}`);
           }}
         >
-          <div className="grid grid-cols-2 gap-2">
-            <div className="col-span-2">
-              {" "}
-              <div className="flex mt-3 justify-center gap-5">
-                <p>
-                  {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
-                </p>
-                {role === "admin" && !past && (
-                  <button>
-                    <FaPencil className="text-neutral text-xl" />
-                  </button>
-                )}
-              </div>
-              <div className="border-t border-cyan-300 mt-2"></div>
+          <div className="flex flex-col">
+            <div className="flex justify-center gap-2 mt-2">
+              <img
+                src={activity.type?.icon}
+                className="w-10"
+                alt={activity.type?.type}
+                title={activity.type?.type}
+              />
             </div>
-            <div className="col-span-2 row-start-2">
-              {" "}
-              <div className="flex justify-center">
-                <h2 className="card-title text-wrap font-titleFont">{activity.title}</h2>
-              </div>
+            <div className="flex justify-center">
+              <h2 className="card-title text-wrap font-titleFont mt-2 text-center">
+                {activity.title}
+              </h2>
             </div>
-            <div className="row-span-2 col-start-2 row-start-3">
-              {" "}
-              <div className="avatar self-center mt-4 ml-5">
+            <div className="flex justify-center">
+              <p>
+                {activity?.instructor?.firstName}{" "}
+                {activity?.instructor?.lastName}
+              </p>
+              <p></p>
+            </div>{" "}
+            <div className="flex mt-1 justify-center gap-5">
+              <p>
+                {formattedStartTime} <span>&middot;</span> {duration} Min.{" "}
+              </p>
+              {role === "admin" && !past && (
+                <button>
+                  <FaPencil className="text-neutral text-xl" />
+                </button>
+              )}
+            </div>
+            <div className="flex flex-row-reverse justify-center items-center gap-2 m-2">
+              <div className="avatar self-center ">
                 <div className="w-20 mask mask-hexagon ">
                   <img src={activity.instructor?.image?.url} />
                 </div>
               </div>
             </div>
-            <div className="row-span-2 col-start-1 row-start-3">
-              <div className="flex flex-col gap-1 ml-3 mt-4">
-                <div>
-                  <p className="font-medium">Instructor:</p>
-                  <p>{activity?.instructor?.firstName}</p>
-                </div>
-                <div>
-                  <p className="font-medium">Attendants:</p>
-                  <p>{activity?.registeredUsers?.length}</p>
-                </div>
+            <div className="flex justify-center items-center my-3">
+              <div className="flex gap-1 items-center">
+                <FaPeopleGroup className="text-2xl" />
+                <p>{activity?.registeredUsers?.length}</p>
               </div>
-            </div>
-            <div className="row-start-5 ml-3 mb-2 mt-1">
-             <img src={activity.type?.icon} className="w-10 " />
-            </div>
-            <div className="row-start-5 mt-1">
-              <div className="flex justify-end ">
-                <CapacityBadge openSlots={openSlots} isBooked={isBooked} />
-              </div>
+
+              <CapacityBadge openSlots={openSlots} isBooked={isBooked} />
             </div>
           </div>
         </Link>
