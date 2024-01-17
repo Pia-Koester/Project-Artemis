@@ -287,7 +287,14 @@ const uploadUserImage = asyncWrapper(async (req, res, next) => {
       image,
     },
     { new: true }
-  );
+  ).populate({
+    path: "classesRegistered",
+    populate: { path: "instructor", model: "Instructor" },
+  })
+  .populate({
+    path: "activeMembership",
+    populate: { path: "plan", model: "MembershipPlan" },
+  });
 
   res.status(201).json(user);
 });
