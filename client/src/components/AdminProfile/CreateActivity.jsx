@@ -90,7 +90,7 @@ export default function CreateActivity() {
   //TO DO: show example of activity details while creating the activity? - Preview mode
 
   return (
-    <div className="flex justify-center items-start">
+    <div className="flex justify-center items-start mb-4">
       <ToastContainer
         position="top-center"
         autoClose={1500}
