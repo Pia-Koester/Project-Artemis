@@ -4,6 +4,7 @@ import axiosClient from "../../api/axiosClient";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import Toast from "../messages/Toast";
 
 export default function CreateActivity() {
   const { data: activityTypes } = useLoaderData();
@@ -52,7 +53,7 @@ export default function CreateActivity() {
       .post("/activities", data)
       .then((response) => {
         setFormlaoding(false);
-        notify();
+        Toast("Creation Successful");
         setTimeout(() => {
           navigate("/");
         }, 3000);
@@ -62,18 +63,6 @@ export default function CreateActivity() {
         notifyFailed();
       });
   };
-
-  const notify = () =>
-    toast.success("--Creation Successful--", {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
 
   const notifyFailed = () =>
     toast.error("--Creation Failed--", {
@@ -91,19 +80,6 @@ export default function CreateActivity() {
 
   return (
     <div className="flex justify-center items-start mb-4">
-      <ToastContainer
-        position="top-center"
-        autoClose={1500}
-        limit={1}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
       <button
         onClick={() => navigate(-1)}
         className="btn btn-circle btn-neutral mr-3 mt-2 self-start"

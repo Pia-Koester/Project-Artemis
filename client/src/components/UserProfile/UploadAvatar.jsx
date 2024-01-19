@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { AuthContext } from "../context/AuthProvider";
 import { FaArrowLeft } from "react-icons/fa6";
+import Toast from "../messages/Toast";
 
 export default function UploadAvatar() {
   const { id } = useParams();
@@ -52,7 +53,7 @@ export default function UploadAvatar() {
         setUser(response.data);
         setFormlaoding(false);
         setMultipleImages([]);
-        notify();
+        Toast("Upload Successfull");
         setTimeout(() => {
           navigate("/userProfile/details");
         }, 3000);
@@ -62,20 +63,6 @@ export default function UploadAvatar() {
         notifyFail();
       });
   };
-
-  //TO DO: set image in user - send back user profile entirely
-
-  const notify = () =>
-    toast.success("--Upload Successfully-- ", {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
 
   const notifyFail = () =>
     toast.error("--Error during Upload-- ", {
@@ -91,19 +78,6 @@ export default function UploadAvatar() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <ToastContainer
-        position="top-center"
-        autoClose={1500}
-        limit={1}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
       <div className="flex justify-center">
         <button
           className="btn btn-circle btn-neutral mr-3 mt-2 self-start"

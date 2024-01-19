@@ -4,8 +4,8 @@ import axiosClient from "../api/axiosClient";
 import { useState } from "react";
 import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
-import { ToastContainer, toast } from "react-toastify";
 import { FaEye } from "react-icons/fa6";
+import Toast from "../components/messages/Toast";
 
 export default function Registration() {
   const [step, setStep] = useState(1);
@@ -21,8 +21,6 @@ export default function Registration() {
     watch,
     formState: { errors },
   } = useForm();
-
-  //TO DO: create 3 forms with each a submit function and the own validation
 
   const registrationSubmit = (data) => {
     console.log(data, step);
@@ -47,7 +45,7 @@ export default function Registration() {
       .post("signup", data)
       .then((response) => {
         // console.log("Data from api", response.data);
-        notify();
+        Toast("Registration Successfull");
         setTimeout(() => {
           navigate("/login");
         }, 3000);
@@ -56,21 +54,6 @@ export default function Registration() {
         console.log(err);
       });
   };
-
-  const notify = () =>
-    toast.success(
-      "--Registration Successful-- Redirecting to the login screen",
-      {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      }
-    );
 
   const handleBacksteps = () => {
     setStep((prev) => {
@@ -98,20 +81,6 @@ export default function Registration() {
 
   return (
     <AnimatePresence>
-      <ToastContainer
-        position="top-center"
-        autoClose={1500}
-        limit={1}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
-
       <div>
         <div className="flex justify-center items-center">
           <div className="flex flex-col items-center justify-center w-4/12 p-4 h-100 ">
@@ -172,28 +141,27 @@ export default function Registration() {
                     <span className="label-text">Set a password</span>
                   </div>
                   <div className="flex relative mr-7 items-center ">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Password"
+                      className="input input-bordered w-full max-w-xs input-primary "
+                      {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                          value: 8,
+                          message: "Must be at least 8 characters",
+                        },
+                      })}
+                    />
+                    <div
+                      onMouseDown={handleShowPassword}
+                      onMouseUp={handleHidePassword}
+                      className="absolute right-3"
+                    >
+                      <FaEye className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150" />
+                    </div>
+                  </div>
 
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Password"
-                    className="input input-bordered w-full max-w-xs input-primary "
-                    {...register("password", {
-                      required: "Password is required",
-                      minLength: {
-                        value: 8,
-                        message: "Must be at least 8 characters",
-                      },
-                    })}
-                  />
-                  <div
-                    onMouseDown={handleShowPassword}
-                    onMouseUp={handleHidePassword}
-                    className="absolute right-3"
-                  >
-                    <FaEye className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150" />
-                  </div>
-                  </div>
-                 
                   {errors.password?.type === "required" && (
                     <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                       {errors.password.message}

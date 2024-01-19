@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../context/AuthProvider";
 import clsx from "clsx";
 import axiosClient from "../../api/axiosClient";
+import Toast from "../messages/Toast";
 
 export default function MembershipCard({ plan, user }) {
   const modalRef = useRef(null);
@@ -35,7 +36,7 @@ export default function MembershipCard({ plan, user }) {
       })
       .then((response) => {
         closeModal();
-        notify();
+        Toast("Purchase Successfull");
         setUser((prev) => {
           return { ...prev, activeMembership: response.data };
         });
@@ -50,18 +51,6 @@ export default function MembershipCard({ plan, user }) {
         }
       });
   };
-
-  const notify = () =>
-    toast.success("--Purchase Successful-- Redirecting to the class overview", {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
 
   const closeModal = () => {
     modalRef.current.close(); // Close the modal
@@ -173,19 +162,6 @@ export default function MembershipCard({ plan, user }) {
             </button>
           </div>
         </div>
-        <ToastContainer
-          position="top-center"
-          autoClose={1500}
-          limit={1}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover={false}
-          theme="light"
-        />
 
         <dialog ref={modalRef} id="my_modal_1" className="modal">
           <div className="modal-box">

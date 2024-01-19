@@ -4,6 +4,7 @@ import axiosClient from "../../api/axiosClient";
 import { FaArrowLeft } from "react-icons/fa6";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Toast from "../messages/Toast";
 
 export default function CreateActivityType() {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ export default function CreateActivityType() {
         console.log(response.data);
         setFormlaoding(false);
         setMultipleImages([]);
-        notify();
+        Toast("Creation Successfull");
         setTimeout(() => {
           navigate("/dashboard");
         }, 3000);
@@ -62,21 +63,6 @@ export default function CreateActivityType() {
         notifyFail();
       });
   };
-
-  const notify = () =>
-    toast.success(
-      "--Creation Successful-- Redirecting to the admin dashboard",
-      {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      }
-    );
 
   const notifyFail = () =>
     toast.error("Error during upload", {
@@ -92,19 +78,6 @@ export default function CreateActivityType() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <ToastContainer
-        position="top-center"
-        autoClose={1500}
-        limit={1}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
       <div className="bg-gray-100 w-96 flex items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
           <h2 className=" flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-3">

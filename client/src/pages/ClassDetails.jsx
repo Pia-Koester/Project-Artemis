@@ -18,6 +18,7 @@ import clsx from "clsx";
 import EditActivity from "../components/AdminProfile/EditActivity";
 import userIcon from "../assets/logos/avatar.jpg";
 import axiosClient from "../api/axiosClient";
+import Toast from "../components/messages/Toast";
 
 export default function ClassDetails() {
   const { id } = useParams();
@@ -40,7 +41,7 @@ export default function ClassDetails() {
             response.data.activity.registeredUsers.length
         );
         setShowcalendarbutton(true);
-        notify();
+        Toast("Booking Successfull");
         setUser(response.data.user);
       })
       .catch((err) => {
@@ -50,30 +51,6 @@ export default function ClassDetails() {
         }
       });
   };
-
-  const notify = () =>
-    toast.success("Booked Successfully", {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
-  const notifyCancelation = () =>
-    toast.success("Canceled Successfully", {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
 
   //transforming dates and times
   const startTime = new Date(activity.startTime);
@@ -156,8 +133,6 @@ export default function ClassDetails() {
               user && user.role === "admin" ? 3 : 2
             }`}
           >
-            {/* To Do: Maximum height  */}
-
             <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-base-100 rounded-box">
               {activity.type?.images.map((image) => {
                 return (
@@ -327,7 +302,7 @@ export default function ClassDetails() {
                         className="btn btn-secondary mr-3 self-center mt-2"
                         onClick={() => {
                           handleCancelation(id, setUser, setOpenSlots);
-                          notifyCancelation();
+                          Toast("Canceled Successfully");
                         }}
                       >
                         Cancel Booking
