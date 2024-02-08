@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthProvider";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import Toast from "../messages/Toast";
 
 export default function UserActivities() {
   const {
@@ -19,37 +20,14 @@ export default function UserActivities() {
   const currentMinutes = currentDate.getMinutes();
   const currentHours = currentDate.getHours() + 1;
 
-  const notify = () =>
-    toast.success("--Cancelation Successful--", {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
   console.log(userActivity);
 
   return (
     <>
-          <ToastContainer
-        position="top-center"
-        autoClose={1500}
-        limit={1}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
       <div className="text-center mb-5">
-        <h2 className="text-2xl leading-6 font-medium text-gray-900 font-titleH3">My Booked Classes</h2>
+        <h2 className="text-2xl leading-6 font-medium text-gray-900 font-titleH3">
+          My Booked Classes
+        </h2>
       </div>
 
       {!userActivity ? (
@@ -165,7 +143,9 @@ export default function UserActivities() {
                   )}
                 >
                   <div className="card-body">
-                    <h2 className="card-title text-wrap font-titleFont">{userActivity.title}</h2>
+                    <h2 className="card-title text-wrap font-titleFont">
+                      {userActivity.title}
+                    </h2>
 
                     <p>{userActivity.description}</p>
                     <p>
@@ -190,10 +170,11 @@ export default function UserActivities() {
                           pastDate && "hidden"
                         )}
                       >
-                        <button className=""
+                        <button
+                          className=""
                           onClick={() => {
                             handleCancelation(userActivity._id, setUser);
-                            notify();
+                            Toast("Deletion Successfull");
                           }}
                         >
                           Cancel Booking

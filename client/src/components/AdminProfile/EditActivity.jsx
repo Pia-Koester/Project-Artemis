@@ -4,6 +4,7 @@ import axiosClient from "../../api/axiosClient";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import Toast from "../messages/Toast";
 
 export default function EditActivity({ activity, hideBackButton }) {
   const { id } = useParams();
@@ -62,7 +63,7 @@ export default function EditActivity({ activity, hideBackButton }) {
     axiosClient
       .put(`/activities/admin/${activity._id}`, data)
       .then((response) => {
-        notify();
+        Toast("Edit Successfull");
         setTimeout(() => {
           navigate("/");
         }, 3000);
@@ -73,32 +74,8 @@ export default function EditActivity({ activity, hideBackButton }) {
       });
   };
 
-  const notify = () =>
-    toast.success("Updated Successfully", {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={1500}
-        limit={1}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
       {!hideBackButton && (
         <button
           onClick={() => navigate("/userProfile/details")}
@@ -136,7 +113,6 @@ export default function EditActivity({ activity, hideBackButton }) {
                 </span>
               )}
             </div>
-
 
             <div className="mb-4 col-span-2">
               <label
