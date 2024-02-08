@@ -27,7 +27,6 @@ import MembershipsOverview from "./components/AdminProfile/MembershipsOverview.j
 import EditMembershipInformation from "./components/AdminProfile/EditMembershipInformation.jsx";
 import Authorize from "./pages/Authorize";
 import Types from "./pages/Types";
-import Landingpage from "./pages/Landingpage";
 import Dashboard from "./components/AdminProfile/Dashboard.jsx";
 import Authlayout from "./layout/Authlayout";
 import Rootlayout from "./layout/Rootlayout";
@@ -38,7 +37,6 @@ import axiosClient from "./api/axiosClient";
 import CreateInstructor from "./components/AdminProfile/CreateInstructor";
 
 const router = createBrowserRouter([
-  { path: "/landingpage", element: <Landingpage /> },
   {
     path: "/",
     element: <Rootlayout />,

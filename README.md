@@ -15,3 +15,16 @@ Start the project locally with ` npm run dev`.
 ### Open Endpoints
 
 ### Endpoints that require Authentication
+
+TO DO: write read me file for API
+
+- explain basic functionality and reason behin app
+- write comprehensive comments and tidy up
+- move pages into correct folder
+- change modals to one component
+- close modals on click outside of modal
+- check styling of buttons to be only daisy ui buttons
+- rename schemas
+- create cronjob for credit removal
+- change deletion functions
+- check responsiveness and write down tasks
