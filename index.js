@@ -27,7 +27,6 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json({ limit: "200kb" }));
-//app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false })); // this is an idea coming from stackoverflow
 app.use(express.static(path.resolve(__dirname, "client", "dist")));
 
