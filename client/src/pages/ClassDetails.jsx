@@ -156,13 +156,13 @@ export default function ClassDetails() {
               <div className="lg:w-2/3 lg:pr-8">
                 <div className="flex gap-2 m-2">
                   <CalendarDaysIcon className="w-7" />
-                  <p className="font-titleH3 font-semibold text-xl">Date</p>
+                  <p className="font-titleH3 font-semibold text-xl">Datum</p>
                 </div>
                 <p>{formattedStartDate}</p>
 
                 <div className="flex gap-2 m-2">
                   <ClockIcon className="w-7" />
-                  <p className="font-titleH3 font-semibold text-xl">Time</p>
+                  <p className="font-titleH3 font-semibold text-xl">Uhrzeit</p>
                 </div>
                 <p>
                   {formattedStartTime} - {formattedEndTime} ({duration} Min.)
@@ -170,7 +170,9 @@ export default function ClassDetails() {
 
                 <div className="flex gap-2 m-2">
                   <UserIcon className="w-7" />
-                  <p className="font-titleH3 font-semibold text-xl">Capacity</p>
+                  <p className="font-titleH3 font-semibold text-xl">
+                    Verfügbarkeit
+                  </p>
                 </div>
                 <CapacityBadge openSlots={openSlots} />
               </div>
@@ -250,7 +252,7 @@ export default function ClassDetails() {
                   <div>
                     <div className="flex gap-2">
                       <CalendarDaysIcon className="w-7" />
-                      <p className="font-bold">Date</p>
+                      <p className="font-bold">Datum</p>
                     </div>
                     <p>{formattedStartDate}</p>
                   </div>
@@ -258,7 +260,7 @@ export default function ClassDetails() {
                   <div>
                     <div className="flex gap-2">
                       <ClockIcon className="w-7" />
-                      <p className="font-bold">Time</p>
+                      <p className="font-bold">Uhrzeit</p>
                     </div>
                     <p>
                       {formattedStartTime} - {formattedEndTime} ({duration}{" "}
@@ -269,7 +271,7 @@ export default function ClassDetails() {
                   <div className="mt-5">
                     <div className="flex gap-2">
                       <UserIcon className="w-7" />
-                      <p className="font-bold">Capacity </p>
+                      <p className="font-bold">Verfügbarkeit </p>
                     </div>
                     <CapacityBadge openSlots={openSlots} className="m-2" />
                   </div>
@@ -407,10 +409,12 @@ export default function ClassDetails() {
             <div className="Angemeldete-Nutzer card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2 row-start-2 row-span-2  max-h-[550px] overflow-x-auto overflow-y-auto">
               <div>
                 <h3 className="flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-1">
-                  Attending Users
+                  Angemeldete Nutzer:innen
                 </h3>
                 {registeredUsers.length === 0 ? (
-                  <p className="text-center mt-2">no users registered yet</p>
+                  <p className="text-center mt-2">
+                    Bis jetzt ist niemand angemeldet
+                  </p>
                 ) : (
                   <table className="table p-2 m-2  max-h-[300px] overflow-x-auto overflow-y-auto">
                     <tbody>
@@ -451,7 +455,7 @@ export default function ClassDetails() {
             <div className="Kursort card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2">
               <div className="flex gap-2 m-2">
                 <MapPinIcon className="w-7" />
-                <p className="font-bold">Location</p>
+                <p className="font-bold">Ort</p>
               </div>
               <LocationMap
                 className="w-4/5 self-center"

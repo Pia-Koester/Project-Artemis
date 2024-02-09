@@ -38,7 +38,7 @@ export default function Footer() {
           </a>
         </nav>
         <nav>
-          <header className="footer-title">Legal</header>
+          <header className="footer-title">Rechtliches</header>
           <a
             className="link link-hover"
             href="https://www.artemisacademy.de/impressum"
