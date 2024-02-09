@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import userIcon from "../../assets/logos/avatar.jpg";
 import axiosClient from "../../api/axiosClient";
-import { FaArrowLeft } from "react-icons/fa6";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export default function EditUserInformation() {
   const { id } = useParams();
@@ -50,7 +50,7 @@ export default function EditUserInformation() {
         className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
         onClick={() => navigate(`/userProfile/usersOverview`)}
       >
-        <FaArrowLeft />
+        <ArrowLeftIcon />
       </button>
       {!user ? (
         <span className="loading loading-dots loading-lg"></span>

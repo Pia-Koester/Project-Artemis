@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams, useRevalidator } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
-import { FaArrowLeft } from "react-icons/fa6";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Toast from "../messages/Toast";
@@ -81,7 +81,7 @@ export default function EditActivity({ activity, hideBackButton }) {
           onClick={() => navigate("/userProfile/details")}
           className="w-full btn btn-neutral px-4 py-2  hover:bg-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50"
         >
-          <FaArrowLeft />
+          <ArrowLeftIcon />
         </button>
       )}
 

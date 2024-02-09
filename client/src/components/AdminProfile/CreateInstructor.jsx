@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axiosClient from "../../api/axiosClient";
-import { FaArrowLeft } from "react-icons/fa6";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Toast from "../messages/Toast";
@@ -80,7 +80,7 @@ export default function CreateInstructor() {
         onClick={() => navigate(-1)}
         className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
       >
-        <FaArrowLeft />
+        <ArrowLeftIcon />
       </button>
       <div className="flex flex-col items-center justify-center">
         <div className="bg-gray-100 w-96 flex items-center justify-center">

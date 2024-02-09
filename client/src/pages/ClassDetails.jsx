@@ -1,11 +1,11 @@
 import {
-  FaRegCalendar,
-  FaClock,
-  FaPersonDress,
-  FaLocationDot,
-  FaArrowLeft,
-  FaCalendarPlus,
-} from "react-icons/fa6";
+  ArrowLeftIcon,
+  ClockIcon,
+  MapPinIcon,
+  UserIcon,
+  CalendarDaysIcon,
+} from "@heroicons/react/24/outline";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import { handleCancelation } from "../api/cancelationAcitvity";
@@ -106,7 +106,7 @@ export default function ClassDetails() {
           className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
           onClick={() => navigate(-1)}
         >
-          <FaArrowLeft />
+          <ArrowLeftIcon className="w-5" />
         </button>
         <ToastContainer
           position="top-center"
@@ -155,13 +155,13 @@ export default function ClassDetails() {
             <div className="flex flex-col lg:flex-row lg:items-center">
               <div className="lg:w-2/3 lg:pr-8">
                 <div className="flex gap-2 m-2">
-                  <FaRegCalendar className="text-2xl" />
+                  <CalendarDaysIcon className="w-7" />
                   <p className="font-titleH3 font-semibold text-xl">Date</p>
                 </div>
                 <p>{formattedStartDate}</p>
 
                 <div className="flex gap-2 m-2">
-                  <FaClock className="text-2xl" />
+                  <ClockIcon className="w-7" />
                   <p className="font-titleH3 font-semibold text-xl">Time</p>
                 </div>
                 <p>
@@ -169,7 +169,7 @@ export default function ClassDetails() {
                 </p>
 
                 <div className="flex gap-2 m-2">
-                  <FaPersonDress className="text-2xl" />
+                  <UserIcon className="w-7" />
                   <p className="font-titleH3 font-semibold text-xl">Capacity</p>
                 </div>
                 <CapacityBadge openSlots={openSlots} />
@@ -249,7 +249,7 @@ export default function ClassDetails() {
                 <div className="grid grid-cols-2">
                   <div>
                     <div className="flex gap-2">
-                      <FaRegCalendar className="text-2xl" />
+                      <CalendarDaysIcon className="w-7" />
                       <p className="font-bold">Date</p>
                     </div>
                     <p>{formattedStartDate}</p>
@@ -257,7 +257,7 @@ export default function ClassDetails() {
 
                   <div>
                     <div className="flex gap-2">
-                      <FaClock className="text-2xl" />
+                      <ClockIcon className="w-7" />
                       <p className="font-bold">Time</p>
                     </div>
                     <p>
@@ -268,7 +268,7 @@ export default function ClassDetails() {
 
                   <div className="mt-5">
                     <div className="flex gap-2">
-                      <FaPersonDress className="text-2xl" />
+                      <UserIcon className="w-7" />
                       <p className="font-bold">Capacity </p>
                     </div>
                     <CapacityBadge openSlots={openSlots} className="m-2" />
@@ -450,7 +450,7 @@ export default function ClassDetails() {
           ) : (
             <div className="Kursort card bg-white shadow-xl flex flex-col p-4 min-w-96 col-start-2">
               <div className="flex gap-2 m-2">
-                <FaLocationDot className="text-2xl" />
+                <MapPinIcon className="w-7" />
                 <p className="font-bold">Location</p>
               </div>
               <LocationMap

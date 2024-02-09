@@ -1,4 +1,4 @@
-import { FaWandMagicSparkles, FaRegEye, FaEye } from "react-icons/fa6";
+import { EyeIcon } from "@heroicons/react/24/outline";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
@@ -83,15 +83,14 @@ export default function Login() {
                     onMouseUp={handleHidePassword}
                     className="absolute right-3"
                   >
-                    <FaEye className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150" />
+                    <EyeIcon className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150" />
                   </div>
-
                 </div>
                 {errors.password?.type === "required" && (
-                    <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                      {errors.password.message}
-                    </span>
-                  )}
+                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                    {errors.password.message}
+                  </span>
+                )}
                 <button className="btn btn-primary mt-5">Submit</button>
               </label>
               {/* TO DO: in case we create the option to login via mail

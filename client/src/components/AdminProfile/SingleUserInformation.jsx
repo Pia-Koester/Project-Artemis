@@ -1,7 +1,7 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axiosClient from "../../api/axiosClient";
-import { FaArrowLeft } from "react-icons/fa6";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export default function SingleUserInformation() {
   const { id } = useParams();
@@ -58,7 +58,7 @@ export default function SingleUserInformation() {
             className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
             onClick={() => navigate(-1)}
           >
-            <FaArrowLeft />
+            <ArrowLeftIcon />
           </button>
           <div className="bg-white max-w-3xl shadow overflow-hidden sm:rounded-lg ">
             <div className="px-4 py-5 sm:px-6">
@@ -172,7 +172,10 @@ export default function SingleUserInformation() {
                                   </div>
                                 </td>
                                 <td>
-                                  <Link class="text-primary transition duration-150 ease-in-out hover:text-teal-800 hover:underline focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600" to={`/details/${classItem._id}`}>
+                                  <Link
+                                    class="text-primary transition duration-150 ease-in-out hover:text-teal-800 hover:underline focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+                                    to={`/details/${classItem._id}`}
+                                  >
                                     View Details
                                   </Link>
                                 </td>

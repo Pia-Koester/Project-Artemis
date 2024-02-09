@@ -4,7 +4,7 @@ import CapacityBadge from "./CapacityBadge";
 import { useState, useContext } from "react";
 import clsx from "clsx";
 import { AuthContext } from "../context/AuthProvider";
-import { FaPencil, FaRegTrashCan, FaPeopleGroup } from "react-icons/fa6";
+import { PencilIcon, UsersIcon } from "@heroicons/react/24/outline";
 
 export default function ActivityCard({ activity, role = "student", isBooked }) {
   //TODO: make transition to card Details
@@ -81,7 +81,7 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
               </p>
               {role === "admin" && !past && (
                 <button>
-                  <FaPencil className="text-neutral text-xl" />
+                  <PencilIcon className="w-4" />
                 </button>
               )}
             </div>
@@ -94,7 +94,7 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
             </div>
             <div className="flex justify-center items-center my-3">
               <div className="flex gap-1 items-center">
-                <FaPeopleGroup className="text-2xl" />
+                <UsersIcon className="w-5" />
                 <p>{activity?.registeredUsers?.length}</p>
               </div>
 
