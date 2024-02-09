@@ -4,7 +4,7 @@ import axiosClient from "../api/axiosClient";
 import { useState } from "react";
 import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaEye } from "react-icons/fa6";
+import { EyeIcon } from "@heroicons/react/24/outline";
 import Toast from "../components/messages/Toast";
 
 export default function Registration() {
@@ -158,7 +158,7 @@ export default function Registration() {
                       onMouseUp={handleHidePassword}
                       className="absolute right-3"
                     >
-                      <FaEye className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150" />
+                      <EyeIcon className="ml-2 w-5 h-5 hover:cursor-pointer transition-transform transform hover:scale-150" />
                     </div>
                   </div>
 

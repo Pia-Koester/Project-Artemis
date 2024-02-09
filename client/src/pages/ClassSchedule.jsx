@@ -3,7 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import ActivityCard from "../components/Activities/ActivityCard";
 import { AuthContext } from "../components/context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import { FaCirclePlus } from "react-icons/fa6";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import axiosClient from "../api/axiosClient.jsx";
 import clsx from "clsx";
 
@@ -156,7 +156,7 @@ export default function ClassSchedule() {
             className="text-4xl text-secondary btn btn-circle "
             onClick={() => navigate("/createActivity")}
           >
-            <FaCirclePlus />
+            <PlusCircleIcon />
           </button>
         )}
       </div>

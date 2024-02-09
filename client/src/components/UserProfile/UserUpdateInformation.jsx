@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import userIcon from "../../assets/logos/avatar.jpg";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import { FaCamera, FaArrowLeft } from "react-icons/fa6";
+import { ArrowLeftIcon, CameraIcon } from "@heroicons/react/24/outline";
 
 export default function UserUpdateInformation() {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export default function UserUpdateInformation() {
             className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
             onClick={() => navigate(-1)}
           >
-            <FaArrowLeft />
+            <ArrowLeftIcon />
           </button>
           <div className="flex flex-col items-center justify-center">
             <div className="bg-gray-100 w-96 flex items-center justify-center">
@@ -48,7 +48,7 @@ export default function UserUpdateInformation() {
                       navigate(`/userProfile/details/upload/${user._id}`);
                     }}
                   >
-                    <FaCamera className="text-3xl" />
+                    <CameraIcon className="text-3xl" />
                   </div>
                 </div>
                 <h2 className="text-2xl font-semibold text-center mb-4">

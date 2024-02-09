@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axiosClient from "../../api/axiosClient";
-import { FaArrowLeft } from "react-icons/fa6";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export default function EditMembershipInformation() {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export default function EditMembershipInformation() {
             className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
             onClick={() => navigate(-1)}
           >
-            <FaArrowLeft />
+            <ArrowLeftIcon />
           </button>
           <div className="flex flex-col items-center justify-center">
             <div className="bg-gray-100 w-96 flex items-center justify-center">

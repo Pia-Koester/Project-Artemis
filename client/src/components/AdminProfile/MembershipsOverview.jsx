@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import MembershipInformationCard from "./MembershipInformationCard";
 import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
-import { FaArrowLeft } from "react-icons/fa6";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export default function MembershipsOverview() {
   const [memberships, setMemberships] = useState(null);
@@ -26,7 +26,7 @@ export default function MembershipsOverview() {
         className="btn btn-circle btn-neutral mr-3 mt-2 self-start"
         onClick={() => navigate("/dashboard")}
       >
-        <FaArrowLeft />
+        <ArrowLeftIcon />
       </button>
       <div className="flex flex-col items-center justify-center">
         <div className="flex justify-between">
