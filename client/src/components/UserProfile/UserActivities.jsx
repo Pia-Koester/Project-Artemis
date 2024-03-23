@@ -3,9 +3,16 @@ import { handleCancelation } from "../../api/cancelationAcitvity";
 import { AuthContext } from "../context/AuthProvider";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import Toast from "../messages/Toast";
 
+// hero icons for detail page
+import {
+  ArrowLeftIcon,
+  ClockIcon,
+  MapPinIcon,
+  UserIcon,
+  CalendarDaysIcon,
+} from "@heroicons/react/24/outline";
 export default function UserActivities() {
   const {
     user: { classesRegistered: userActivity },
@@ -26,7 +33,7 @@ export default function UserActivities() {
     <>
       <div className="text-center mb-5">
         <h2 className="text-2xl leading-6 font-medium text-gray-900 font-titleH3">
-          My Booked Classes
+          Meine gebuchten Kurse
         </h2>
       </div>
 
@@ -36,7 +43,7 @@ export default function UserActivities() {
         <div className="flex flex-col items-center justify-center mb-5">
           <div class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 w-1/3">
             <h5 class="border-b-2 border-neutral-100 px-6 py-3 text-xl font-medium leading-tight dark:border-neutral-600 dark:text-neutral-50">
-              You don't have any classes booked yet
+              Noch hast du keine Kurse gebucht{" "}
             </h5>
             <div class="p-6">
               <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50"></h5>
@@ -85,91 +92,71 @@ export default function UserActivities() {
             }
           })
           .map((userActivity) => {
-            const getStartDate = userActivity.startTime;
-            const formatStartDate = getStartDate.split("T");
-            const formatStartTime = formatStartDate[1].split(".");
+            const startTime = new Date(userActivity.startTime);
+            const formattedStartTime = startTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              timeZone: "UTC", //TO DO: backend must save dates with UTC+1
+            });
+            const options = {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            };
+            const formattedStartDate = startTime.toLocaleDateString(
+              "de-DE",
+              options
+            );
+            const startMilliseconds = startTime.getTime();
 
-            const getEndDate = userActivity.endTime;
-            const formatEndDate = getEndDate.split("T");
-            const formatEndTime = formatEndDate[1].split(".");
-
-            const utcTimeString = userActivity.startTime;
-            const date = new Date(utcTimeString);
-
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1; // JavaScript months are 0-based, so we add 1
-            const day = date.getDate();
-            const hours = date.getHours();
-            const minutes = date.getMinutes();
-
-            let pastDate = false;
-
-            if (currentYear > year) {
-              pastDate = true;
-            } else if (currentYear === year && currentMonth > month) {
-              pastDate = true;
-            } else if (
-              currentYear === year &&
-              currentMonth === month &&
-              currentDay > day
-            ) {
-              pastDate = true;
-            } else if (
-              currentYear === year &&
-              currentMonth === month &&
-              currentDay === day &&
-              currentHours > hours
-            ) {
-              pastDate = true;
-            } else if (
-              currentYear === year &&
-              currentMonth === month &&
-              currentDay === day &&
-              currentHours === hours &&
-              currentMinutes > minutes
-            ) {
-              pastDate = true;
-            }
+            //calculate duration based on start and end date in milliseconds
+            const endTime = new Date(userActivity.endTime);
+            const formattedEndTime = endTime.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              timeZone: "UTC", //TO DO: backend must save dates with UTC+1
+            });
+            const endMilliseconds = endTime.getTime();
+            const duration =
+              (endMilliseconds - startMilliseconds) / (1000 * 60);
 
             return (
               <div
                 key={userActivity._id}
                 className="mb-4 lg:w-6/12 w-11/12 mx-auto"
               >
-                <div
-                  className={clsx(
-                    "card bg-primary text-primary-content grid lg:grid-cols-2",
-                    pastDate && "opacity-50"
-                  )}
-                >
+                <div className="card bg-primary text-primary-content grid lg:grid-cols-2">
                   <div className="card-body">
                     <h2 className="card-title text-wrap font-titleFont">
                       {userActivity.title}
                     </h2>
+                    <div className="flex gap-2 m-2">
+                      <CalendarDaysIcon className="w-7" />
+                      <p className="font-titleH3 font-semibold text-xl">
+                        Datum
+                      </p>
+                    </div>
+                    <p>{formattedStartDate}</p>
 
-                    <p>{userActivity.description}</p>
+                    <div className="flex gap-2 m-2">
+                      <ClockIcon className="w-7" />
+                      <p className="font-titleH3 font-semibold text-xl">
+                        Uhrzeit
+                      </p>
+                    </div>
                     <p>
-                      <span className="font-medium">Start time:</span>{" "}
-                      {formatStartDate[0] +
-                        " at " +
-                        formatStartTime[0].slice(0, 5)}
+                      {formattedStartTime} - {formattedEndTime} ({duration}{" "}
+                      Min.)
                     </p>
-                    <p>
-                      <span className="font-medium">End time: </span>
-                      {formatEndDate[0] + " at " + formatEndTime[0].slice(0, 5)}
-                    </p>
+
                     <p>
                       <span className="font-medium">Location:</span>{" "}
                       {userActivity.location.address}, 20357, Hamburg
                     </p>
 
                     <div className="flex justify-between items-end">
-                      <div
-                        className={clsx(
-                          "btn bg-secondary hover:bg-violet-600 text-white text-xs text-center self-center px-3 py-2",
-                          pastDate && "hidden"
-                        )}
-                      >
+                      <div>
                         <button
                           className=""
                           onClick={() => {
@@ -180,12 +167,7 @@ export default function UserActivities() {
                           Cancel Booking
                         </button>
                       </div>
-                      <div
-                        className={clsx(
-                          "badge badge-neutral",
-                          !pastDate && "hidden"
-                        )}
-                      >
+                      <div>
                         <button>Class Finished</button>
                       </div>
                     </div>
