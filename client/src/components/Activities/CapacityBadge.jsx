@@ -26,8 +26,8 @@ export default function CapacityBadge({ openSlots, isBooked }) {
           <span className="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
         )}
         {isBooked
-          ? "Booked"
-          : `${openSlots} Spot${openSlots !== 1 ? "s" : ""} left`}
+          ? "Gebucht"
+          : `${openSlots} ${openSlots !== 1 ? "Plätze" : "Platz"} frei`}
       </span>
     </div>
   );

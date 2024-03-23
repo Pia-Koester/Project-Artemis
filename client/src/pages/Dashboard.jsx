@@ -1,8 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import UserCard from "./UserCard";
+import UserCard from "../components/AdminProfile/UserCard";
 import { useNavigate } from "react-router-dom";
-import axiosClient from "../../api/axiosClient";
+import axiosClient from "../api/axiosClient";
 export default function Dashboard() {
   const { id } = useParams();
 

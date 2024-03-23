@@ -7,21 +7,22 @@ import { AuthContext } from "../context/AuthProvider";
 import { PencilIcon, UsersIcon } from "@heroicons/react/24/outline";
 
 export default function ActivityCard({ activity, role = "student", isBooked }) {
-  //TODO: make transition to card Details
   const navigate = useNavigate();
+
   //calculating the start time based on the provided date
   const startTime = new Date(activity.startTime);
   const formattedStartTime = startTime.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: "UTC", //TO DO: backend must save dates with UTC+1
   });
   const startMilliseconds = startTime.getTime();
 
   //calculate duration based on start and end date in milliseconds
   const endTime = new Date(activity.endTime);
   const endMilliseconds = endTime.getTime();
-  const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
+  const duration = Math.ceil(
+    ((endMilliseconds - startMilliseconds) / (1000 * 60) / 10) * 10
+  );
 
   //change color of card based on if the time and day have already passed
   const today = new Date();

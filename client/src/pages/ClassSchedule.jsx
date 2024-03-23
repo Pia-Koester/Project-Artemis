@@ -106,7 +106,7 @@ export default function ClassSchedule() {
   return (
     <div className="flex gap-3 flex-col items-center p-5">
       <h1 className="text-4xl mb-6 font-titleFont font-bold">
-        Find Your Next Class Here
+        Buche deinen nächsten Kurs
       </h1>{" "}
       <div className="flex flex-col md:flex-row w-full gap-2 md:justify-center items-center">
         <div className="join">

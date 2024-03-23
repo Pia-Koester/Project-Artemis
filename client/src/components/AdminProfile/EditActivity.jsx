@@ -43,7 +43,6 @@ export default function EditActivity({ activity, hideBackButton }) {
   const formattedEndTime = endTime.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: "UTC", //TO DO: backend must save dates with UTC+1
   });
 
   const onSubmit = (data) => {
