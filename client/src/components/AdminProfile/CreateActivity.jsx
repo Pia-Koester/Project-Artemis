@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Toast from "../messages/Toast";
 
 //TO DO: install react-datepicker to have a better picker with date and time
 
@@ -38,34 +39,28 @@ export default function CreateActivity() {
   }, []);
 
   const onSubmit = (data) => {
-    // setFormlaoding(true);
+    setFormlaoding(true);
 
-    // const { date, start, end, type } = data;
-    // const startTime = `${date}T${start}:00.000Z`;
-    // const endTime = `${date}T${end}:00.000Z`;
-
-    // data.startTime = startTime;
-    // data.endTime = endTime;+
     console.log(data);
+    const { type } = data;
+    const index = activityTypes.findIndex(
+      (activityType) => activityType.type === type
+    );
+    data.type = activityTypes[index]._id;
 
-    // const index = activityTypes.findIndex(
-    //   (activityType) => activityType.type === type
-    // );
-    // data.type = activityTypes[index]._id;
-
-    // axiosClient
-    //   .post("/activities", data)
-    //   .then((response) => {
-    //     setFormlaoding(false);
-    //     Toast("Creation Successful");
-    //     setTimeout(() => {
-    //       navigate("/");
-    //     }, 3000);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     notifyFailed();
-    //   });
+    axiosClient
+      .post("/activities", data)
+      .then((response) => {
+        setFormlaoding(false);
+        Toast("Creation Successful");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      })
+      .catch((error) => {
+        console.log(error);
+        notifyFailed();
+      });
   };
 
   const notifyFailed = () =>
@@ -206,7 +201,7 @@ export default function CreateActivity() {
                       onChange={(date) => field.onChange(date)}
                       selected={field.value}
                       showTimeSelect
-                      dateFormat="dd-MM-yyyy HH:mm"
+                      dateFormat="dd.MM.yyyy HH:mm"
                       timeFormat="HH:mm"
                       className="input input-bordered w-full max-w-xs"
                     />
@@ -229,7 +224,7 @@ export default function CreateActivity() {
                       onChange={(date) => field.onChange(date)}
                       selected={field.value}
                       showTimeSelect
-                      dateFormat="dd-MM-yyyy HH:mm"
+                      dateFormat="dd.MM.yyyy HH:mm"
                       timeFormat="HH:mm"
                       className="input input-bordered w-full max-w-xs"
                     />

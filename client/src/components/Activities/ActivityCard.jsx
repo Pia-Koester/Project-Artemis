@@ -14,7 +14,6 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
   const formattedStartTime = startTime.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: "UTC", //TO DO: backend must save dates with UTC+1
   });
   const startMilliseconds = startTime.getTime();
 

@@ -60,7 +60,6 @@ export default function ClassDetails() {
   const formattedStartTime = startTime.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: "UTC", //TO DO: backend must save dates with UTC+1
   });
   const options = {
     weekday: "long",
@@ -76,7 +75,6 @@ export default function ClassDetails() {
   const formattedEndTime = endTime.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
-    timeZone: "UTC", //TO DO: backend must save dates with UTC+1
   });
   const endMilliseconds = endTime.getTime();
   const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);

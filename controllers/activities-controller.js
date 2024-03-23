@@ -20,14 +20,14 @@ const createActivity = asyncWrapper(async (req, res, next) => {
   //defining the weekdays for different filter functions
   const start = new Date(startTime);
   const options = { weekday: "long", timeZone: "UTC" };
-  const weekday = new Intl.DateTimeFormat("en-En", options).format(start); //TO DO:
+  const weekday = new Intl.DateTimeFormat("en-En", options).format(start);
 
   const activity = await Activity.create({
     title,
     description,
     capacity,
     instructor,
-    startTime: start,
+    startTime,
     endTime,
     weekday,
     type,
