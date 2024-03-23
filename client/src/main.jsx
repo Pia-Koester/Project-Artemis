@@ -68,8 +68,9 @@ const router = createBrowserRouter([
             loader: getActivity,
           },
           {
-            path: "confirmation/:id",
+            path: "details/:id/confirmation",
             element: <Bookingconfirmation />,
+            loader: getActivity,
           },
           {
             path: "membershipPlans",

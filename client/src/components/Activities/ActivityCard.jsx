@@ -7,8 +7,8 @@ import { AuthContext } from "../context/AuthProvider";
 import { PencilIcon, UsersIcon } from "@heroicons/react/24/outline";
 
 export default function ActivityCard({ activity, role = "student", isBooked }) {
-  //TODO: make transition to card Details
   const navigate = useNavigate();
+
   //calculating the start time based on the provided date
   const startTime = new Date(activity.startTime);
   const formattedStartTime = startTime.toLocaleTimeString([], {

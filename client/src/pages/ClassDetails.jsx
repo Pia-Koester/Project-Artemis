@@ -41,11 +41,10 @@ export default function ClassDetails() {
             response.data.activity.registeredUsers.length
         );
         setShowcalendarbutton(true);
-        Toast("Booking Successfull");
         setUser(response.data.user);
       })
       .then(() => {
-        navigate(`confirmation/${id}`);
+        navigate(`confirmation`);
       })
       .catch((err) => {
         console.log(err.response.status);

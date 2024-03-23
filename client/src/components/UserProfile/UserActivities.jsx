@@ -19,13 +19,9 @@ export default function UserActivities() {
     setUser,
   } = useContext(AuthContext);
 
-  const currentDate = new Date();
-
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-based, so we add 1
-  const currentDay = currentDate.getDate();
-  const currentMinutes = currentDate.getMinutes();
-  const currentHours = currentDate.getHours() + 1;
+  //change color of card based on if the time and day have already passed
+  const today = new Date();
+  // const [past, setPast] = useState(startTime < today);
 
   console.log(userActivity);
 
@@ -114,11 +110,11 @@ export default function UserActivities() {
             const formattedEndTime = endTime.toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
-              timeZone: "UTC", //TO DO: backend must save dates with UTC+1
             });
             const endMilliseconds = endTime.getTime();
-            const duration =
-              (endMilliseconds - startMilliseconds) / (1000 * 60);
+            const duration = Math.ceil(
+              ((endMilliseconds - startMilliseconds) / (1000 * 60) / 10) * 10
+            );
 
             return (
               <div
