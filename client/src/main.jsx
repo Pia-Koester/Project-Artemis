@@ -27,7 +27,7 @@ import MembershipsOverview from "./components/AdminProfile/MembershipsOverview.j
 import EditMembershipInformation from "./components/AdminProfile/EditMembershipInformation.jsx";
 import Authorize from "./pages/Authorize";
 import Types from "./pages/Types";
-import Dashboard from "./components/AdminProfile/Dashboard.jsx";
+import Dashboard from "./pages/Dashboard";
 import Authlayout from "./layout/Authlayout";
 import Rootlayout from "./layout/Rootlayout";
 import EditActivityType from "./components/AdminProfile/EditActivityType.jsx";
@@ -35,6 +35,7 @@ import ErrorPage from "./pages/errors/ErrorPage";
 import UploadAvatar from "./components/UserProfile/UploadAvatar";
 import axiosClient from "./api/axiosClient";
 import CreateInstructor from "./components/AdminProfile/CreateInstructor";
+import Bookingconfirmation from "./pages/Bookingconfirmation";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,11 @@ const router = createBrowserRouter([
           {
             path: "details/:id",
             element: <ClassDetails />,
+            loader: getActivity,
+          },
+          {
+            path: "details/:id/confirmation",
+            element: <Bookingconfirmation />,
             loader: getActivity,
           },
           {

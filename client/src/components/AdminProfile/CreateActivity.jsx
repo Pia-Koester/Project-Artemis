@@ -1,10 +1,14 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
 import { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import Toast from "../messages/Toast";
+import { toast } from "react-toastify";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Toast from "../messages/Toast";
+
+//TO DO: install react-datepicker to have a better picker with date and time
 
 export default function CreateActivity() {
   const { data: activityTypes } = useLoaderData();
@@ -15,6 +19,7 @@ export default function CreateActivity() {
   const {
     register,
     handleSubmit,
+    control,
     watch,
     formState: { errors },
   } = useForm();
@@ -26,7 +31,6 @@ export default function CreateActivity() {
     axiosClient
       .get("/instructors")
       .then((response) => {
-        console.log(response.data);
         setInstructors(response.data);
       })
       .catch((error) => {
@@ -37,13 +41,8 @@ export default function CreateActivity() {
   const onSubmit = (data) => {
     setFormlaoding(true);
 
-    const { date, start, end, type } = data;
-    const startTime = `${date}T${start}:00.000Z`;
-    const endTime = `${date}T${end}:00.000Z`;
-
-    data.startTime = startTime;
-    data.endTime = endTime;
-
+    console.log(data);
+    const { type } = data;
     const index = activityTypes.findIndex(
       (activityType) => activityType.type === type
     );
@@ -89,7 +88,7 @@ export default function CreateActivity() {
       <div className="flex flex-col items-center justify-center ">
         <div className="bg-white p-8 rounded-lg shadow-lg w-full ">
           <h2 className="flex justify-center text-2xl leading-6 font-medium text-gray-900 font-titleH3 mb-3">
-            Create a new Activity
+            Lege einen neuen Kurs an
           </h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-2 gap-x-5">
@@ -98,7 +97,7 @@ export default function CreateActivity() {
                   htmlFor="title"
                   className="block text-gray-700 text-sm font-semibold mb-2"
                 >
-                  Title
+                  Name / Überschrift
                 </label>
                 <input
                   className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
@@ -119,7 +118,7 @@ export default function CreateActivity() {
                   htmlFor="Description"
                   className="block text-gray-700 text-sm font-semibold mb-2"
                 >
-                  Description
+                  Beschreibung
                 </label>
                 <textarea
                   className="textarea w-full px-4 py-2 textarea-border rounded-lg text-gray-700 focus:ring-blue-500 h-36"
@@ -139,16 +138,16 @@ export default function CreateActivity() {
                   htmlFor="instructor"
                   className="block text-gray-700 text-sm font-semibold mb-2"
                 >
-                  Instructor
+                  Trainer:in
                 </label>
                 <select
-                  className="select select-secondary w-full max-w-xs"
+                  className="select select-bordered w-full"
                   {...register("instructor", {
                     required: "Instructor is required",
                   })}
                 >
                   <option disabled selected>
-                    Instructor
+                    Trainer:in wählen
                   </option>
                   {instructors.map((instructor) => {
                     return (
@@ -170,10 +169,10 @@ export default function CreateActivity() {
                   htmlFor="capacity"
                   className="block text-gray-700 text-sm font-semibold mb-2"
                 >
-                  Maximum Capacity
+                  max. Teilnehmer:innen
                 </label>
                 <input
-                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
+                  className="input input-bordered w-full max-w-xs"
                   {...register("capacity", {
                     required: "Capacity is required",
                   })}
@@ -188,80 +187,66 @@ export default function CreateActivity() {
 
               <div className="mb-4">
                 <label
-                  htmlFor="date"
+                  htmlFor="startTime"
                   className="block text-gray-700 text-sm font-semibold mb-2"
                 >
-                  Date
+                  Startdatum und Zeit
                 </label>
-                <input
-                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
-                  {...register("date", {
-                    required: "Date is required",
-                  })}
-                  type="date"
+                <Controller
+                  control={control}
+                  name="startTime"
+                  render={({ field }) => (
+                    <DatePicker
+                      placeholderText="Select date"
+                      onChange={(date) => field.onChange(date)}
+                      selected={field.value}
+                      showTimeSelect
+                      dateFormat="dd.MM.yyyy HH:mm"
+                      timeFormat="HH:mm"
+                      className="input input-bordered w-full max-w-xs"
+                    />
+                  )}
                 />
-                {errors.date?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.date.message}
-                  </span>
-                )}
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="start"
-                  className="block text-gray-700 text-sm font-semibold mb-2"
-                >
-                  Start Time
-                </label>
-                <input
-                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
-                  {...register("start", {
-                    required: "Time is required",
-                  })}
-                  type="time"
-                />
-                {errors.startTime?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.startTime.message}
-                  </span>
-                )}
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="end"
-                  className="block text-gray-700 text-sm font-semibold mb-2"
-                >
-                  End Time
-                </label>
-                <input
-                  className="form-input w-full px-4 py-2 border rounded-lg text-gray-700 focus:ring-blue-500"
-                  {...register("end", {
-                    required: "Time is required",
-                  })}
-                  type="time"
-                />
-                {errors.startTime?.type === "required" && (
-                  <span className="label self-start mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                    {errors.startTime.message}
-                  </span>
-                )}
-              </div>
-
               <div className="mb-4">
                 <label
                   htmlFor="endTime"
                   className="block text-gray-700 text-sm font-semibold mb-2"
                 >
-                  Activity Type
+                  Enddatum und Zeit
+                </label>
+                <Controller
+                  control={control}
+                  name="endTime"
+                  render={({ field }) => (
+                    <DatePicker
+                      placeholderText="Select date"
+                      onChange={(date) => field.onChange(date)}
+                      selected={field.value}
+                      showTimeSelect
+                      dateFormat="dd.MM.yyyy HH:mm"
+                      timeFormat="HH:mm"
+                      className="input input-bordered w-full max-w-xs"
+                    />
+                  )}
+                />
+              </div>
+
+              <div className="mb-4">
+                <label
+                  htmlFor="type"
+                  className="block text-gray-700 text-sm font-semibold mb-2"
+                >
+                  Kursart
                 </label>
                 <select
-                  className="select select-bordered"
+                  className="select select-bordered w-full"
                   {...register("type", {
                     required: "Type is required",
                   })}
                 >
                   <option disabled selected>
-                    Pick one
+                    wähle aus
                   </option>
                   {activityTypes.map((item) => {
                     return <option>{item.type}</option>;
@@ -280,7 +265,7 @@ export default function CreateActivity() {
                 type="submit"
                 className="w-full btn btn-primary text-white px-4 py-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mb-2"
               >
-                Create
+                Speichern
               </button>
             )}
           </form>
