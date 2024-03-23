@@ -77,7 +77,9 @@ export default function ClassDetails() {
     minute: "2-digit",
   });
   const endMilliseconds = endTime.getTime();
-  const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
+  const duration = Math.ceil(
+    ((endMilliseconds - startMilliseconds) / (1000 * 60) / 10) * 10
+  );
 
   const registeredUsers = activity?.registeredUsers;
 

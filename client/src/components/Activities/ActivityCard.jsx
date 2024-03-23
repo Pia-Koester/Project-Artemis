@@ -20,7 +20,9 @@ export default function ActivityCard({ activity, role = "student", isBooked }) {
   //calculate duration based on start and end date in milliseconds
   const endTime = new Date(activity.endTime);
   const endMilliseconds = endTime.getTime();
-  const duration = (endMilliseconds - startMilliseconds) / (1000 * 60);
+  const duration = Math.ceil(
+    ((endMilliseconds - startMilliseconds) / (1000 * 60) / 10) * 10
+  );
 
   //change color of card based on if the time and day have already passed
   const today = new Date();
